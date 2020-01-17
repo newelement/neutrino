@@ -1,0 +1,351 @@
+<?php
+namespace Newelement\Neutrino\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Newelement\Neutrino\Facades\Neutrino;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
+
+class MediaController extends Controller
+{
+	private $pathRoot = 'uploads';
+	private $disk = 'public';
+	private $folderIgnores = [
+		'_thumb',
+		'_small',
+		'_medium',
+		'_large',
+		'_original'
+	];
+
+	public function __construct(){
+		$this->disk = config('neutrino.storage.filesystem');
+	}
+
+	public function index()
+	{
+		return view('neutrino::admin.media.index');
+	}
+
+	public function get(Request $request)
+	{
+
+		$uploadsExists = Storage::disk($this->disk)->has('uploads');
+		if( !$uploadsExists ){
+			Storage::disk($this->disk)->makeDirectory('uploads');
+		}
+
+		$path = $request->path;
+		$file_type = $request->file_type;
+
+		if( !$path ){
+			$path = $this->pathRoot;
+		}
+
+		$data = [];
+		$items = [];
+		$filesArr = [];
+
+		$folders = Storage::disk($this->disk)->directories($path);
+		$files = Storage::disk($this->disk)->files($path);
+
+		$i = 0;
+		foreach( $folders as $folder ){
+			foreach ($this->folderIgnores as $ignore) {
+			    if (strpos($folder, $ignore) !== FALSE) {
+			        unset($folders[$i]);
+			    }
+			}
+			$i++;
+		}
+
+		foreach( $files as $file ){
+			$pathInfo = pathinfo($file);
+			$isImage = $this->imageType($pathInfo['extension']);
+			$arr = [
+				'id' => uniqid(),
+				'path' => $file,
+				'info' => $pathInfo,
+				'image' => $isImage,
+				'selected' => false
+			];
+
+			if( $file_type === 'image' && $isImage){
+				$arr['sizes'] = $this->getSizes($file);
+				$filesArr[] = $arr;
+			}
+
+			if( $file_type === 'file' && !$isImage){
+				$filesArr[] = $arr;
+			}
+
+			if( $file_type === 'all' ){
+				$arr['sizes'] = $this->getSizes($file);
+				$filesArr[] = $arr;
+			}
+		}
+
+		$folders = collect(['folders' => $folders]);
+		$files = collect(['files' => $filesArr]);
+
+		$items = $folders->merge($files);
+
+		$data['items'] = $items;
+
+		return response()->json([ 'fileData' => $data ]);
+	}
+
+	public function uploadFiles(Request $request)
+	{
+		$files = $request->file('file');
+		$path = $request->path;
+		$filesArr = [];
+        $success = true;
+        $message = '';
+        $status = 200;
+
+		$path = $path.'/';
+
+		$i = 0;
+		foreach($files as $file){
+            if( $file->isValid() ){
+    			$imageName = $file->getClientOriginalName();
+    			$mimeType = $file->getMimeType();
+
+    			$pathInfo = pathinfo($path.$imageName);
+
+    			if( $this->fileExists($path.$imageName) ){
+    				$imageName = uniqid().'-'.$imageName;
+    			}
+
+    			if( !$this->imageType( $mimeType ) ){
+    				$orig = $file->storeAs($path, $imageName, $this->disk);
+    		  	} else {
+
+    				$orig = $file->storeAs($path.'/_original/', $imageName, $this->disk);
+
+                    try{
+    				    $image = Image::make($file);
+                    } catch (\Exception $e){
+                        return response()->json(['message' => $e->getMessage() ], 500);
+                    }
+    	            $image->backup();
+
+    	            $imageSizes = config('neutrino.media.image_sizes');
+
+    				foreach( $imageSizes as $key => $size ){
+
+        				$image->reset();
+
+        				if( $key === 'thumb' && config('neutrino.media.thumb_crop') === 'square' ){
+            				$thumbData = Image::make($file)->fit( $size );
+            				$resource = $thumbData->stream()->detach();
+    				    } else {
+            	            $image->resize( $size , null, function ($constraint) {
+            	                $constraint->aspectRatio();
+            	            });
+            				$resource = $image->stream()->detach();
+        	            }
+        	            if( $key === 'thumb' ){
+        	                Storage::disk($this->disk)->put($path.'/'.$imageName, $resource);
+        	            } else {
+            	            Storage::disk($this->disk)->put($path.'/_'.$this->sanitizeSizeName($key).'/'.$imageName, $resource);
+            	        }
+    				}
+
+    				$image->destroy();
+    			}
+
+    			$filesArr[] = [
+    				'id' => uniqid(),
+    				'path' => $path.$imageName,
+    				'info' => $pathInfo,
+    				'image' => $this->imageType($pathInfo['extension']),
+    				'selected' => false,
+    				'sizes' => $this->getSizes($path.$imageName)
+    			];
+
+    			$i++;
+            } else {
+                $success = false;
+                $message = 'One or more files were not uploaded:<br>';
+                $invalids[] =  $file->getClientOriginalName().' ['.$file->getErrorMessage().'] ';
+                $message .= implode('<br>', $invalids);
+                $status = 500;
+            }
+		}
+
+		return response()->json(['success' => $success, 'files' => $filesArr, 'message' => $message], $status);
+	}
+
+	private function imageType( $mimeType )
+	{
+		$image = false;
+		switch( strtolower($mimeType) ){
+			case 'image/jpeg':
+			case 'image/png':
+			case 'image/gif':
+			case 'jpg':
+			case 'png':
+			case 'gif':
+				$image = true;
+			break;
+		}
+		return $image;
+	}
+
+	public function createFolder(Request $request)
+	{
+		$path = $request->path;
+		$folderName = $request->folder_name;
+		$folder = Storage::disk($this->disk)->makeDirectory($path.'/'.$folderName);
+		return response()->json(['folder' => $folder]);
+	}
+
+	public function deleteFolder(Request $request)
+	{
+		$path = $request->path;
+		$folderName = $request->folder_name;
+		$delete = false;
+		if( strlen($folderName) > 2 ){
+			$delete = Storage::disk($this->disk)->deleteDirectory($folderName);
+		}
+		return response()->json(['delete' => $delete]);
+	}
+
+	public function deleteFile(Request $request)
+	{
+		$path = $request->path;
+		$deleted = Storage::disk($this->disk)->delete($path);
+		return response()->json(['deleted' => $deleted]);
+	}
+
+	public function listDirsFiles()
+	{
+		$files = Storage::files($directory);
+	}
+
+	public function editImage(Request $request)
+	{
+		$inputImage = $request->image;
+		$path = $request->path;
+		$imageName = $request->current_image;
+		$success = true;
+        $message = '';
+		$file = [];
+
+		if (preg_match('/^data:image\/(\w+);base64,/', $inputImage)) {
+
+			$data = substr($inputImage, strpos($inputImage, ',') + 1);
+		    $data = base64_decode($data);
+
+			$pathInfo = pathinfo($path.'/'.$imageName);
+
+            try{
+			    $image = Image::make($data);
+			    $image->backup();
+            } catch(\Exception $e){
+                $success = false;
+                $message = 'Could not edit image. '.$e->getMessage();
+                return response()->json(['success' => $success, 'message' => $message]);
+            }
+
+            $imageSizes = config('neutrino.media.image_sizes');
+
+            foreach( $imageSizes as $key => $size ){
+
+                $image->reset();
+
+                if( $key === 'thumb' && config('neutrino.media.thumb_crop') === 'square' ){
+                    try{
+                        $thumbData = Image::make($image)->fit( $size );
+                        $resource = $thumbData->stream()->detach();
+                    } catch(\Exception $e){
+                        $success = false;
+                        $message = 'Could not create image. '.$e->getMessage();
+                        return response()->json(['success' => $success, 'message' => $message]);
+                    }
+				} else {
+        	        $image->resize( $size , null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $resource = $image->stream()->detach();
+    	        }
+                if( $key === 'thumb' ){
+    	            Storage::disk($this->disk)->put($path.'/'.$imageName, $resource);
+    	        } else {
+        	       Storage::disk($this->disk)->put($path.'/_'.$this->sanitizeSizeName($key).'/'.$imageName, $resource);
+                }
+            }
+
+			$image->destroy();
+
+			$file = [
+				'id' => uniqid(),
+				'path' => $path.'/'.$imageName,
+				'info' => $pathInfo,
+				'image' => true,
+				'selected' => false,
+				'sizes' => $this->getSizes($path.'/'.$imageName)
+			];
+
+		}
+
+		return response()->json(['success' => $success, 'file' => $file, 'message' => $message]);
+
+	}
+
+	private function sanitizeSizeName($string)
+	{
+    	$string = strtolower($string);
+    	$string = str_replace(' ', '', $string);
+    	$string = preg_replace("/[^a-zA-Z]+/", "", $string);
+    	return $string;
+	}
+
+	private function fileExists($file)
+	{
+		$exists = Storage::disk($this->disk)->exists($file);
+		return $exists;
+	}
+
+	private function getSizes($file)
+	{
+		$sizes = [];
+		$pathInfo = pathinfo($file);
+		$dir = $pathInfo['dirname'];
+
+        $imageSizes = config('neutrino.media.image_sizes');
+
+        foreach( $imageSizes as $key => $value ){
+            $path = $dir.'/_'.$key.'/'.$pathInfo['basename'];
+            $exists = Storage::disk($this->disk)->exists($path);
+            $sizes[$key] = '/storage/'.$path;
+        }
+
+		$ogPath = $dir.'/_original/'.$pathInfo['basename'];
+		$ogExists = Storage::disk($this->disk)->exists($ogPath);
+
+		if( $ogExists ){
+			$sizes['original'] = '/storage/'.$ogPath;
+		}
+
+		unset($sizes['thumb']);
+
+		return $sizes;
+	}
+
+	private function sanitizeFilename($filename)
+	{
+		$filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
+		$filename = mb_ereg_replace("([\.]{2,})", '', $filename);
+		return $filename;
+	}
+
+	private function getFileType($filename)
+	{
+
+	}
+
+}

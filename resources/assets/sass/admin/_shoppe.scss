@@ -1,0 +1,181 @@
+.variation-content{
+    h4{
+        margin-bottom: 12px;
+    }
+}
+
+.attributes-chooser{
+    background-color: #f3f3f3;
+    margin-bottom: 24px;
+
+    label{
+        margin-right: 18px;
+
+        span{
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    .attr-row{
+        padding: 12px;
+        border-bottom: 1px solid #fff;
+
+        &:last-child{
+            border-bottom: 0;
+        }
+    }
+
+}
+
+.attr-values{
+    display: none;
+    flex-wrap: wrap;
+    padding: 6px 0 6px 24px;
+    color: #555;
+    font-size: 14px;
+
+    &.open{
+        display: flex;
+    }
+}
+
+.variation-header{
+    position: relative;
+
+    a.add-variation-btn{
+        display: block;
+        font-weight: 700;
+        border: 1px solid #444;
+        color: #fff;
+        background-color: #888;
+        padding: 4px 18px;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        position: absolute;
+        top: 50%;
+        right: 24px;
+        transform: translateY(-50%);
+        transition: background-color .25s ease;
+
+        &:hover{
+            background-color: #555;
+        }
+    }
+}
+
+.variation-image{
+    max-width: 55px;
+    height: auto;
+    margin-right: 18px;
+    border: 1px solid #fff;
+}
+
+.variation-item{
+    padding: 12px 0 0 0;
+    margin-bottom: 12px;
+    position: relative;
+
+    &:last-child{
+        margin-bottom: 0;
+    }
+
+    a.delete-variation-btn{
+        display: block;
+        text-decoration: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        line-height: 1.2;
+        text-align: center;
+        background-color: darken(red, 15%);
+        color: #fff;
+        transition: all .25s ease;
+        position: absolute;
+        top: 0;
+        right: -12px;
+        z-index: 5;
+
+        &:hover{
+            color: #fff;
+            background-color: #777;
+        }
+    }
+}
+
+.variation-options{
+    background-color: #888;
+    color: #fff;
+    padding: 12px;
+    position: relative;
+
+    .variation-collapse{
+        margin-left: auto;
+        position: relative;
+        width: 24px;
+        text-align: center;
+
+        a.variation-collapse-btn{
+            display: block;
+            color: #fff;
+            font-size: 24px;
+            text-decoration: none;
+
+            i{
+                transition: all .25s ease;
+                transform: translateY(-50%) rotate(0);
+                position: absolute;
+                top: 50%;
+            }
+
+            &.open i{
+                transform: translateY(-50%) rotate(90deg);
+            }
+
+            &:hover{
+                color: #ccc;
+            }
+        }
+    }
+
+    .inner{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .product-variation-dropdown{
+        width: 16%;
+
+        label{
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        select{
+            height: 32px;
+            font-size: 14px;
+        }
+
+    }
+}
+
+.variation-fields{
+    background-color: #e3e3e3;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .25s ease, padding .15s ease;
+
+    &.open{
+        max-height: 650px;
+        padding: 12px;
+    }
+
+    .form-row:last-child{
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}
+
+

@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "devDependencies": {
+    "@editorjs/header": "^2.3.2",
+    "cross-env": "^3.2.3",
+    "jquery": "^3.1.1",
+    "laravel-mix": "^4.0.12",
+    "lodash": "^4.17.4",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "dependencies": {
+    "@tinymce/tinymce-vue": "^3.0.1",
+    "bootstrap-icons": "^1.0.0-alpha2",
+    "dropzone": "^5.0.1",
+    "node-sass": "^4.11.0",
+    "pace-progressbar": "^1.0.8",
+    "prosemirror-tables": "^1.0.0",
+    "select2": "^4.0.3",
+    "sortablejs": "^1.10.0-rc3",
+    "sweetalert2": "^8.15.3",
+    "tinymce": "^5.1.2",
+    "toastr": "^2.1.2",
+    "v-runtime-template": "^1.10.0",
+    "vue": "^2.3.4",
+    "vue-clickaway": "^2.2.2",
+    "vue-cropperjs": "^4.0.0",
+    "vue2-dropzone": "^3.6.0",
+    "vuedraggable": "^2.23.2"
+  }
+}

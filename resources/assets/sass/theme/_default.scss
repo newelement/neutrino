@@ -1,0 +1,48 @@
+.form-signin{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+
+    input[type="email"]{
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    input[type="password"]{
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .form-control{
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+    }
+}
+
+.jumbotron{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 6rem 2rem;
+    position: relative;
+
+    hr{
+        border-top: 1px solid rgba(0, 0, 0, .3)
+    }
+}
+
+.form-control{
+    &:focus{
+        box-shadow: none;
+        background-color: #fff;
+    }
+}
+
+@import 'shoppe';
+@import 'blocks';

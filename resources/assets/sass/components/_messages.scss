@@ -1,0 +1,105 @@
+.message{
+	padding: 12px;
+	position: relative;
+
+	&.center{
+		text-align: center;
+	}
+
+	&.success{
+		border: 1px solid #c3e6cb;
+		background-color: #d4edda;
+		color: #155724;
+
+		a{
+			color: #155724;
+			font-weight: 700;
+		}
+	}
+
+	&.info{
+		border: 1px solid #b8daff;
+		background-color: #cce5ff;
+		color: #004085;
+
+		a{
+			color: #004085;
+			font-weight: 700;
+		}
+	}
+
+	a{
+		transition: opacity .25s ease;
+		&:hover{
+			opacity: .65;
+		}
+	}
+
+	&.error{
+		border: 1px solid darken(red, 20%);
+		color: darken(red, 20%);
+		font-weight: 700;
+	}
+
+}
+
+.item-added-message{
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+	transition: all .3s ease;
+
+	&.show{
+		display: block;
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+.close-message{
+	position: absolute;
+	top: 0;
+    right: 6px;
+    line-height: 1;
+    text-decoration: none;
+    transition: opacity 0.25s ease;
+    font-size: 24px;
+	cursor: pointer;
+
+	&:hover{
+		opacity: .65;
+	}
+}
+
+.messages{
+	background-color: #fff;
+	//padding: 12px;
+}
+
+.alert{
+	padding: 12px 24px;
+	font-size: 18px;
+	max-width: 100%;
+	margin: 0 auto;
+	font-weight: 700;
+
+	&.alert-danger{
+		background-color: darken(red, 15%);
+		font-weight: 700;
+		color: #fff;
+	}
+
+	&.alert-success{
+		background-color: lighten(green, 5%);
+		color: #fff;
+	}
+
+	ul{
+		display: block;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+}

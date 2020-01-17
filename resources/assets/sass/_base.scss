@@ -1,0 +1,133 @@
+@import 'components/normalize';
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+@import 'variables/variables';
+@import 'mixins/mixins';
+@import 'components/components';
+
+// ------------------------------------------------
+
+
+
+// Base Styles
+//–––––––––––––––––––––––––––––––––––––––––––––––––
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: $font-family;
+  color: $font-color;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  background-color: darken($body-bg, 5%);
+}
+
+h1 {
+  @include font-baseline(68, 72);
+}
+
+h2 {
+  @include font-baseline(42, 48);
+}
+
+h3 {
+  @include font-baseline(26, 48);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+h4 {
+  @include font-baseline(16, 24);
+}
+
+h5 {
+  @include font-baseline(14, 24);
+  color: #555;
+}
+
+p {
+  margin: 0 0 1.5em;
+  font-size: 20px;
+}
+
+ul,
+ol,
+pre,
+table,
+blockquote {
+  margin-bottom: 1.5em;
+}
+
+// Sanitation
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+b,
+strong,
+em,
+small,
+code {
+  line-height: 1;
+}
+
+sup,
+sub {
+  vertical-align: baseline;
+  position: relative;
+  top: -.4em;
+}
+
+sub {
+  top: .4em;
+}
+
+// Links
+//–––––––––––––––––––––––––––––––––––––––––––––––––
+
+a {
+  color: $link-color;
+
+  &:hover {
+    color: darken($link-color, 5%);
+  }
+}
+
+// HR reset
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em;
+  padding: 0;
+}
+
+
+
+
+// Media Queries
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+
+@media (#{$x-large}) {}
+
+@media (#{$_1140}) {}
+
+@media (#{$large}) {}
+
+@media (#{$_960}) {}
+
+@media (#{$medium}) {}
+
+@media (#{$small}) {}
+
+@media (#{$x-small}) {}

@@ -1,0 +1,405 @@
+[v-cloak]{
+    display: none;
+}
+
+#block-editor{
+    position: relative;
+    display: flex;
+    width: 100%;
+    //min-height: 500px;
+    flex-direction: row;
+
+    [contenteditable]:active,
+    [contenteditable]:focus{
+        border:none;
+        outline:none;
+    }
+
+    br[data-mce-bogus="1"] {
+        display:none;
+    }
+
+    [contenteditable]{
+        transition: background-color .25s ease;
+        &:hover{
+            background-color: #F2FFEB;
+        }
+    }
+
+    a:hover{
+        text-decoration: none;
+    }
+
+    [contentEditable]:empty:not(:focus):before{
+        content:attr(data-placeholder);
+    }
+
+    .plugin-placeholder:before{
+        margin: 0;
+    }
+
+    .block-title{
+        position: absolute;
+        left: 54px;
+        top: -4px;
+        background-color: #777;
+        color: #f3f3f3;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0;
+        line-height: 1;
+        padding: 4px 8px;
+    }
+
+    .choose-block-btn{
+        display: block;
+        width: 25px;
+        height: 30px;
+        text-decoration: none;
+        text-align: center;
+        font-size: 20px;
+        color: #888;
+        line-height: 1.5;
+        transition: color .25s ease;
+
+        &:hover{
+            color: #ccc;
+        }
+
+        &.small{
+            width: 20px;
+            height: 20px;
+            line-height: 1.2;
+            font-size: 16px;
+        }
+    }
+
+    .initial-blocks{
+        width: 100%;
+        padding-top: 32px;
+        padding-bottom: 24px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .block-append-btn{
+        display: flex;
+        flex-direction: row;
+        width: 200px;
+        margin: 2px;
+        font-size: 18px;
+        padding: 8px;
+        text-decoration: none;
+        line-height: 1;
+        color: #555;
+        border: 1px solid #aaa;
+        background-color: #ccc;
+        transition: background-color .25s ease, color .25s ease;
+
+        i{
+            margin-left: auto;
+            font-weight: 700;
+        }
+
+        &:hover{
+            text-decoration: none;
+            background-color: #f3f3f3;
+            color: #555;
+        }
+    }
+
+    .block-chooser-block{
+        display: none;
+        position: absolute;
+        top: 12px;
+        left: 24px;
+        z-index: 20;
+
+        &.show{
+            display: block;
+        }
+
+        .inner{
+            position: relative;
+        }
+
+        .block-append-btn{
+            width: 100%;
+            margin: 2px 0;
+        }
+    }
+
+    .block-chooser{
+        width: 284px;
+        height: 300px;
+        overflow: auto;
+        position: absolute;
+        top: 30px;
+        left: 0;
+        padding: 6px;
+        border: 1px solid #999;
+        background-color: #fff;
+    }
+
+    .blocks-list{
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        padding: 18px 0 0 0;
+        background-color: #fff;
+
+        .block-item{
+            display: block;
+            width: 100%;
+            padding: 18px 18px 6px 50px;
+            position: relative;
+
+            .block-template{
+                padding: 6px;
+                border-top: 1px solid #f3f3f3;
+            }
+
+            &:hover{
+
+                .delete-block-btn,
+                .block-drag-handle,
+                .block-chooser-block
+                {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .append-block-group-btn{
+        color: #fff;
+        display: inline-block;
+        margin-left: 6px;
+        transition: color .25s ease;
+
+        &:hover{
+            color: #ccc;
+        }
+    }
+
+    .delete-block-btn{
+        display: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: darken(red, 15%);
+        transition: background-color .25s ease;
+        color: #fff;
+        text-align: center;
+        position: absolute;
+        font-size: 14px;
+        top: 3px;
+        right: 6px;
+        z-index: 1;
+
+        &:hover{
+            background-color: #ccc;
+        }
+
+        &.show{
+            display: block;
+        }
+    }
+
+    .block-drag-handle{
+        display: none;
+        width: 40px;
+        height: 20px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        line-height: 1.2;
+        position: absolute;
+        top: 18px;
+        left: -6px;
+        text-align: center;
+        color: #ccc;
+        z-index: 2;
+        cursor: ns-resize;
+
+        &.show{
+            display: block;
+        }
+    }
+
+    .block-item-options{
+        position: absolute;
+        top: -28px;
+        right: 32px;
+        z-index: 399;
+
+        .inner{
+            position: relative;
+            z-index: 400;
+        }
+    }
+
+    .block-item-options-toggle{
+        transition: color .25s ease;
+        color: #888;
+        &:hover{
+            color: #ccc;
+        }
+    }
+
+    .block-item-options-list{
+        width: 200px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 6px;
+        position: absolute;
+        top: 4px;
+        right: 12px;
+        z-index: 401;
+        box-shadow: 0 0 10px 1px rgba(0,0,0,0.2);
+    }
+
+    .block-item-drag-handle{
+        color: #888;
+        position: absolute;
+        top: 0;
+        right: 30px;
+        cursor: ns-resize;
+        z-index: 400;
+    }
+
+    .bi-option-item{
+        padding: 4px 0;
+        border-bottom: 1px solid #eee;
+
+        &:last_child{
+            border-bottom: none;
+        }
+
+        label {
+            width: 100%;
+            span{
+                font-size: 14px;
+                color: #555;
+            }
+            input[type="text"],
+            input[type="number"],
+            input[type="date"]{
+                border: 1px solid #ccc;
+                height: 30px;
+                width: 100%;
+                margin: 0;
+                transition: border-color .25s ease;
+
+                &:focus{
+                    border-color: #333;
+                }
+            }
+            textarea{
+                border: 1px solid #ccc;
+                height: 45px;
+                width: 100%;
+                margin: 0;
+                transition: border-color .25s ease;
+
+                &:focus{
+                    border-color: #333;
+                }
+            }
+        }
+
+        .select-wrapper{
+            width: 100%;
+            select{
+                height: 30px;
+            }
+        }
+
+    }
+
+    .delete-block-item{
+        padding: 4px 0;
+    }
+
+    .delete-block-item{
+        display: block;
+        color: darken(red, 15%);
+        text-decoraction: none;
+        text-decoration: none;
+        text-align: center;
+        transition: color .25s ease;
+        &:hover{
+            color: lighten(red, 15%);
+        }
+    }
+
+    .child-block-chooser-toggle{
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            z-index: 100;
+            display: block;
+            font-size: 14px;
+            width: 24px;
+            height: 24px;
+            line-height: 1.7;
+            border-radius: 50%;
+            background-color: rgba(255,255,255, .9);
+            text-align: center;
+            color: #222;
+
+        &:hover{
+           text-decoration: none;
+        }
+
+    }
+
+    .child-block-chooser{
+        width: 250px;
+        height: 250px;
+        overflow: auto;
+        position: absolute;
+        top: 34px;
+        left: 0;
+        padding: 6px;
+        border: 1px solid #999;
+        background-color: #fff;
+        z-index: 300;
+
+        .block-append-btn{
+            width: auto;
+        }
+
+    }
+
+    .child-block{
+        position: relative;
+    }
+
+    .remove-child-block{
+        width: 18px;
+        height: 18px;
+        text-align: center;
+        display: block;
+        position: absolute;
+        font-size: 14px;
+        line-height: 1.2;
+        background-color: rgba(white, .85);
+        color: darken(red, 15%);
+        border-radius: 50%;
+        top: -6px;
+        right: -1px;
+        transition: color .25s ease;
+
+        &:hover{
+            text-decoration: none;
+            color: #ccc;
+        }
+    }
+
+}
+
+.inline-editor{
+    position: relative;
+}
+

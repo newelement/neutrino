@@ -1,0 +1,133 @@
+@import '~select2/dist/css/select2.css';
+
+/* Ye'old clearfix */
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+
+/* FLOAT YER BOAT */
+.fl{
+	float: left;
+}
+
+.fr{
+	float: right;
+}
+
+.fn{
+	float: none;
+}
+
+
+.hide-text {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+.desktop-only{
+	display: block;
+}
+
+.mobile-only{
+	display: none;
+}
+
+@media (#{$medium}) {
+	.desktop-only{
+		display: none;
+	}
+	.mobile-only{
+		display: block;
+	}
+}
+
+
+/* IMAGE REPLACEMENT */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+
+/* ----- Images ----- */
+
+img.max-width {
+	max-width: 100%;
+	height: auto;
+}
+img.align-right{
+    float: right;
+    margin: 0 0 10px 20px;
+}
+img.align-left{
+    float: left;
+    margin: 0 20px 10px 0;
+}
+img.align-center{
+    display: block;
+    margin: 0 auto;
+}
+a img.align-right {
+    float: right;
+    margin: 0 0 10px 20px;
+}
+
+a img.align-left {
+    float: left;
+    margin: 0 20px 10px 0;
+}
+
+a img.align-center {
+    display: block;
+    margin: 0 auto;
+}
+
+
+@media (#{$small}) {
+
+    img.align-right,
+    img.align-left,
+    a img.align-right,
+    a img.align-left{
+        display: block;
+        float: none;
+        clear: both;
+        margin: 0 auto;
+    }
+
+}
+
+
+.text-right{
+    text-align: right;
+}
+.text-left{
+    text-align: left;
+}
+.text-center{
+    text-align: center;
+}
+
+.pos-relative{
+    position: relative
+}
