@@ -93,15 +93,15 @@ class FormController extends Controller
 		$form = Form::find($id);
 
 		$i = 0;
-		foreach( $request->field_type as $key => $value ){
-                    
+		foreach( (array) $request->field_type as $key => $value ){
+
 			$settings = [];
 			$settings['multiple_files'] = isset($request->field_multiple[$key]) && $request->field_multiple[$key] === '1' ? 1 : 0;
 			$settings['allowed_filetypes'] = isset($request->field_filetypes[$key])? $request->field_filetypes[$key] : '*' ;
 			$settings['placeholder'] = isset($request->field_placeholder[$key])? $request->field_placeholder[$key] : '' ;
 			$settings['empty_first_option'] = isset($request->field_firstoption[$key]) && (int) $request->field_firstoption[$key] === 1 ? 1 : 0;
 			$settings['options'] = isset($request->field_options[$key])? $this->parseFieldOptions($request->field_options[$key], $request->field_type[$key]) : [];
-            
+
 			FormField::updateOrCreate(['field_id' => $key],
 			[
 				'form_id' => $form->id,
@@ -114,13 +114,13 @@ class FormController extends Controller
 				'sort' => $i
 			]);
 			$i++;
-			
+
 		}
-		
+
 		if( $request->ajax() ){
     		return response()->json(['sorted' => true]);
 		}
-	
+
 		return redirect('/admin/forms/'.$id.'/fields')->with('success', 'Fields updated.');
 	}
 

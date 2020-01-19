@@ -14,7 +14,7 @@
 					<div class="form-row">
 						<label class="label-col" for="title">Title</label>
 						<div class="input-col">
-							<input id="title" type="text" name="title" value="{{ old('title', $page->title) }}" required>
+							<input id="title" type="text" name="title" autocomplete="off" value="{{ old('title', $page->title) }}" required>
 						</div>
 					</div>
 
@@ -50,7 +50,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span class="block-drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                            <span class="block-drag-handle"><i class="far fa-sort"></i></span>
                                             <a href="#" class="delete-block-btn" @click.prevent="removeBlock(block)"><i class="fal fa-times"></i></a>
                                             <h3 class="block-title">@{{ block.title }} <a v-if="block.group" href="#" class="append-block-group-btn" @click.prevent="addBlockGroup(block)" role="button"><i class="fal fa-plus"></i></a></h3>
                                             <div class="block-template" :class="{ grouped: block.group }">

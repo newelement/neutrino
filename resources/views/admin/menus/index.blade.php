@@ -47,7 +47,7 @@
 					<div class="form-row">
 						<label class="label-col" for="menu-name">Menu Name</label>
 						<div class="input-col">
-							<input id="menu-name" type="text" name="name" value="{{ old('name', $edit_menu->name) }}">
+							<input id="menu-name" type="text" name="name" autocomplete="off" value="{{ old('name', $edit_menu->name) }}">
 						</div>
 					</div>
 					@if( !$edit )

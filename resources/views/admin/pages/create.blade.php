@@ -11,7 +11,7 @@
 					<div class="form-row">
 						<label class="label-col" for="title">Title</label>
 						<div class="input-col">
-							<input id="title" class="to-slug" type="text" name="title" value="{{ old('title') }}" required>
+							<input id="title" class="to-slug" type="text" name="title" value="{{ old('title') }}" autocomplete="off" required>
 						</div>
 					</div>
 
@@ -48,12 +48,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span class="block-drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                            <span class="block-drag-handle"><i class="far fa-sort"></i></span>
                                             <a href="#" class="delete-block-btn" @click.prevent="removeBlock(block)"><i class="fal fa-times"></i></a>
                                             <h3 class="block-title">@{{ block.title }} <a v-if="block.group" href="#" class="append-block-group-btn" @click.prevent="addBlockGroup(block)" role="button"><i class="fal fa-plus"></i></a></h3>
                                             <div class="block-template" :class="{ grouped: block.group }">
-                                                <tinymce-editor v-if="block.contentEditable && !block.template && block.tag" v-model="block.value" :init="tinyInitInlineParagraph" :tag-name="block.tag"></tinymce-editor>
-                                                <tinymce-editor v-if="block.contentEditable && !block.template && !block.tag" v-model="block.value" :init="tinyInitInlineFreeText"></tinymce-editor>
+                                                <keep-alive>
+                                                    <tinymce-editor v-if="block.contentEditable && !block.template && block.tag" v-model="block.value" :init="tinyInitInlineParagraph" :tag-name="block.tag"></tinymce-editor>
+                                                </keep-alive>
+                                                <keep-alive>
+                                                    <tinymce-editor v-if="block.contentEditable && !block.template && !block.tag" v-model="block.value" :init="tinyInitInlineFreeText"></tinymce-editor>
+                                                </keep-alive>
                                                 <keep-alive>
                                                     <component v-if="!block.contentEditable" :block="block" :block-index="blockIndex" v-bind:is="block.name" />
                                                 </keep-alive>

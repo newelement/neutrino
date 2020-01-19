@@ -14,7 +14,7 @@
 			<div class="form-row">
 				<label class="label-col" for="title">Group Title</label>
 				<div class="input-col">
-					<input id="title" type="text" name="title" value="{{ old('title') }}" required>
+					<input id="title" type="text" name="title" autocomplete="off" value="{{ old('title') }}" required>
 				</div>
 			</div>
 

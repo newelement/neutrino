@@ -18,7 +18,7 @@
 					<div class="form-row">
 						<label class="label-col" for="item-name">Title</label>
 						<div class="input-col">
-							<input id="item-name" type="text">
+							<input id="item-name" autocomplete="off" type="text">
 						</div>
 					</div>
 					<div class="form-row">
@@ -39,9 +39,9 @@
 						</div>
 					</div>
 					<div id="item-url-group" class="form-row menu-item-type">
-						<label class="label-col" for="item-url">URL</label>
+						<label class="label-col"  for="item-url">URL</label>
 						<div class="input-col">
-							<input id="item-url" type="text" placeholder="/">
+							<input id="item-url" autocomplete="off" type="text" placeholder="/">
 						</div>
 					</div>
 					<div id="item-page-group" class="form-row menu-item-type">

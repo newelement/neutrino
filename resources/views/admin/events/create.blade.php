@@ -12,7 +12,7 @@
 					<div class="form-row">
 						<label class="label-col" for="title">Title</label>
 						<div class="input-col">
-							<input id="title" class="to-slug" type="text" name="title" value="{{ old('title') }}" required>
+							<input id="title" class="to-slug" type="text" name="title" value="{{ old('title') }}" autocomplete="off" required>
 						</div>
 					</div>
 
