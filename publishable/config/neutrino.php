@@ -131,8 +131,8 @@ return [
                 ],
             ],
 
-            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlockController@testimonial',
-            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlockController@testimonialCompiler'
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@testimonial',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@testimonialCompiler'
         ]
     ],
 ];

@@ -648,16 +648,49 @@ function getSetting($name){
 
 function getScripts(){
     $scripts = config('neutrino.enqueue_js', []);
+    echo '<script src="/js/app.js"></script>'."\n";
     foreach( $scripts as $script ){
         echo '<script src="'.$script.'"></script>'."\n";
+    }
+    if( _shoppeExists() ){
+        echo '<script src="/vendor/newelement/shoppe/js/shoppe.js"></script>'."\n";
     }
 }
 
 function getStyles(){
     $styles = config('neutrino.enqueue_css', []);
+    $allStyles = [];
+    $allStyles[] = 'css/app.css';
     foreach( $styles as $script ){
-        echo '<link href="'.$style.'" rel="stylesheet">'."\n";
+        $allStyles[] = ltrim($style, '/');
     }
+    if( _shoppeExists() ){
+        $allStyles[] = 'vendor/newelement/shoppe/css/shoppe.css';
+    }
+
+    if( getSetting('enable_asset_cache') ){
+
+        $cssContent = '';
+        foreach ( $allStyles as $cssFile ) {
+            $cssContent .= file_get_contents( public_path( $cssFile ) );
+        }
+
+        $cssContent = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $cssContent);
+        $cssContent = str_replace(': ', ':', $cssContent);
+        $cssContent = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $cssContent);
+        $exists = \Storage::disk('public')->exists('assets/css/all.css');
+        if( !$exists ){
+            \Storage::disk('public')->put('assets/css/all.css', $cssContent);
+        }
+        $allCss = \Storage::disk('public')->url('assets/css/all.css');
+        echo '<link href="'.$allCss.'" rel="stylesheet">'."\n";
+
+    } else {
+        foreach( $allStyles as $style ){
+            echo '<link href="/'.$style.'" rel="stylesheet">'."\n";
+        }
+    }
+
 }
 
 function getAdminScripts(){

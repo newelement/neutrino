@@ -34,8 +34,7 @@
 		  gtag('js', new Date());
 		  gtag('config', '{{ env('GOOGLE_ANALYTICS_ID') }}');
 		</script>
-	    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	    <link href="{{ asset('vendor/newelement/neutrino/css/theme.css') }}" rel="stylesheet">
+	    {{ getStyles() }}
 	</head>
 	<body class="@if($data->data_type) {{'data-type-'.$data->data_type}} @endif">
 		<div id="app">
@@ -114,7 +113,6 @@
 
 		</div>
         @yield('js')
-		<script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('vendor/newelement/neutrino/js/theme.js') }}"></script>
+		{{ getScripts() }}
 	</body>
 </html>

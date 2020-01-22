@@ -74,5 +74,17 @@ class SettingsTableSeeder extends Seeder
 				'order' => 0
 			]
 		);
+        Setting::updateOrCreate(
+            [
+                'key' => 'enable_asset_cache',
+                'value' => '',
+                'value_bool' => 1,
+                'type' => 'BOOL',
+                'label' => 'Enable asset cache',
+                'details' => 'Turn off/on asset cache globally.',
+                'protected' => 1,
+                'order' => 0
+            ]
+        );
     }
 }

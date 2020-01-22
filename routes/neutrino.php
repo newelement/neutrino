@@ -128,6 +128,7 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::post('/form-fields/{id}/sort', $namespacePrefix.'Admin\FormController@createFields');
 
 		Route::get('/cache/clear/{type}', $namespacePrefix.'Admin\SettingsController@cacheClear');
+        Route::get('/cache/clear-asset-cache', $namespacePrefix.'Admin\SettingsController@clearAssetCache');
 
 		Route::get('/filemanager', $namespacePrefix.'Admin\MediaController@get');
 		Route::post('/filemanager/folder', $namespacePrefix.'Admin\MediaController@createFolder');

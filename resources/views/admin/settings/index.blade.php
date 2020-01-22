@@ -118,6 +118,9 @@
 					<p>
 						<a href="/admin/cache/clear/all">Clear all cache</a>
 					</p>
+                    <p>
+                        <a href="/admin/cache/clear-asset-cache">Clear asset cache</a>
+                    </p>
 
 				</div>
 			</div>
@@ -126,7 +129,11 @@
 		</div>
 
 		<aside class="sidebar">
+            @if($edit)
 			<form action="/admin/settings/{{$edit_setting->id}}" method="post">
+            @else
+            <form action="/admin/settings" method="post">
+            @endif
 				@csrf
 				@if( $edit )
 				@method('put')
@@ -146,7 +153,7 @@
 						<input id="setting-label" type="text" name="setting_label" value="{{ old('setting_label', $edit_setting->label) }}" @if($edit_setting->protected) readonly @endif>
 					</div>
 				</div>
-                
+
                 @if(!$edit_setting->protected)
 				<div class="form-row">
 					<label class="label-col" for="setting-type">Setting Type</label>

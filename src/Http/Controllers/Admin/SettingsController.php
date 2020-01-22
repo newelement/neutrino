@@ -103,6 +103,8 @@ class SettingsController extends Controller
 		switch($type){
 			case 'all':
 				Cache::flush();
+                \Storage::disk('public')->delete('assets/css/all.css');
+                \Storage::disk('public')->delete('assets/js/all.js');
 			break;
 			case 'page':
 				Cache::forget('');
@@ -120,6 +122,14 @@ class SettingsController extends Controller
 
 		return redirect('/admin/settings')->with('success', 'Cache cleared.');
 	}
+
+    public function clearAssetCache()
+    {
+        \Storage::disk('public')->delete('assets/css/all.css');
+        \Storage::disk('public')->delete('assets/js/all.js');
+
+        return redirect('/admin/settings')->with('success', 'Asset cache cleared.');
+    }
 
 	private function cacheClearDriver($driver, $type)
 	{
