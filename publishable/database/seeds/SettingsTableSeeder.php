@@ -51,25 +51,13 @@ class SettingsTableSeeder extends Seeder
 			]
 		);
         Setting::updateOrCreate(
-            [
-                'key' => 'enable_block_editor',
-                'value' => '',
-                'value_bool' => 1,
-                'type' => 'BOOL',
-                'label' => 'Enable Block Edtior',
-                'details' => 'Use the block editor for pages and entries.',
-                'protected' => 1,
-                'order' => 0
-            ]
-        );
-        Setting::updateOrCreate(
 			[
 	            'key' => 'cache',
 	            'value' => '',
 				'value_bool' => 1,
 				'type' => 'BOOL',
-				'label' => 'Global cache',
-				'details' => 'Turn off/on cache globally.',
+				'label' => 'Global Cache',
+				'details' => 'Turn off/on cache globally. Excluding asset cache.',
 	            'protected' => 1,
 				'order' => 0
 			]
@@ -80,7 +68,7 @@ class SettingsTableSeeder extends Seeder
                 'value' => '',
                 'value_bool' => 1,
                 'type' => 'BOOL',
-                'label' => 'Enable asset cache',
+                'label' => 'Enable Asset Cache',
                 'details' => 'Turn off/on asset cache globally.',
                 'protected' => 1,
                 'order' => 0

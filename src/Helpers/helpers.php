@@ -597,6 +597,9 @@ function getFeaturedImage($objectId, $objectType){
 }
 
 function getImageSizes($image){
+    if( !$image ){
+        return [];
+    }
 	$sizes = [];
 	$image = str_replace('/storage/', '', $image);
 	$pathInfo = pathinfo($image);
