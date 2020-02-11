@@ -25,7 +25,7 @@
 		<meta name="twitter:creator" content="@" />
 
 		<script>
-        window.app = <?php echo json_encode([ 'csrfToken' => csrf_token(), 'baseUrl' => URL::to('/')]);?>
+        window.app = <?php echo json_encode([ 'csrfToken' => csrf_token(), 'baseUrl' => URL::to('/')]);?>;
 		</script>
 		<script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTICS_ID') }}"></script>
 		<script>
@@ -35,6 +35,7 @@
 		  gtag('config', '{{ env('GOOGLE_ANALYTICS_ID') }}');
 		</script>
 	    {{ getStyles() }}
+        @stack('headerscripts')
 	</head>
 	<body class="@if($data->data_type) {{'data-type-'.$data->data_type}} @endif">
 		<div id="app">
@@ -112,6 +113,7 @@
 			</footer>
 
 		</div>
+        @stack('footerscripts')
         @yield('js')
 		{{ getScripts() }}
 	</body>

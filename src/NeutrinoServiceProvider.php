@@ -58,7 +58,6 @@ class NeutrinoServiceProvider extends ServiceProvider
 		app('arrilot.widget-namespaces')->registerNamespace('neutrino', '\Newelement\Neutrino\Widgets');
 
 		$this->initActions();
-        //$this->loadAssets();
 	}
 
 	/**
@@ -79,31 +78,6 @@ class NeutrinoServiceProvider extends ServiceProvider
         foreach ($publishable as $group => $paths) {
             $this->publishes($paths, $group);
         }
-    }
-
-    public function loadAssets()
-    {
-        $scripts = config('neutrino.enqueue_js', []);
-        $styles = config('neutrino.enqueue_css', []);
-
-        foreach( $scripts as $script ){
-            $append = false;
-            try{
-                $append = file_get_contents(public_path().$script);
-            } catch(\Exception $exception){
-
-            }
-
-            if( $append ){
-               $append .= $append;
-            }
-            file_put_contents(public_path().'/vendor/newelement/neutrino/js/neutrino.js', $append);
-        }
-
-        foreach( $styles as $style ){
-
-        }
-
     }
 
     public function registerConfigs()

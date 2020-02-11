@@ -25,12 +25,17 @@ class CreatePagesTable extends Migration
 			$table->text('protected')->nullable();
 			$table->char('status', 1)->default('P');
             $table->char('editor_type', 1)->default('B');
+            $table->tinyInteger('system_page')->default(0);
 			$table->bigInteger('parent_id')->default(0);
 			$table->bigInteger('created_by')->nullable();
 			$table->bigInteger('updated_by')->nullable();
             $table->timestamps();
 			$table->softDeletes();
 			$table->index('slug');
+            $table->index('title');
+            $table->index('content');
+            $table->index('short_content');
+            $table->index('block_content');
 			$table->index('status');
 			$table->index('created_by');
 			$table->index('updated_by');

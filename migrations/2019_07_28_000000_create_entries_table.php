@@ -29,12 +29,18 @@ class CreateEntriesTable extends Migration
 			$table->string('entry_type', 100);
 			$table->bigInteger('entry_type_id')->nullable();
 			$table->tinyInteger('allow_comments')->default(1);
+            $table->timestamp('publish_date', 0)->nullable();
 			$table->bigInteger('created_by')->nullable();
 			$table->bigInteger('updated_by')->nullable();
             $table->timestamps();
 			$table->softDeletes();
 			$table->index('slug');
+            $table->index('title');
+            $table->index('content');
+            $table->index('short_content');
+            $table->index('block_content');
 			$table->index('status');
+            $table->index('publish_date');
 			$table->index('created_by');
 			$table->index('updated_by');
         });

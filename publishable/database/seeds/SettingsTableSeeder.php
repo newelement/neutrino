@@ -66,7 +66,7 @@ class SettingsTableSeeder extends Seeder
             [
                 'key' => 'enable_asset_cache',
                 'value' => '',
-                'value_bool' => 1,
+                'value_bool' => 0,
                 'type' => 'BOOL',
                 'label' => 'Enable Asset Cache',
                 'details' => 'Turn off/on asset cache globally.',
