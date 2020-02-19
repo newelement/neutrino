@@ -846,6 +846,11 @@ a.btn{
 	&.full{
 		width: 100%;
 	}
+
+    &.small{
+        padding: 6px 14px;
+        font-size: 14px;
+    }
 }
 
 #tiny-mce-wrapper{

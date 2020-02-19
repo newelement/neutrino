@@ -12740,6 +12740,12 @@ a.btn.full {
   width: 100%;
 }
 
+.btn.small,
+a.btn.small {
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
 #tiny-mce-wrapper {
   width: 100%;
 }
@@ -15028,6 +15034,239 @@ progress[value]::-webkit-progress-bar {
 .variation-fields .form-row:last-child {
   padding-bottom: 0;
   margin-bottom: 0;
+}
+
+.order-header {
+  background-color: #f4f4f4;
+  margin-bottom: 24px;
+}
+
+.order-header .inner {
+  padding: 0 12px 12px 12px;
+}
+
+.order-header-top {
+  margin-bottom: 24px;
+  background-color: #e3e3e3;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+}
+
+.order-header-top .order-header-top-item {
+  -webkit-box-flex: 1;
+          flex-grow: 1;
+  font-size: 18px;
+  padding: 24px;
+}
+
+.order-addresses {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+}
+
+.order-shipping-details,
+.order-payment-details {
+  width: 50%;
+}
+
+.shipping-address {
+  font-style: normal;
+  margin-bottom: 24px;
+}
+
+.order-payment-details p {
+  font-size: 16px;
+}
+
+.order-payment-details h4 {
+  margin-bottom: 6px;
+}
+
+a.view-shipping-label-link {
+  display: inline-block;
+  padding: 6px 18px;
+  color: #fff;
+  background-color: #333;
+  text-decoration: none;
+  margin-top: 12px;
+  -webkit-transition: background-color .25s ease;
+  transition: background-color .25s ease;
+}
+
+a.view-shipping-label-link i {
+  margin-right: 6px;
+}
+
+a.view-shipping-label-link:hover {
+  background-color: #777;
+}
+
+.order-status-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  font-size: 14px;
+  margin: 0 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.order-status-badge.order-status-1 {
+  background-color: #BEE3F8;
+  color: #2C5282;
+}
+
+.order-status-badge.order-status-2 {
+  background-color: #EDF2F7;
+  color: #2D3748;
+}
+
+.order-status-badge.order-status-3 {
+  background-color: #C6F6D5;
+  color: #276749;
+}
+
+.order-status-badge.order-status-4 {
+  background-color: #FEEBC8;
+  color: #DD6B20;
+}
+
+.order-status-badge.order-status-86 {
+  background-color: #FC8181;
+  color: #9B2C2C;
+}
+
+.credit-tag,
+.debit-tag {
+  display: inline-block;
+  font-size: 14px;
+  padding: 2px 8px;
+  font-weight: 700;
+}
+
+.credit-tag {
+  background-color: #FEB2B2;
+  color: #9B2C2C;
+}
+
+.debit-tag {
+  background-color: #BEE3F8;
+  color: #2C5282;
+}
+
+.line-refund-modal {
+  display: none;
+  background-color: #fff;
+  width: 100%;
+  border: 1px solid #888;
+  max-width: 400px;
+  box-shadow: 0 0 25px 16px rgba(0, 0, 0, 0.1);
+  margin: 12px;
+  padding: 24px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 99999;
+}
+
+.line-refund-modal .inner {
+  position: relative;
+}
+
+.line-refund-modal h3, .line-refund-modal h4 {
+  color: #222;
+}
+
+.line-refund-modal p {
+  color: #222;
+  text-align: center;
+}
+
+.line-refund-modal .close-refund-item-modal {
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  font-size: 24px;
+  color: #999;
+  text-decoration: none;
+  -webkit-transition: color .25s ease;
+  transition: color .25s ease;
+  line-height: 1;
+}
+
+.line-refund-modal .close-refund-item-modal:hover {
+  color: #eee;
+}
+
+.refund-messages {
+  padding: 4px;
+}
+
+#line-refund-notes {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  -webkit-transition: border-color .3s ease;
+  transition: border-color .3s ease;
+}
+
+#line-refund-notes:focus {
+  border-color: #333;
+}
+
+.form-cols {
+  margin-bottom: 24px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+}
+
+.form-cols .form-col-6 {
+  width: 60%;
+  padding: 0 12px;
+}
+
+.form-cols .form-col-4 {
+  width: 40%;
+  padding: 0 12px;
+}
+
+.form-cols .label-col {
+  width: 100%;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 12px;
+  color: #444;
+}
+
+.form-cols .input-col {
+  width: 100%;
+}
+
+.form-cols input[type="number"] {
+  width: 100%;
+  height: 60px;
+  font-size: 24px;
+  text-align: center;
+  border: 1px solid #ccc;
+  outline: none;
+  -webkit-transition: border-color .3s ease;
+  transition: border-color .3s ease;
+}
+
+.form-cols input[type="number"]:focus {
+  border-color: #333;
 }
 
 #filemanager {

@@ -12,6 +12,8 @@ return [
         ],
     ],
 
+    'timezone' => 'America/New_York',
+
     'admin_menu_items' => [
         /*[
             'slot' => 4,

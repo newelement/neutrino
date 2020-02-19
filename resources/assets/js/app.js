@@ -6,6 +6,7 @@ import select2 from 'select2';
 import Swal from 'sweetalert2';
 import PaceProgressBar from 'pace-progressbar';
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
+import axios from 'axios';
 
 import tinymce from 'tinymce';
 import 'tinymce/themes/silver';
@@ -39,8 +40,6 @@ import 'tinymce/plugins/paste/plugin.js';
 import 'tinymce/plugins/textpattern/plugin.js';
 import 'tinymce/plugins/directionality/plugin.js';
 
-import axios from 'axios';
-
 PaceProgressBar.start();
 
 const HTTP = axios.create(axios.defaults.headers.common = {
@@ -53,6 +52,15 @@ let chosenFeatured = {};
 let chosenAttributes = [];
 let $form = $('.media-drop-zone');
 let droppedFiles = false;
+
+let refundObj = {
+    amount: 0.00,
+    line_id: 0,
+    ref_id: '',
+    qty: 0,
+    line_item: '',
+    full_amount: 1
+};
 
 let fields = [
 	{ label: 'Text', type: 'text'},
@@ -2562,6 +2570,187 @@ window.addEventListener('DOMContentLoaded', (e) => {
             }
         });
 
+
+    });
+
+    $('.print-shipping-label-btn').click( (e) => {
+        e.preventDefault();
+        let id = e.target.getAttribute('data-order-id');
+        HTTP.get('/admin/shipping-label/'+id)
+        .then(response => {
+            if( response.data.success ){
+                $('.print-shipping-label-btn').hide();
+                let html = '<strong>Tracking Number:</strong> <a href="'+response.data.tracking_url+'" target="_blank">'+response.data.tracking_number+'</a><br>';
+                html += '<a href="'+response.data.label_url+'" class="view-payment-details-btn" target="_blank">View Shipping Label</a>';
+                $('.tracking-label-info').html(html);
+            }
+        })
+        .catch(e => {
+            console.log('Shipping label error.');
+        });
+    });
+
+    $('.view-payment-details-btn').click( (e) => {
+        e.preventDefault();
+    });
+
+    $('.view-payment-details-btn').click( (e) => {
+        e.preventDefault();
+        let id = e.target.getAttribute('data-transaction-id');
+        HTTP.get('/admin/transaction-details/'+id)
+        .then(response => {
+            if( response.data.success ){
+                let res = response.data;
+                let html = '<p><strong>Status:</strong> '+res.status+'<br>';
+                html += '<strong>Initial Charge:</strong> $'+res.amount+'</p>';
+                html += '<h4>Billed To</h4>';
+                if( res.billing_details.name !== null ){
+                    html += '<p>'+res.billing_details.name+'<br>';
+                }
+                if( res.billing_details.email !== null ){
+                    html += res.billing_details.email+'<br>';
+                }
+                if( res.billing_details.phone !== null ){
+                    html += '<p>'+res.billing_details.phone+'<br>';
+                }
+                if( res.billing_details.address.street1 !== null ){
+                    html += res.billing_details.address.street1+'<br>';
+                }
+                if(res.billing_details.address.street2 !== null){
+                    html += res.billing_details.address.street2+'<br>';
+                }
+                if( res.billing_details.address.city !== null ){
+                    html += res.billing_details.address.city+' '+res.billing_details.address.state+', ';
+                }
+                if( res.billing_details.address.zip !== null ){
+                    html += res.billing_details.address.zip+'<br>';
+                }
+                if( res.billing_details.address.country !== null ){
+                    html += res.billing_details.address.country;
+                }
+                html += '</p>';
+
+                html += '<p><strong>Type:</strong> '+res.payment_details.type+'<br>';
+                html += '<strong>Method:</strong> '+res.payment_details.method+'<br>';
+                html += '<strong>Last 4:</strong> '+res.payment_details.last_four+'</p>';
+
+                $('.payment-details').html(html);
+            }
+        })
+        .catch(e => {
+            console.log('Shipping label error.');
+        });
+    });
+
+    $('#order-status').change( (el) => {
+        if( $('#order-status').val() === '86' ){
+            $('.refund-order-row').show();
+        } else {
+            $('.refund-order-row').hide();
+        }
+    });
+
+    $('.refund-item-btn').click( (el) => {
+        e.preventDefault();
+        let target = el.target;
+        let amount = parseFloat(target.getAttribute('data-amount'));
+        let title = target.getAttribute('data-item-title');
+        let lineId = target.getAttribute('data-line-seq');
+        let refId = target.getAttribute('data-order-ref');
+        let qty = parseInt(target.getAttribute('data-qty'));
+        let lineItem = parseInt(target.getAttribute('data-line-id'));
+
+        refundObj = {
+                amount: amount,
+                line_id: lineId,
+                ref_id: refId,
+                qty: qty,
+                line_item: lineItem,
+                full_amount: 1,
+                notes: ''
+        };
+
+        $('#line-refund-amount').val(amount);
+        $('#line-refund-qty').val(qty);
+        $('.item-refund-title').html(title);
+
+        $('.line-refund-modal').fadeIn('fast');
+
+    });
+
+    $('.close-refund-item-modal').click((el) => {
+        el.preventDefault();
+        refundObj = {
+                amount: 0.00,
+                line_id: 0,
+                ref_id: '',
+                qty: 0,
+                line_item: '',
+                full_amount: 1
+        };
+        $('.refund-messages').html('');
+        $('.item-refund-title').html('');
+        $('.line-refund-modal').fadeOut('fast');
+    })
+
+    $('.submit-refund-item-btn').click( (el) => {
+        e.preventDefault();
+        $('.refund-messages').html('');
+
+        let amount = parseFloat($('#line-refund-amount').val());
+        let qty = parseInt($('#line-refund-qty').val());
+        let notes = $('#line-refund-notes').val();
+
+        if( qty > refundObj.qty ){
+            $('.refund-messages').html('QTY cannot exceed the QTY purchased.');
+            return false;
+        }
+
+        if( qty === 0 || qty === '' ){
+            $('.refund-messages').html('QTY is required.');
+            return false;
+        }
+
+        if( amount > refundObj.amount ){
+            $('.refund-messages').html('Amount cannot exceed the amount purchased.');
+            return false;
+        }
+
+        if( amount === 0 || amount === '' ){
+            $('.refund-messages').html('Amount is required.');
+            return false;
+        }
+
+        if( notes === '' ){
+            $('.refund-messages').html('Enter your refund notes.');
+            return false;
+        }
+
+        refundObj.amount = amount;
+        refundObj.qty = qty;
+        refundObj.notes = notes;
+
+        HTTP.post('/admin/order-lines/refund/'+refundObj.line_id, refundObj)
+        .then(response => {
+            refundObj = {
+                amount: 0.00,
+                line_id: 0,
+                ref_id: '',
+                qty: 0,
+                line_item: '',
+                full_amount: 1
+            };
+            $('.line-refund-modal').fadeOut('fast');
+            $('.item-refund-title').html('');
+        })
+        .catch(e => {
+            $('.refund-messages').html(e.message);
+            if (e.response) {
+                console.log(e.response.data);
+                $('.refund-messages').append('<br>'+e.response.data.message);
+            }
+
+        })
 
     });
 

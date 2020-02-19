@@ -139,11 +139,14 @@
                 <li><a href="/admin/product-attributes"><span class="dash">-</span> Attributes</a></li>
 		    </ul>
 		</li>
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'shoppe.shoppe') active open @endif">
+		<li class="has-dropdown @if( \Route::currentRouteName() === 'shoppe.shoppe' || \Route::currentRouteName() === 'shoppe.orders') active open @endif">
 		    <a href="/admin/shoppe">
     		    <i class="fal fa-store fa-fw"></i> <span class="parent-nav-title">Shoppe</span>
 		    </a>
 		    <ul @if( \Route::currentRouteName() === 'shoppe.shoppe') class="open" @endif>
+                <li><a href="/admin/orders"><span class="dash">-</span> Orders</a>
+                    <!--<span class="moderate-counter">2</span>-->
+                </li>
     		    <li><a href="/admin/shoppe"><span class="dash">-</span> Shoppe Settings</a></li>
 		    </ul>
 		</li>
