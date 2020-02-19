@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            @include('partials.sidebar')
+            @include('neutrino::partials.sidebar')
         </div>
     </div>
 

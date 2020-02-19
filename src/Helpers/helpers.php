@@ -664,7 +664,7 @@ function getStyles(){
     $styles = config('neutrino.enqueue_css', []);
     $allStyles = [];
     $allStyles[] = 'css/app.css';
-    foreach( $styles as $script ){
+    foreach( $styles as $style ){
         $allStyles[] = ltrim($style, '/');
     }
     if( _shoppeExists() ){

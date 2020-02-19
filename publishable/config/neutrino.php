@@ -43,7 +43,7 @@ return [
 
     ],
     'enqueue_css' => [
-
+        '/vendor/newelement/neutrino/css/theme.css',
     ],
 
     'enqueue_admin_js' => [
