@@ -19,6 +19,7 @@ class CreatePagesTable extends Migration
 			$table->string('slug', 300)->unique();
             $table->text('content')->nullable();
             $table->json('block_content')->nullable();
+            $table->index('short_content');
 			$table->text('keywords')->nullable();
 			$table->text('meta_description')->nullable();
 			$table->text('social_image')->nullable();
