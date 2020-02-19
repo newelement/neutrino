@@ -62,13 +62,16 @@ class PagesTableSeeder extends Seeder
 	}
 ]';
 
-        Page::updateOrCreate([
-            'title' => 'Home',
-            'slug' => 'home',
-            'content' => htmlentities($content),
-            'block_content' => $blockContent,
-			'status' => 'P',
-			'parent_id' => 0
-        ]);
+        $pageExists = Page::where('slug', 'home')->first();
+            if( !$pageExists ){
+            Page::insert([
+                'title' => 'Home',
+                'slug' => 'home',
+                'content' => htmlentities($content),
+                'block_content' => $blockContent,
+                'status' => 'P',
+                'parent_id' => 0
+            ]);
+            }
     }
 }
