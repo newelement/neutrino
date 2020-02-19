@@ -38,7 +38,7 @@ class CreateEntriesTable extends Migration
             $table->index('title');
             $table->index('content');
             $table->index('short_content');
-            $table->index('block_content');
+            //$table->index('block_content');
 			$table->index('status');
             $table->index('publish_date');
 			$table->index('created_by');
