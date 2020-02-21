@@ -183,7 +183,7 @@
     margin-bottom: 24px;
 
     .inner{
-        padding: 0 12px 12px 12px
+        padding: 0 24px 24px 24px
     }
 }
 
@@ -208,6 +208,15 @@
 .order-shipping-details,
 .order-payment-details{
     width: 50%;
+}
+
+.order-shipping-details{
+    padding-right: 24px;
+    border-right: 1px solid #ddd;
+}
+
+.order-payment-details{
+    padding-left: 24px;
 }
 
 .shipping-address{
@@ -273,6 +282,11 @@ a.view-shipping-label-link{
         background-color: #FC8181;
         color: #9B2C2C;
     }
+}
+
+.row-order-status-4,
+.row-order-status-86{
+    text-decoration: line-through;
 }
 
 .credit-tag,
@@ -341,6 +355,8 @@ a.view-shipping-label-link{
     padding: 4px;
 }
 
+
+
 #line-refund-notes{
     width: 100%;
     height: 100px;
@@ -361,11 +377,23 @@ a.view-shipping-label-link{
 
     .form-col-6{
         width: 60%;
-        padding: 0 12px;
+        padding: 0 6px;
+    }
+    .form-col-5{
+        width: 50%;
+        padding: 0 6px;
     }
     .form-col-4{
         width: 40%;
-        padding: 0 12px;
+        padding: 0 6px;
+    }
+    .form-col-3{
+        width: 30%;
+        padding: 0 6px;
+    }
+    .form-col-2{
+        width: 20%;
+        padding: 0 6px;
     }
 
     .label-col{

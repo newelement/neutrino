@@ -147,6 +147,7 @@
                 <li><a href="/admin/orders"><span class="dash">-</span> Orders</a>
                     <!--<span class="moderate-counter">2</span>-->
                 </li>
+                <li><a href="/admin/shoppe-reports"><span class="dash">-</span> Reports</a></li>
     		    <li><a href="/admin/shoppe"><span class="dash">-</span> Shoppe Settings</a></li>
 		    </ul>
 		</li>

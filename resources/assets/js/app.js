@@ -2580,8 +2580,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
         .then(response => {
             if( response.data.success ){
                 $('.print-shipping-label-btn').hide();
-                let html = '<strong>Tracking Number:</strong> <a href="'+response.data.tracking_url+'" target="_blank">'+response.data.tracking_number+'</a><br>';
-                html += '<a href="'+response.data.label_url+'" class="view-payment-details-btn" target="_blank">View Shipping Label</a>';
+                let html = '<strong>Tracking #:</strong> <a href="'+response.data.tracking_url+'" target="_blank">'+response.data.tracking_number+'</a><br>';
+                html += '<a href="'+response.data.label_url+'" class="view-shipping-label-link" target="_blank"><i class="fal fa-barcode-read"></i>View Shipping Label</a>';
                 $('.tracking-label-info').html(html);
             }
         })
@@ -2645,15 +2645,25 @@ window.addEventListener('DOMContentLoaded', (e) => {
     $('#order-status').change( (el) => {
         if( $('#order-status').val() === '86' ){
             $('.refund-order-row').show();
+            $('.refund-notes').show();
         } else {
             $('.refund-order-row').hide();
+            $('.refund-notes').hide();
         }
+
+        if( $('#order-status').val() === '4' || $('#order-status').val() === '86' ){
+            $('.refund-notes').show();
+        } else {
+            $('.refund-notes').hide();
+        }
+
+
     });
 
     $('.refund-item-btn').click( (el) => {
         e.preventDefault();
         let target = el.target;
-        let amount = parseFloat(target.getAttribute('data-amount'));
+        let amount = target.getAttribute('data-amount');
         let title = target.getAttribute('data-item-title');
         let lineId = target.getAttribute('data-line-seq');
         let refId = target.getAttribute('data-order-ref');
@@ -2661,7 +2671,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
         let lineItem = parseInt(target.getAttribute('data-line-id'));
 
         refundObj = {
-                amount: amount,
                 line_id: lineId,
                 ref_id: refId,
                 qty: qty,
@@ -2691,13 +2700,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
         $('.refund-messages').html('');
         $('.item-refund-title').html('');
         $('.line-refund-modal').fadeOut('fast');
+        $('#line-shipping-amount').val('');
     })
 
     $('.submit-refund-item-btn').click( (el) => {
         e.preventDefault();
         $('.refund-messages').html('');
 
-        let amount = parseFloat($('#line-refund-amount').val());
         let qty = parseInt($('#line-refund-qty').val());
         let notes = $('#line-refund-notes').val();
 
@@ -2706,18 +2715,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
             return false;
         }
 
-        if( qty === 0 || qty === '' ){
-            $('.refund-messages').html('QTY is required.');
-            return false;
-        }
-
-        if( amount > refundObj.amount ){
-            $('.refund-messages').html('Amount cannot exceed the amount purchased.');
-            return false;
-        }
-
-        if( amount === 0 || amount === '' ){
-            $('.refund-messages').html('Amount is required.');
+        if( qty === 0 ){
+            $('.refund-messages').html('QTY must be greater than 0.');
             return false;
         }
 
@@ -2726,22 +2725,32 @@ window.addEventListener('DOMContentLoaded', (e) => {
             return false;
         }
 
-        refundObj.amount = amount;
+        var shippingAmount = parseFloat($('#line-shipping-amount').val());
+
         refundObj.qty = qty;
         refundObj.notes = notes;
+        refundObj.shipping_amount = shippingAmount;
 
         HTTP.post('/admin/order-lines/refund/'+refundObj.line_id, refundObj)
         .then(response => {
-            refundObj = {
-                amount: 0.00,
-                line_id: 0,
-                ref_id: '',
-                qty: 0,
-                line_item: '',
-                full_amount: 1
-            };
-            $('.line-refund-modal').fadeOut('fast');
-            $('.item-refund-title').html('');
+            if( response.data.success ){
+                refundObj = {
+                    amount: 0.00,
+                    shipping_amount: 0.00,
+                    line_id: 0,
+                    ref_id: '',
+                    qty: 0,
+                    line_item: '',
+                    full_amount: 1,
+                    notes: ''
+                };
+                $('.line-refund-modal').fadeOut('fast');
+                $('.item-refund-title').html('');
+                $('#line-shipping-amount').val('');
+
+                location.reload();
+
+            }
         })
         .catch(e => {
             $('.refund-messages').html(e.message);
