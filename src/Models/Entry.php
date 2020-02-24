@@ -15,7 +15,8 @@ class Entry extends Model
 	protected $searchable = [
         'columns' => [
             'title' => 7,
-            'content' => 5
+            'content' => 5,
+            'short_content' => 5
         ],
     ];
 

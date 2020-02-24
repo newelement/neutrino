@@ -218,16 +218,21 @@ function getContent($args = [], $content = false){
 
 	if( !$content ){
         $data = view()->shared('objectData');
-        if( $data->editor_type === 'B' ){
 
-            // TODO
-            // There will be a setting soon to cache block content
+        if( $data ){
+            if( $data->editor_type === 'B' ){
 
-            $blocksJSON = json_decode($data->block_content);
-            $blocksController = new BlocksController;
-            $content = $blocksController->compileBlocks($blocksJSON);
+                // TODO
+                // There will be a setting soon to cache block content
+
+                $blocksJSON = json_decode($data->block_content);
+                $blocksController = new BlocksController;
+                $content = $blocksController->compileBlocks($blocksJSON);
+            } else {
+                $content = $data->content;
+            }
         } else {
-            $content = $data->content;
+            $content = false;
         }
     }
 

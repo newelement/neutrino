@@ -29,7 +29,7 @@
 						<th width="140">Updated By</th>
 						<th width="140">@sortablelink('created_at', 'Created On')</th>
 						<th width="140">@sortablelink('updated_at', 'Updated On')</th>
-						<th></th>
+						<th width="60"></th>
 						<th width="50"></th>
 					</tr>
 				</thead>
@@ -45,10 +45,10 @@
 						<td data-label="Created by" class="center"><small>{{ $entry->createdUser->name }}</small></td>
 						<td data-label="Updated by" class="center"><small>{{ $entry->updatedUser->name }}</small></td>
 						<td data-label="Created On">
-    						<small>{{ $entry->created_at->format('m-j-y g:i a') }}</small>
+    						<small>{{ $entry->created_at->timezone( config('neutrino.timezone') )->format('m-j-y g:i a') }}</small>
 						</td>
 						<td data-label="Updated On">
-    						<small>{{ $entry->updated_at->format('m-j-y g:i a') }}</small>
+    						<small>{{ $entry->updated_at->timezone( config('neutrino.timezone') )->format('m-j-y g:i a') }}</small>
 						</td>
 						<td data-label="Protected">
     						@if( $entry->protected )

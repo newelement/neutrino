@@ -97,6 +97,8 @@ class EntryController extends Controller
             $block_content = json_encode($block_content);
         }
 
+        $publishDate = $request->publish_date;
+
 		$entry = new Entry;
 		$entry->title = $request->title;
 		$entry->slug = toSlug($request->slug, 'entry');
@@ -104,6 +106,7 @@ class EntryController extends Controller
         $entry->block_content = $block_content;
         $entry->short_content = htmlentities($request->short_content);
 		$entry->status = $request->status? $request->status : 'P' ;
+        $entry->publish_date = $request->publish_date? $publishDate : now();
         $entry->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$entry->keywords = $request->keywords ;
 		$entry->meta_description = $request->meta_description ;
@@ -245,12 +248,15 @@ class EntryController extends Controller
 
         }
 
+        $publishDate = $request->publish_date;
+
 		$entry->title = $request->title;
 		$entry->slug = $entry->slug === $request->slug? $request->slug : toSlug($request->slug, 'entry');
 		$entry->content = $content;
         $entry->block_content = $block_content;
         $entry->short_content = htmlentities($request->short_content);
 		$entry->status = $request->status? $request->status : 'P' ;
+        $entry->publish_date = $request->publish_date? $publishDate : now();
         $entry->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$entry->keywords = $request->keywords ;
 		$entry->meta_description = $request->meta_description ;

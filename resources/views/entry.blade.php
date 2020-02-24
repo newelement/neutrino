@@ -22,7 +22,7 @@ $socialImages = getImageSizes($data->social_image);
 
                 {!! getContent() !!}
             </div>
-            @include('partials.sidebar')
+            @include('neutrino::partials.sidebar')
         </div>
     </div>
 @endsection

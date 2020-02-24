@@ -176,7 +176,12 @@ class ContentController extends Controller
 				$entrySort = config('neutrino.ordering.entries.default.sort');
 			}
 
-			$targetObject = Entry::where('entry_type', $entryType->slug)->orderBy($entryOrderBy, $entrySort)->paginate( $entryTypePageLimit );
+			$targetObject = Entry::where('entry_type', $entryType->slug)
+                            ->where('status', 'P')
+                            ->whereDate('publish_date', '>=', Carbon::today()->toDateString())
+                            ->orderBy($entryOrderBy, $entrySort)
+                            ->paginate( $entryTypePageLimit );
+
 			$data->entries = $targetObject;
 			$data->title = pluralTitle($entryType->slug);
 			$data->data_type = 'entry_archive';
@@ -204,10 +209,18 @@ class ContentController extends Controller
 
 			if( getSetting('cache') ){
 				$targetObject = Cache::rememberForever('entry_'.$targetSlug, function () use ($targetSlug) {
-				    return Entry::where('slug', $targetSlug)->first();
+				    return Entry::
+                            where('slug', $targetSlug)
+                            ->where('status', 'P')
+                            ->whereDate('publish_date', '>=', Carbon::today()->toDateString())
+                            ->first();
 				});
 			} else {
-				$targetObject = Entry::where('slug', $targetSlug)->first();
+				$targetObject = Entry::
+                                where('slug', $targetSlug)
+                                ->where('status', 'P')
+                                ->whereDate('publish_date', '>=', Carbon::today()->toDateString())
+                                ->first();
 			}
 
 			if( $targetObject->protected ){
@@ -217,8 +230,6 @@ class ContentController extends Controller
 			}
 
 			$data = $targetObject;
-
-
 
 			$data->data_type = 'entry';
 			$blade = $this->bladeVendor.'entry';

@@ -28,7 +28,7 @@
 						<td data-label="Comment" class="text-center">
 							{!! $comment->comment !!}
 						</td>
-						<td data-label="Created on" class="center">{{ $comment->created_at->format('Y-m-d g:i a') }}</td>
+						<td data-label="Created on" class="center">{{ $comment->created_at->timezone( config('neutrino.timezone') )->format('Y-m-d g:i a') }}</td>
 						<td  data-label="Created By"class="center">{{ $comment->createdUser()->name }}</td>
 						<td data-label="Delete">
 							<form class="delete-form" action="/admin/comment/{{ $comment->id }}/approve }}" method="get">
