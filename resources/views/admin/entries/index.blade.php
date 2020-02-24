@@ -40,7 +40,7 @@
 							<a href="/admin/entry/{{ $entry->id }}?entry_type={{ request('entry_type') }}">{{ $entry->title }}</a>
 						</td>
 						<td data-label="Status" class="text-center">
-							{{ _translateStatus($entry->status) }}
+							{{ $entry->publish_date <= now() ? _translateStatus($entry->status) : 'Scheduled' }}
 						</td>
 						<td data-label="Created by" class="center"><small>{{ $entry->createdUser->name }}</small></td>
 						<td data-label="Updated by" class="center"><small>{{ $entry->updatedUser->name }}</small></td>

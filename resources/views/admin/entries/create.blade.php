@@ -122,6 +122,14 @@
 						</div>
 					</div>
 
+                    <div id="publish-date-toggle" class="form-row">
+                        <label class="label-col" for="publish-date">Publish Date</label>
+                        <div class="input-col">
+                            <input id="publish-date" class="datetime-picker" type="text" name="publish_date" value="{{ old('publish_date') }}" readonly>
+                            <span class="note">Will default to now if not set.</span>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <label class="label-col" for="status">Editor Type
                             <div class="editor-type-options">

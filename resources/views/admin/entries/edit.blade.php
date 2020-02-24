@@ -135,6 +135,14 @@
 						</div>
 					</div>
 
+                    <div id="publish-date-toggle" class="form-row" style="{{  $entry->status === 'P'? 'display: block' : '' }}">
+                        <label class="label-col" for="publish-date">Publish Date</label>
+                        <div class="input-col">
+                            <input id="publish-date" class="datetime-picker" type="text" name="publish_date" value="{{ $entry->publish_date->timezone( config('neutrino.timezone') )->format('Y-m-d g:i a') }}" readonly>
+                            <span class="note">Will default to now if not set.</span>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <label class="label-col" for="status">Editor Type
                             <div class="editor-type-options">

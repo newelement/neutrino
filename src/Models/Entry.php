@@ -12,6 +12,10 @@ class Entry extends Model
 {
 	use SoftDeletes, SearchableTrait, Sortable;
 
+    protected $dates = [
+        'publish_date',
+    ];
+
 	protected $searchable = [
         'columns' => [
             'title' => 7,

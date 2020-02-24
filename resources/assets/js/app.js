@@ -6,6 +6,7 @@ import select2 from 'select2';
 import Swal from 'sweetalert2';
 import PaceProgressBar from 'pace-progressbar';
 import datepicker from 'js-datepicker'
+import flatpickr from "flatpickr";
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
 import axios from 'axios';
 
@@ -149,6 +150,8 @@ if( editor ){
 		editor_config
 	);
 }
+
+const datetimePicker = flatpickr('.datetime-picker', { enableTime: true, dateFormat: 'Y-m-d h:i K' });
 
 function readURL(input) {
 	$('#preview').hide();

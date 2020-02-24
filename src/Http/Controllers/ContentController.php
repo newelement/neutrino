@@ -178,7 +178,7 @@ class ContentController extends Controller
 
 			$targetObject = Entry::where('entry_type', $entryType->slug)
                             ->where('status', 'P')
-                            ->whereDate('publish_date', '>=', Carbon::today()->toDateString())
+                            ->whereDate('publish_date', '<=', now() )
                             ->orderBy($entryOrderBy, $entrySort)
                             ->paginate( $entryTypePageLimit );
 
@@ -212,39 +212,44 @@ class ContentController extends Controller
 				    return Entry::
                             where('slug', $targetSlug)
                             ->where('status', 'P')
-                            ->whereDate('publish_date', '>=', Carbon::today()->toDateString())
                             ->first();
 				});
 			} else {
 				$targetObject = Entry::
                                 where('slug', $targetSlug)
                                 ->where('status', 'P')
-                                ->whereDate('publish_date', '>=', Carbon::today()->toDateString())
                                 ->first();
 			}
 
-			if( $targetObject->protected ){
-    			if( !$this->checkProtection($targetObject->protected) ){
-        			return redirect()->route( config('neutrino.protected_route', 'login') )->with('error', __('neutrino::messages.protected_content') );
+            if( $targetObject->publish_date >= now() ){
+                $targetObject = false;
+            }
+
+            if( $targetObject ){
+
+    			if( $targetObject->protected ){
+        			if( !$this->checkProtection($targetObject->protected) ){
+            			return redirect()->route( config('neutrino.protected_route', 'login') )->with('error', __('neutrino::messages.protected_content') );
+        			}
     			}
-			}
 
-			$data = $targetObject;
+    			$data = $targetObject;
 
-			$data->data_type = 'entry';
-			$blade = $this->bladeVendor.'entry';
+    			$data->data_type = 'entry';
+    			$blade = $this->bladeVendor.'entry';
 
-			$bladeType = $this->bladeVendor.$entryType->slug;
+    			$bladeType = $this->bladeVendor.$entryType->slug;
 
-			if($request->ajax()){
-	        	return response()->json(['data' => $data]);
-	        } else {
-				$CFields = getCustomFields('entry_'.$data->id);
-                $data->custom_fields = $CFields;
-                view()->share('customFields', $CFields);
-                view()->share('objectData', $data);
-				return view()->first([ $bladeType.'-'.$targetSlug, $blade.'-'.$targetSlug, $blade.'-'.$entryType->slug, $blade], ['data' => $data]);
-			}
+    			if($request->ajax()){
+    	        	return response()->json(['data' => $data]);
+    	        } else {
+    				$CFields = getCustomFields('entry_'.$data->id);
+                    $data->custom_fields = $CFields;
+                    view()->share('customFields', $CFields);
+                    view()->share('objectData', $data);
+    				return view()->first([ $bladeType.'-'.$targetSlug, $blade.'-'.$targetSlug, $blade.'-'.$entryType->slug, $blade], ['data' => $data]);
+    			}
+            }
 		}
 
 
