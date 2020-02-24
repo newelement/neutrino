@@ -111,10 +111,10 @@
 			<aside class="sidebar">
 				<div class="side-fields">
 					<div class="form-row">
-						<label class="label-col" for="status">Status</label>
+						<label class="label-col" for="entry-status">Status</label>
 						<div class="input-col">
     						<div class="select-wrapper">
-    							<select id="status" name="status">
+    							<select id="entry-status" name="status">
     								<option value="P" {{ old('status') === 'P'? 'selected="selected"' : '' }}>Publish</option>
     								<option value="D" {{ old('status') === 'D'? 'selected="selected"' : '' }}>Draft</option>
     							</select>

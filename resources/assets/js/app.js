@@ -2577,6 +2577,18 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		delVarRow($(this));
 	});
 
+    $('#entry-status').change( (el) =>  {
+        if ( el.target.value === 'P' ) {
+            $('#publish-date-toggle').show();
+        } else {
+            $('#publish-date-toggle').hide();
+        }
+    });
+
+    $('#create-note-btn').click( (el) =>  {
+        el.preventDefault();
+    });
+
     $('.change-editor').click(function(e){
         e.preventDefault();
 
