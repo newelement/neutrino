@@ -34,7 +34,7 @@
 						<option value="entries">Entries</option>
 						<option value="pages">Pages</option>
 						<option value="taxonomy">Taxonomy</option>
-						@if( _shoppeExists() )
+						@if( shoppeExists() )
 						<option value="products">Products</option>
 						@endif
 					</select>

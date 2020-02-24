@@ -72,7 +72,7 @@
 							<textarea id="desc" name="description" style="height: 100px;">{{ old('description', $edit_taxonomy->description) }}</textarea>
 						</div>
 					</div>
-					
+
 					<div class="form-row">
 						<label class="label-col" for="status">Hierarchical</label>
 						<div class="input-col">
@@ -88,7 +88,7 @@
 								<option value="{{ $entry_type->slug }}" {{ $edit_taxonomy->show_on->contains($entry_type->slug)? 'selected="selected"' : '' }}>{{ $entry_type->entry_type }}</option>
 								@endforeach
 								<option value="events" {{ $edit_taxonomy->show_on->contains('events')? 'selected="selected"' : '' }}">Events</option>
-							    @if( _shoppeExists() )	
+							    @if( shoppeExists() )
 								<option value="products" {{ $edit_taxonomy->show_on->contains('products')? 'selected="selected"' : '' }}">Products</option>
                                 @endif
 							</select>

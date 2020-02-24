@@ -128,7 +128,10 @@
             @endif
         </li>
         @endforeach
-		@if( _shoppeExists() )
+		@if( shoppeExists() )
+        @php
+            $orderCount = getNewOrderCount();
+        @endphp
 		<li class="has-dropdown @if( \Route::currentRouteName() === 'shoppe.products') active open @endif">
 		    <a href="/admin/products">
     		    <i class="fal fa-shopping-cart fa-fw"></i> <span class="parent-nav-title">Products</span>
@@ -142,11 +145,16 @@
 		<li class="has-dropdown @if( \Route::currentRouteName() === 'shoppe.shoppe' || \Route::currentRouteName() === 'shoppe.orders') active open @endif">
 		    <a href="/admin/shoppe">
     		    <i class="fal fa-store fa-fw"></i> <span class="parent-nav-title">Shoppe</span>
+                @if( $orderCount > 0 )
+                <span class="new-order-counter parent-order-count">{{ $orderCount }}</span>
+                @endif
 		    </a>
 		    <ul @if( \Route::currentRouteName() === 'shoppe.shoppe') class="open" @endif>
                 <li><a href="/admin/shoppe"><span class="dash">-</span> Dashboard</a>
                 <li><a href="/admin/orders"><span class="dash">-</span> Orders</a>
-                    <!--<span class="moderate-counter">2</span>-->
+                @if( $orderCount > 0 )
+                    <span class="new-order-counter">{{ $orderCount }}</span>
+                @endif
                 </li>
                 <li><a href="/admin/shoppe-reports"><span class="dash">-</span> Reports</a></li>
     		    <li><a href="/admin/shoppe-settings"><span class="dash">-</span> Shoppe Settings</a></li>

@@ -1694,10 +1694,6 @@ function pluralTitle($string){
 	return str_plural( ucwords(str_replace('-',' ',$string)) );
 }
 
-function _shoppeExists(){
-    return class_exists('Newelement\Shoppe\Http\Controllers\Admin\ProductController');
-}
-
 function _getMenuSlot($num = 0){
     $menuItems = config('neutrino.admin_menu_items', []);
     $arrs = [];

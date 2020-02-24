@@ -86,6 +86,15 @@
 					</div>
                     @endif
 
+                    <div class="form-row">
+                        <label class="label-col align-top full-width" for="short_content">Content Excerpt</label>
+                        <div class="input-col full-width">
+                            <div class="tiny-mce-wrapper">
+                                <textarea id="short-content" class="small-editor" name="short_content">{!! old('short_content', $entry->short_content) !!}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
 					@foreach( $field_groups as $group )
 					<h2 class="cf-group-title">{{ $group->title }}</h2>
 						@if( $group->description )

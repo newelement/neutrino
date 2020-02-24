@@ -102,6 +102,7 @@ class EntryController extends Controller
 		$entry->slug = toSlug($request->slug, 'entry');
 		$entry->content = $content;
         $entry->block_content = $block_content;
+        $entry->short_content = htmlentities($request->short_content);
 		$entry->status = $request->status? $request->status : 'P' ;
         $entry->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$entry->keywords = $request->keywords ;
@@ -248,6 +249,7 @@ class EntryController extends Controller
 		$entry->slug = $entry->slug === $request->slug? $request->slug : toSlug($request->slug, 'entry');
 		$entry->content = $content;
         $entry->block_content = $block_content;
+        $entry->short_content = htmlentities($request->short_content);
 		$entry->status = $request->status? $request->status : 'P' ;
         $entry->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$entry->keywords = $request->keywords ;

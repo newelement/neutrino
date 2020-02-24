@@ -5,6 +5,7 @@ import Sortable from 'sortablejs';
 import select2 from 'select2';
 import Swal from 'sweetalert2';
 import PaceProgressBar from 'pace-progressbar';
+import datepicker from 'js-datepicker'
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
 import axios from 'axios';
 
@@ -78,6 +79,36 @@ let fields = [
 ];
 
 let editor = document.querySelector('.editor');
+let smallEditor = document.querySelector('.small-editor');
+
+if( smallEditor ){
+    var editor_config_small = {
+        path_absolute : "/",
+        selector: ".small-editor",
+        height: 230,
+        width: '100%',
+        plugins: [
+          "advlist autolink lists link hr anchor pagebreak",
+          "wordcount visualblocks visualchars code",
+          "insertdatetime nonbreaking directionality",
+          "paste textpattern"
+        ],
+        menubar:false,
+        statusbar: false,
+        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link",
+        relative_urls: false,
+        mobile: {
+            theme: 'mobile',
+            plugins: [ 'lists', 'autolink', 'link' ],
+            toolbar: [ 'undo', 'bold', 'billist', 'link', 'italic', 'styleselect' ]
+        },
+        content_css : editorCss
+    };
+
+    tinymce.init(
+        editor_config_small
+    );
+}
 
 if( editor ){
 	var editor_config = {
@@ -88,7 +119,7 @@ if( editor ){
 	    plugins: [
 	      "advlist autolink lists link image imagetools charmap print preview hr anchor pagebreak",
 	      "searchreplace wordcount visualblocks visualchars code fullscreen",
-	      "insertdatetime media nonbreaking save table directionality",
+	      "insertdatetime media nonbreaking table directionality",
 	      "template paste textpattern"
 	    ],
 	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
@@ -1418,6 +1449,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     html += '<label class="label-col" for="desc'+id+'">Description</label>';
                     html += '<div class="input-col">';
                         html += '<textarea id="desc'+id+'" class="smaller" name="variations['+id+'][desc]" value=""></textarea>';
+                    html += '</div>';
+                html += '</div>';
+
+                html += '<div class="form-row">';
+                    html += '<label class="label-col" for="cost'+id+'">Cost</label>';
+                    html += '<div class="input-col">';
+                        html += '<input type="number" id="cost'+id+'" name="variations['+id+'][cost]" value="" step="0.01">';
                     html += '</div>';
                 html += '</div>';
 
@@ -2762,6 +2800,15 @@ window.addEventListener('DOMContentLoaded', (e) => {
         })
 
     });
+
+    let $datePickerInput = document.querySelectorAll('.start-date');
+    if( $datePickerInput.length ){
+        const startDate = datepicker('.start-date', { id: 1 });
+        const endDate = datepicker('.end-date', { id: 1 });
+
+        startDate.getRange();
+        endDate.getRange();
+    }
 
 });
 

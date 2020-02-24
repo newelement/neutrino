@@ -623,6 +623,10 @@ function getImageSizes($image){
 	return $sizes;
 }
 
+function shoppeExists(){
+    return class_exists('Newelement\Shoppe\Http\Controllers\Admin\ProductController');
+}
+
 
 /*
 * SETTINGS Helper Functions
@@ -655,7 +659,7 @@ function getScripts(){
     foreach( $scripts as $script ){
         echo '<script src="'.$script.'"></script>'."\n";
     }
-    if( _shoppeExists() ){
+    if( shoppeExists() ){
         echo '<script src="/vendor/newelement/shoppe/js/shoppe.js"></script>'."\n";
     }
 }
@@ -667,7 +671,7 @@ function getStyles(){
     foreach( $styles as $style ){
         $allStyles[] = ltrim($style, '/');
     }
-    if( _shoppeExists() ){
+    if( shoppeExists() ){
         $allStyles[] = 'vendor/newelement/shoppe/css/shoppe.css';
     }
 

@@ -33,6 +33,7 @@ class Page extends Model
 			'slug',
 			'content',
             'block_content',
+            'short_content',
 			'status',
             'editor_type',
 			'parent_id',

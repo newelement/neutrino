@@ -35,6 +35,10 @@
 						<tr>
 							<td data-label="Title">
 								<a href="/admin/page/{{ $page->id }}">{{ $page->title }}</a>
+                                @if( $page->system_page )
+                                <br>
+                                <span class="system-page">system page</span>
+                                @endif
 							</td>
 							<td data-label="Status" class="text-center">
 								{{ _translateStatus($page->status) }}

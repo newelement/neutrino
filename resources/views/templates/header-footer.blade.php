@@ -49,6 +49,9 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                             {!! getMenu('Main Menu', 'html', [ 'ul_parent' => false, 'ul_class' => 'navbar-nav ml-auto'] ) !!}
+                            @if( shoppeExists() )
+                            <li class="nav-item"><a class="nav-link" href="/cart">Cart <span class="shoppe-cart-count">{{ cartCount() }}</span></a></li>
+                            @endif
                             @if( Auth::guest() )
                             <li class="nav-item {{ request()->path() === 'login'? ' active' : '' }}"><a class="nav-link" href="/login">Login</a></li>
                             @else

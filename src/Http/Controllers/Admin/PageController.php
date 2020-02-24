@@ -97,6 +97,7 @@ class PageController extends Controller
 			'slug' => toSlug($request->slug, 'page'),
 			'content' => $content,
             'block_content' => $block_content,
+            'short_content' => htmlentities($request->short_content),
 			'parent_id' => $request->parent_id? $request->parent_id : 0 ,
 			'keywords' => $request->keywords ,
 			'meta_description' => $request->meta_description ,
@@ -206,6 +207,7 @@ class PageController extends Controller
 		$page->slug = $page->slug === $request->slug? $request->slug : toSlug($request->slug, 'page');
 		$page->content = $content;
         $page->block_content = $block_content;
+        $page->short_content = htmlentities($request->short_content);
 		$page->parent_id = $request->parent_id? $request->parent_id : 0 ;
 		$page->keywords = $request->keywords ;
 		$page->meta_description = $request->meta_description ;

@@ -9,6 +9,10 @@
 
 				<h2>Edit Page <a class="headline-btn" href="/admin/page" role="button">Create Page</a></h2>
 
+                    @if( $page->system_page )
+                    <div class="system-page-warning">Warning. This page is being used by a package in Neutrino.</div>
+                    @endif
+
 					@method('PUT')
 					@csrf
 					<div class="form-row">
@@ -86,6 +90,15 @@
                         </div>
                     </div>
                     @endif
+
+                    <div class="form-row">
+                        <label class="label-col align-top full-width" for="short_content">Content Excerpt</label>
+                        <div class="input-col full-width">
+                            <div class="tiny-mce-wrapper">
+                                <textarea id="short-content" class="small-editor" name="short_content">{!! old('short_content', $page->short_content) !!}</textarea>
+                            </div>
+                        </div>
+                    </div>
 
 					<div class="form-row">
 						<label class="label-col" for="keywords">Keywords</label>
