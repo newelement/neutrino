@@ -15,6 +15,7 @@ use Newelement\Neutrino\Traits\CustomFields;
 use Newelement\Neutrino\Models\Role;
 use Newelement\Neutrino\Models\Backup;
 use Newelement\Neutrino\Traits\Blocks;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class PageController extends Controller
 {
@@ -122,6 +123,17 @@ class PageController extends Controller
 		if( $customFields ){
 			$this->parseCustomFields($customFields, $page->id, 'page');
 		}
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'page.create',
+            'object_type' => 'page',
+            'object_id' => $page->id,
+            'content' => 'Page created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/page/'.$page->id)->with('success', 'Page created.');
 
@@ -250,6 +262,17 @@ class PageController extends Controller
 			return response()->json(['success' => true]);
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'page.update',
+            'object_type' => 'page',
+            'object_id' => $page->id,
+            'content' => 'Page updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/page/'.$id)->with('success', 'Page updated.');
 
 	}
@@ -263,6 +286,18 @@ class PageController extends Controller
 	public function delete($id)
 	{
 		Page::find($id)->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'page.delete',
+            'object_type' => 'page',
+            'object_id' => $id,
+            'content' => 'Page deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/pages')->with('success', 'Page deleted.');
 	}
 
@@ -288,6 +323,18 @@ class PageController extends Controller
 				'object_type' => 'page'
 			])->delete();
 		}
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'page.destroyed',
+            'object_type' => 'page',
+            'object_id' => $id,
+            'content' => 'Page destroyed',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/pages-trash')->with('success', 'Page destroyed.');
 	}
 

@@ -21,6 +21,7 @@ use Newelement\Neutrino\Events\EntryUpdated;
 use Illuminate\Support\Facades\Log;
 use Newelement\Neutrino\Models\Backup;
 use Newelement\Neutrino\Traits\Blocks;
+use Newelement\Neutrino\Models\ActivityLog;
 use Carbon\Carbon;
 
 class EntryController extends Controller
@@ -124,6 +125,18 @@ class EntryController extends Controller
 		$entry->save();
 
 		if( $entry ){
+
+            ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'entry.create',
+                'object_type' => 'entry',
+                'object_id' => $entry->id,
+                'content' => 'Entry created',
+                'log_level' => 0,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
+
 			event(new EntryAdded($entry));
 		}
 
@@ -280,6 +293,18 @@ class EntryController extends Controller
 		$entry->save();
 
 		if( $entry ){
+
+            ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'entry.updated',
+                'object_type' => 'entry',
+                'object_id' => $entry->id,
+                'content' => 'Entry updated',
+                'log_level' => 0,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
+
 			event(new EntryUpdated($entry));
 		}
 
@@ -377,6 +402,17 @@ class EntryController extends Controller
 		$entryType->searchable = $request->searchable? $request->searchable : 0;
 		$entryType->save();
 
+        ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'entrytype.create',
+                'object_type' => 'entrytype',
+                'object_id' => $entryType->id,
+                'content' => 'Entry type created',
+                'log_level' => 0,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
+
 		return redirect('/admin/entry-types')->with('success', 'Entry type created.');
 	}
 
@@ -400,6 +436,17 @@ class EntryController extends Controller
 		$entryType->searchable = $request->searchable? $request->searchable : 0;
 		$entryType->save();
 
+        ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'entrytype.updated',
+                'object_type' => 'entrytype',
+                'object_id' => $entryType->id,
+                'content' => 'Entry type updated',
+                'log_level' => 0,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
+
 		return redirect('/admin/entry-types')->with('success', 'Entry type updated.');
 	}
 
@@ -410,6 +457,18 @@ class EntryController extends Controller
 			return redirect('/admin/entry-types')->with('error', 'Cannot delete entry type.');
 		}
 		$entryType->delete();
+
+        ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'entrytype.delete',
+                'object_type' => 'entrytype',
+                'object_id' => $id,
+                'content' => 'Entry type deleted',
+                'log_level' => 1,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
+
 		return redirect('/admin/entry-types')->with('success', 'Entry type deleted.');
 	}
 
@@ -434,6 +493,18 @@ class EntryController extends Controller
 	public function delete(Request $request, $id)
 	{
 		Entry::find($id)->delete();
+
+        ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'entry.delete',
+                'object_type' => 'entry',
+                'object_id' => $id,
+                'content' => 'Entry deleted',
+                'log_level' => 1,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
+
 		return redirect('/admin/entries?entry_type='.$request->entry_type)->with('success', ucwords(str_replace('-','',$request->entry_type)).' deleted.');
 	}
 
@@ -459,6 +530,17 @@ class EntryController extends Controller
 				'object_id' => $id,
 				'object_type' => 'entry'
 			])->delete();
+
+            ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'entry.destroyed',
+                'object_type' => 'entry',
+                'object_id' => $id,
+                'content' => 'Entry destroyed',
+                'log_level' => 1,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
 		}
 		return redirect('/admin/entries-trash')->with('success', ucwords(str_replace('-','',$request->entry_type)).' destroyed.');
 	}

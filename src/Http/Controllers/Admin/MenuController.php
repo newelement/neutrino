@@ -14,6 +14,7 @@ use Newelement\Neutrino\Models\Location;
 use Newelement\Neutrino\Models\Taxonomy;
 use Newelement\Neutrino\Models\TaxonomyType;
 use Newelement\Neutrino\Models\User;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class MenuController extends Controller
 {
@@ -49,6 +50,17 @@ class MenuController extends Controller
 				'featured' => 1
 			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
 		}
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'menu.create',
+            'object_type' => 'menu',
+            'object_id' => $menu->id,
+            'content' => 'Menu created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/menus/'.$menu->id)->with('success', 'Menu created.');
 
@@ -122,6 +134,17 @@ class MenuController extends Controller
 			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'menu.update',
+            'object_type' => 'menu',
+            'object_id' => $id,
+            'content' => 'Menu updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/menus/'.$id)->with('success', 'Menu updated.');
 
 	}
@@ -131,6 +154,18 @@ class MenuController extends Controller
 	{
 		$menu = Menu::find($id);
 		$menu->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'menu.delete',
+            'object_type' => 'menu',
+            'object_id' => $id,
+            'content' => 'Menu deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/menus')->with('success', 'Menu deleted.');
 	}
 
@@ -145,6 +180,17 @@ class MenuController extends Controller
 			$this->recurMenuItems($menuId, $item, $parentId = 0);
 			$this->order++;
 		}
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'menu.items.added',
+            'object_type' => 'menu',
+            'object_id' => $menuId,
+            'content' => 'Menu items added',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return response()->json(['success' => true]);
 	}

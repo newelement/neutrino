@@ -9,6 +9,7 @@ use Newelement\Neutrino\Facades\Neutrino;
 use Newelement\Neutrino\Models\Setting;
 use Newelement\Neutrino\Models\Entry;
 use Newelement\Neutrino\Models\Comment;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class CommentController extends Controller
 {
@@ -37,6 +38,18 @@ class CommentController extends Controller
 		$comment->approved_by = auth()->user()->id;
 		$comment->approved_at = \Carbon\Carbon::now();
 		$comment->save();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'comment.approve',
+            'object_type' => 'comment',
+            'object_id' => $comment->id,
+            'content' => 'Comment approved',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/comments')->with('success', 'Comment approved.');
 	}
 
@@ -44,6 +57,18 @@ class CommentController extends Controller
 	{
 		$comment = Comment::find($id);
 		$comment->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'comment.delete',
+            'object_type' => 'comment',
+            'object_id' => $id,
+            'content' => 'Comment deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/comments')->with('success', 'Comment deleted.');
 	}
 

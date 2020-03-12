@@ -9,6 +9,7 @@ use Newelement\Neutrino\Facades\Neutrino;
 use Newelement\Neutrino\Models\User;
 use Newelement\Neutrino\Models\Role;
 use Illuminate\Support\Str;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class UserController extends Controller
 {
@@ -56,6 +57,17 @@ class UserController extends Controller
 
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'user.create',
+            'object_type' => 'user',
+            'object_id' => $user->id,
+            'content' => 'User created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/users')->with('success', 'User created.');
 	}
 
@@ -90,12 +102,34 @@ class UserController extends Controller
 
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'user.update',
+            'object_type' => 'user',
+            'object_id' => $user->id,
+            'content' => 'User updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/users')->with('success', 'User updated.');
 	}
 
 	public function delete($id)
 	{
 		User::find($id)->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'user.delete',
+            'object_type' => 'user',
+            'object_id' => $id,
+            'content' => 'User deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/users')->with('success', 'User deleted.');
 	}

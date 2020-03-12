@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Newelement\Neutrino\Facades\Neutrino;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class MediaController extends Controller
 {
@@ -176,6 +177,17 @@ class MediaController extends Controller
             }
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'media.upload',
+            //'object_type' => 'comment',
+            //'object_id' => $id,
+            'content' => 'Files uploaded '.count($files).' - '.$message,
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return response()->json(['success' => $success, 'files' => $filesArr, 'message' => $message], $status);
 	}
 
@@ -184,7 +196,7 @@ class MediaController extends Controller
 		$image = false;
 		switch( strtolower($mimeType) ){
 			case 'image/jpeg':
-			case 'image/png':
+		    case 'image/png':
 			case 'image/gif':
 			case 'jpg':
 			case 'png':
@@ -200,7 +212,19 @@ class MediaController extends Controller
 		$path = $request->path;
 		$folderName = $request->folder_name;
 		$folder = Storage::disk($this->disk)->makeDirectory($path.'/'.$folderName);
-		return response()->json(['folder' => $folder]);
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'media.folder.create',
+            //'object_type' => 'comment',
+            //'object_id' => $id,
+            'content' => $folderName.' was created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
+	    return response()->json(['folder' => $folder]);
 	}
 
 	public function deleteFolder(Request $request)
@@ -211,6 +235,18 @@ class MediaController extends Controller
 		if( strlen($folderName) > 2 ){
 			$delete = Storage::disk($this->disk)->deleteDirectory($folderName);
 		}
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'media.folder.delete',
+            //'object_type' => 'comment',
+            //'object_id' => $id,
+            'content' => $folderName.' was deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return response()->json(['delete' => $delete]);
 	}
 
@@ -218,6 +254,18 @@ class MediaController extends Controller
 	{
 		$path = $request->path;
 		$deleted = Storage::disk($this->disk)->delete($path);
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'media.file.delete',
+            //'object_type' => 'comment',
+            //'object_id' => $id,
+            'content' => $path.' was deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return response()->json(['deleted' => $deleted]);
 	}
 
@@ -289,6 +337,17 @@ class MediaController extends Controller
 				'selected' => false,
 				'sizes' => $this->getSizes($path.'/'.$imageName)
 			];
+
+            ActivityLog::insert([
+                'activity_package' => 'neutrino',
+                'activity_group' => 'media.image.edit',
+                //'object_type' => 'comment',
+                //'object_id' => $id,
+                'content' => $path.'/'.$imageName.' '.$message,
+                'log_level' => 0,
+                'created_by' => auth()->user()->id,
+                'created_at' => now()
+            ]);
 
 		}
 

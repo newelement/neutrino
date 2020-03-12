@@ -22,13 +22,13 @@
             @endif
         </li>
         @endforeach
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.page') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('pages.') ) active open @endif">
 		    <a href="/admin/pages">
     		    <i class="fal fa-file fa-fw"></i> <span class="parent-nav-title">Pages</span>
             </a>
-			<ul @if( \Route::currentRouteName() === 'neutrino.page') class="open" @endif>
-				<li><a href="/admin/pages"><span class="dash">-</span> All Pages</a></li>
-				<li><a href="/admin/page"><span class="dash">-</span> Create Page</a></li>
+			<ul @if( isRouteGroup('pages.') ) class="open" @endif>
+				<li><a @if( isRouteGroup('pages.all') ) class="active" @endif href="/admin/pages"><span class="dash">-</span> All Pages</a></li>
+				<li><a @if( isRouteGroup('pages.show') ) class="active" @endif href="/admin/page"><span class="dash">-</span> Create Page</a></li>
 			</ul>
 		</li>
 		@php
@@ -48,7 +48,7 @@
             @endif
         </li>
         @endforeach
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.entry-types' || \Route::currentRouteName() === 'neutrino.entry') active open @endif">
+		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.entry-types' || isRouteGroup('entries.') || isRouteGroup('comments.') ) active open @endif">
 			@php
 			$commentCount = _getCommentCount();
 			@endphp
@@ -60,7 +60,7 @@
 				echo '<span class="moderate-counter">'.$commentCount.'</span>';
 			}
 			@endphp
-			<ul @if( \Route::currentRouteName() === 'neutrino.entry-types' || \Route::currentRouteName() === 'neutrino.entry') class="open" @endif>
+			<ul @if( \Route::currentRouteName() === 'neutrino.entry-types' || isRouteGroup('entries.') || isRouteGroup('comments.') ) class="open" @endif>
 				<li>
 				    <a href="/admin/entries?entry_type=post"><span class="dash">-</span> Post</a>
 				</li>
@@ -70,8 +70,8 @@
 				@foreach( $entryTypes as $entryType )
 					<li><a href="/admin/entries?entry_type={{ $entryType->slug }}"><span class="dash">-</span> {{ $entryType->entry_type }}</a></li>
 				@endforeach
-				<li><a href="/admin/comments"><span class="dash">-</span> Comments</a></li>
-				<li><a href="/admin/moderate-comments"><span class="dash">-</span> Moderate Comments</a>
+				<li><a @if( isRouteGroup('comments.all')) class="active" @endif href="/admin/comments"><span class="dash">-</span> Comments</a></li>
+				<li><a @if( isRouteGroup('comments.moderate')) class="active" @endif href="/admin/moderate-comments"><span class="dash">-</span> Moderate Comments</a>
 				@php
 				if( $commentCount > 0 ){
 					echo '<span class="moderate-counter">'.$commentCount.'</span>';

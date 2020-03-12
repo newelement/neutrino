@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Newelement\Neutrino\Facades\Neutrino;
 use Newelement\Neutrino\Models\Setting;
 use Illuminate\Support\Str;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class SettingsController extends Controller
 {
@@ -53,6 +54,17 @@ class SettingsController extends Controller
 		$setting->order = 1;
 		$setting->save();
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'setting.create',
+            'object_type' => 'setting',
+            'object_id' => $setting->id,
+            'content' => 'Setting created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/settings')->with('success', 'Setting created.');
 	}
 
@@ -73,6 +85,16 @@ class SettingsController extends Controller
 		$setting->value_bool = $request->setting_value_bool? 1 : 0 ;
 		$setting->save();
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'setting.update',
+            'object_type' => 'setting',
+            'object_id' => $setting->id,
+            'content' => 'Setting updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/settings')->with('success', 'Setting updated.');
 	}
@@ -84,6 +106,17 @@ class SettingsController extends Controller
 			return redirect('/admin/settings')->with('error', 'Cannot delete protected setting.');
 		}
 		$setting->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'setting.delete',
+            'object_type' => 'setting',
+            'object_id' => $id,
+            'content' => 'Setting deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/settings')->with('success', 'Setting deleted.');
 	}
@@ -120,6 +153,17 @@ class SettingsController extends Controller
 			break;
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'setting.cache.clear',
+            'object_type' => 'setting',
+            //'object_id' => $id,
+            //'content' => 'Setting deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/settings')->with('success', 'Cache cleared.');
 	}
 
@@ -127,6 +171,17 @@ class SettingsController extends Controller
     {
         \Storage::disk('public')->delete('assets/css/all.css');
         \Storage::disk('public')->delete('assets/js/all.js');
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'setting.asset.clear',
+            'object_type' => 'setting',
+            //'object_id' => $id,
+            //'content' => 'Setting deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
         return redirect('/admin/settings')->with('success', 'Asset cache cleared.');
     }
@@ -149,5 +204,31 @@ class SettingsController extends Controller
 		    }
 		}
 	}
+
+    public function getActivityLog(){
+        $logs = ActivityLog::orderBy('created_at', 'desc')->paginate(50);
+
+        $set = [];
+
+        foreach( $logs as $log ){
+            $set[] = [
+                'id' => $log->id,
+                'package' => $log->activity_package,
+                'group' => $log->activity_group,
+                'object' => '',
+                'activity' => $log->content,
+                'user' => $log->createdUser->name,
+                'level' => $log->log_level,
+                'created_on' => $log->created_at->timezone( config('neutrino.timezone') )->format('m-j-y g:i a')
+            ];
+        }
+
+        $arr = [
+            'last_page' => $logs->lastPage(),
+            'data' => $set
+        ];
+
+        return response()->json($arr);
+    }
 
 }

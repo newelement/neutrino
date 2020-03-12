@@ -12,6 +12,7 @@ use Newelement\Neutrino\Models\ObjectTerm;
 use Newelement\Neutrino\Models\ObjectMedia;
 use Newelement\Neutrino\Models\EntryType;
 use Newelement\Neutrino\Traits\CustomFields;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class TaxonomiesController extends Controller
 {
@@ -48,14 +49,14 @@ class TaxonomiesController extends Controller
 		$edit_taxonomy->description = '';
 		$edit_taxonomy->taxonomy_image = '';
 		$edit_taxonomy->featuredImage = false;
-		
+
 		$fieldGroups = $this->getFieldGroups('taxonomy', $taxonomy->slug);
 
 		return view('neutrino::admin.taxonomies.index', [
-		        'taxonomies' => $taxonomies, 
-		        'taxonomy' => $taxonomy, 
-		        'taxes' => $taxes, 
-		        'edit_taxonomy' => $edit_taxonomy, 
+		        'taxonomies' => $taxonomies,
+		        'taxonomy' => $taxonomy,
+		        'taxes' => $taxes,
+		        'edit_taxonomy' => $edit_taxonomy,
 		        'field_groups' => $fieldGroups,
 		        'edit' => false]);
 	}
@@ -86,12 +87,23 @@ class TaxonomiesController extends Controller
 			$media->file_path = parse_url($path, PHP_URL_PATH);
 			$media->save();
 		}
-		
+
 		// Custom Fields
 		$customFields = $request->cfs;
 		if( $customFields ){
 			$this->parseCustomFields($customFields, $tax->id, 'taxonomy');
 		}
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'taxonomy.create',
+            'object_type' => 'taxonomy',
+            'object_id' => $tax->id,
+            'content' => 'Taxonomy created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/taxonomies/'.$id)->with('success', $type->title.' created.');
 	}
@@ -111,6 +123,17 @@ class TaxonomiesController extends Controller
 		$tax->show_on = implode(',',$request->show_on);
 		$tax->save();
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'taxonomytype.create',
+            'object_type' => 'taxonomytype',
+            'object_id' => $tax->id,
+            'content' => 'Taxonomy Type created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/taxonomy-types')->with('success', 'Taxonomy created.');
 	}
 
@@ -122,8 +145,8 @@ class TaxonomiesController extends Controller
 		$entryTypes = EntryType::orderBy('entry_type', 'asc')->get();
 
 		return view('neutrino::admin.taxonomies.index-types', [
-		                'taxonomies' => $taxonomies, 
-		                'edit_taxonomy' => $tax, 
+		                'taxonomies' => $taxonomies,
+		                'edit_taxonomy' => $tax,
 		                'entry_types' => $entryTypes,
 		                'edit' => true]);
 	}
@@ -134,14 +157,14 @@ class TaxonomiesController extends Controller
 		$taxes = Taxonomy::where('taxonomy_type_id', $type)->where('id', '<>', $tax->id)->orderBy('title', 'asc')->get();
 		$taxonomy = TaxonomyType::where('id', $type)->first();
 		$taxonomies = Taxonomy::orderBy('title', 'asc')->paginate(20);
-		
+
 		$fieldGroups = $this->getFieldGroups('taxonomy', $taxonomy->slug);
 
 		return view('neutrino::admin.taxonomies.index', [
-		            'taxonomies' => $taxonomies, 
-		            'taxonomy' => $taxonomy, 
-		            'edit_taxonomy' => $tax, 
-		            'taxes' => $taxes, 
+		            'taxonomies' => $taxonomies,
+		            'taxonomy' => $taxonomy,
+		            'edit_taxonomy' => $tax,
+		            'taxes' => $taxes,
 		            'field_groups' => $fieldGroups,
 		            'edit' => true]);
 	}
@@ -155,6 +178,17 @@ class TaxonomiesController extends Controller
 		$tax->hierarchical = $request->hierarchical? $request->hierarchical : 0;
 		$tax->show_on = is_array($request->show_on)? implode(',', $request->show_on) : '';
 		$tax->save();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'taxonomytype.update',
+            'object_type' => 'taxonomytype',
+            'object_id' => $tax->id,
+            'content' => 'Taxonomy type updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/taxonomy-types')->with('success', 'Taxonomy updated.');
 	}
@@ -189,12 +223,23 @@ class TaxonomiesController extends Controller
 				'featured' => 1
 				])->delete();
 		}
-		
+
 		// Custom Fields
 		$customFields = $request->cfs;
 		if( $customFields ){
 			$this->parseCustomFields($customFields, $tax->id, 'taxonomy');
 		}
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'taxonomy.updated',
+            'object_type' => 'taxonomy',
+            'object_id' => $tax->id,
+            'content' => 'Taxonomy updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/taxonomies/'.$taxType->id)->with('success', $taxType->title.' updated.');
 	}
@@ -212,7 +257,19 @@ class TaxonomiesController extends Controller
 			Taxonomy::where('taxonomy_id', $term->id)->delete();
 		}
 
-		$type->delete();
+        $type->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'taxonomytype.delete',
+            'object_type' => 'taxonomytype',
+            'object_id' => $id,
+            'content' => 'Taxonomy type deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/taxonomy-types')->with('success', 'Taxonomy deleted.');
 	}
 
@@ -224,6 +281,18 @@ class TaxonomiesController extends Controller
 		ObjectTerm::where('taxonomy_id', $term->id)->delete();
 		$title = $term->title;
 		$term->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'taxonomy.delete',
+            'object_type' => 'taxonomy',
+            'object_id' => $id,
+            'content' => 'Taxonomy deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/taxonomies/'.$type->id)->with('success', $title.' deleted.');
 	}
 

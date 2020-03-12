@@ -7,6 +7,9 @@ import Swal from 'sweetalert2';
 import PaceProgressBar from 'pace-progressbar';
 import datepicker from 'js-datepicker'
 import flatpickr from "flatpickr";
+import moment from 'moment';
+window.moment = moment;
+import Tabulator from 'tabulator-tables';
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
 import axios from 'axios';
 
@@ -88,6 +91,7 @@ if( smallEditor ){
         selector: ".small-editor",
         height: 230,
         width: '100%',
+        skin: "oxide-dark",
         plugins: [
           "advlist autolink lists link hr anchor pagebreak",
           "wordcount visualblocks visualchars code",
@@ -117,6 +121,7 @@ if( editor ){
 	    selector: ".editor",
 		height: 600,
 		width: '100%',
+        skin: "oxide-dark",
 	    plugins: [
 	      "advlist autolink lists link image imagetools charmap print preview hr anchor pagebreak",
 	      "searchreplace wordcount visualblocks visualchars code fullscreen",
@@ -150,8 +155,6 @@ if( editor ){
 		editor_config
 	);
 }
-
-const datetimePicker = flatpickr('.datetime-picker', { enableTime: true, dateFormat: 'Y-m-d h:i K' });
 
 function readURL(input) {
 	$('#preview').hide();
@@ -1193,6 +1196,77 @@ function addVariationAttribueValue(el){
     });
 }
 
+function enableConditionals(toggleSets){
+    toggleSets.forEach( (obj) => {
+        obj.watcher.addEventListener( 'change', (e) => {
+            let value = e.target.value;
+            switch(obj.type){
+                case 'checkbox':
+                    obj.elsToToggle.forEach( (ob) => {
+                        if ( e.target.checked ){
+                            ob.target.classList.remove('hide');
+                        } else {
+                            ob.target.classList.add('hide');
+                        }
+                    });
+                break;
+                case 'radio':
+                    obj.elsToToggle.forEach( (ob) => {
+                        if ( e.target.checked && ob.value === value ){
+                            ob.target.classList.remove('hide');
+                        } else {
+                            ob.target.classList.add('hide');
+                        }
+                    });
+                break;
+                case 'select-one':
+                    obj.elsToToggle.forEach( (ob) => {
+                        if ( ob.value === value ){
+                            ob.target.classList.remove('hide');
+                        } else {
+                            ob.target.classList.add('hide');
+                        }
+                    });
+                break;
+            }
+
+        });
+
+        // Apply current conditional values
+
+        let value = obj.watcher.value;
+        switch(obj.type){
+            case 'checkbox':
+                obj.elsToToggle.forEach( (ob) => {
+                    if ( obj.watcher.checked ){
+                        ob.target.classList.remove('hide');
+                    } else {
+                        ob.target.classList.add('hide');
+                    }
+                });
+            break;
+            case 'radio':
+                obj.elsToToggle.forEach( (ob) => {
+                    if ( obj.watcher.checked && ob.value === value ){
+                        ob.target.classList.remove('hide');
+                    } else {
+                        ob.target.classList.add('hide');
+                    }
+                });
+            break;
+            case 'select-one':
+                obj.elsToToggle.forEach( (ob) => {
+                    if ( ob.value === value ){
+                        ob.target.classList.remove('hide');
+                    } else {
+                        ob.target.classList.add('hide');
+                    }
+                });
+            break;
+        }
+    });
+}
+
 window.addEventListener('DOMContentLoaded', (e) => {
 
 	let dashboard = document.querySelector('.dashboard');
@@ -1265,6 +1339,36 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 		});
 	}
+
+    let activityTable = document.getElementById('activity-log-table');
+    let activityTab = document.getElementById('activity-log-tab');
+
+    if( activityTable ){
+        var table = new Tabulator("#activity-log-table", {
+            paginationSize: 50,
+            ajaxProgressiveLoad: 'load',
+            ajaxProgressiveLoadDelay: 200,
+            layout:"fitColumns",
+
+            columns:[
+                {title:"Package", field:"package"},
+                {title:"Group", field:"group"},
+                {title:"Activity", field:"activity"},
+                {title:"User", field:"user", align:"center"},
+                {title:"Level", field:"level", align: 'center', sorter: 'number'},
+                {title:"Created On", field:"created_on",
+                    sorter: 'datetime'
+                    , sorterParams:{
+                        format: 'MM-DD-YY h:mm a'
+                    }
+                }
+            ]
+        });
+
+        activityTab.addEventListener('click', (el) => {
+            table.setData('/admin/settings/activity/log');
+        });
+    }
 
     setInterval(function(){
         let formData = new FormData;
@@ -1494,6 +1598,22 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     html += '<label class="label-col" for="stock'+id+'">Stock</label>';
                     html += '<div class="input-col">';
                         html += '<input type="number" id="stock'+id+'" name="variations['+id+'][stock]" value="">';
+                    html += '</div>';
+                html += '</div>';
+
+                html += '<div class="form-row">';
+                    html += '<label class="label-col" for="weight'+id+'">Weight</label>';
+                    html += '<div class="input-col input-col-group">';
+                        html += '<div><input type="number" id="weight'+id+'" name="variations['+id+'][weight]" value="" step="0.01"> lbs</div>';
+                    html += '</div>';
+                html += '</div>';
+
+                html += '<div class="form-row">';
+                    html += '<label class="label-col" for="dim'+id+'">Dimensions</label>';
+                    html += '<div class="input-col input-col-group">';
+                        html += '<div><input type="number" id="width'+id+'" name="variations['+id+'][width]" value="" placeholder="Width" step="0.01"> in.</div>';
+                        html += '<div><input type="number" id="height'+id+'" name="variations['+id+'][height]" value="" placeholder="Height" step="0.01"> in.</div>';
+                        html += '<div><input type="number" id="depth'+id+'" name="variations['+id+'][depth]" value="" placeholder="Depth" step="0.01"> in.</div>';
                     html += '</div>';
                 html += '</div>';
 
@@ -2362,6 +2482,32 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 	});
 
+    let $toggleTos = document.querySelectorAll('[data-toggle-to]');
+    if( $toggleTos.length ){
+        let toggleSets = [];
+        $toggleTos.forEach( (el) => {
+            let type = el.type;
+            console.log(el);
+            let toggleTo = el.getAttribute('data-toggle-to');
+            let toggles = document.querySelectorAll('[data-'+toggleTo+']');
+
+            let obj = { watcher: el, type: type, elsToToggle: [] };
+
+            if( toggles.length ){
+                toggles.forEach( (e) => {
+                    let valueToggle = e.getAttribute('data-'+toggleTo);
+                    let target = { target: e, value: valueToggle };
+                    obj.elsToToggle.push( target );
+                });
+            }
+
+            toggleSets.push(obj);
+
+        });
+        //console.log(toggleSets);
+        enableConditionals(toggleSets);
+    }
+
 	$('.tabs a').click(function(e){
 		e.preventDefault();
 		$('.tabs a').removeClass('active');
@@ -2587,6 +2733,32 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     $('#create-note-btn').click( (el) =>  {
         el.preventDefault();
+        $('.order-notes-message').html('');
+        let orderNote = $('#order-note').val();
+        let allow_public = $('#order-note-public').is(':checked')? 1 : 0;
+        if( orderNote.length !== 0 ){
+            let formData = new FormData;
+            formData.append('note', orderNote);
+            formData.append('allow_public', allow_public)
+
+            HTTP.post('/admin/orders/'+orderId+'/note', formData)
+            .then(response => {
+                let html = '<li>';
+                html += '<div class="order-note-date">By: '+response.data.note.user+' on '+response.data.note.created+' </div>';
+                html += '<div class="order-note '+ ( response.data.note.public? 'public' : 'private' ) +'">';
+                    html += response.data.note.notes;
+                html += '</div>';
+                html += '</li>';
+
+                $('.order-notes-list ul').prepend(html);
+
+                $('.order-notes-message').html('<p class="text-center" style="font-size: 14px">Note added.</p>');
+
+            }).catch(response => {
+                $('.order-notes-message').html('<p class="text-center" style="font-size: 14px">There was an error adding note.</p>');
+
+            });
+        }
     });
 
     $('.change-editor').click(function(e){
@@ -2640,6 +2812,17 @@ window.addEventListener('DOMContentLoaded', (e) => {
         })
         .catch(e => {
             console.log('Shipping label error.');
+        });
+    });
+
+    $('.resend-order-receipt').click( el => {
+        el.preventDefault();
+        HTTP.get('/admin/resend-reciept/'+orderId)
+        .then(response => {
+            $('.resend-order-receipt-wrap').html('<span>Email sent!</span>');
+        })
+        .catch(e => {
+
         });
     });
 
@@ -2816,13 +2999,24 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     });
 
+    const datetimePicker = flatpickr('.datetime-picker', { enableTime: true, dateFormat: 'Y-m-d h:i K' });
+
     let $datePickerInput = document.querySelectorAll('.start-date');
+    let $datePickerProfit = document.querySelectorAll('.profit-start-date');
     if( $datePickerInput.length ){
         const startDate = datepicker('.start-date', { id: 1 });
         const endDate = datepicker('.end-date', { id: 1 });
 
         startDate.getRange();
         endDate.getRange();
+    }
+
+    if( $datePickerProfit.length ){
+        const profitStartDate = datepicker('.profit-start-date', { id: 2 });
+        const profitEndDate = datepicker('.profit-end-date', { id: 2 });
+
+        profitStartDate.getRange();
+        profitEndDate.getRange();
     }
 
 });

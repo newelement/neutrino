@@ -262,7 +262,8 @@ h2, h3{
                             a{
                                 padding: 4px 12px;
 
-                                &:hover{
+                                &:hover,
+                                &.active{
                     				background-color: inherit;
                     				color: #999;
                                 }
@@ -274,7 +275,7 @@ h2, h3{
                         }
 
                     }
-                }
+            }
 
             a{
                 display: block;
@@ -324,8 +325,6 @@ h2, h3{
                 a{
     				background-color: #555;
     				color: #fff;
-
-
 
     				.dash{
         				display: inline;
@@ -416,8 +415,10 @@ h2, h3{
     				}
 
                     &.active{
-                        a:hover{
+                        a:hover,
+                        a.active{
                             background-color: #777;
+                            color: #fff;
                         }
                     }
     			}
@@ -444,7 +445,8 @@ h2, h3{
     				&.open{
     					background-color: #333;
 
-    					&:hover{
+    					&:hover
+                        {
     						background-color: #777;
     						color: #fff;
     					}
@@ -2160,6 +2162,13 @@ progress[value]::-webkit-progress-bar {
 			background-color: #e3e3e3;
 		}
 	}
+
+    &.smaller{
+        li a{
+            padding: 6px 14px;
+            font-size: 16px;
+        }
+    }
 }
 
 .tabs-container{
@@ -2617,6 +2626,8 @@ progress[value]::-webkit-progress-bar {
 }
 
 @import '~flatpickr/dist/themes/dark.css';
+@import '~tabulator-tables/src/scss/tabulator.scss';
+@import '~tabulator-tables/src/scss/tabulator_simple.scss';
 
 @media( max-width: 950px ){
 

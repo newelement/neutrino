@@ -170,7 +170,7 @@
     transition: max-height .25s ease, padding .15s ease;
 
     &.open{
-        max-height: 650px;
+        max-height: 795px;
         padding: 12px;
     }
 
@@ -462,13 +462,67 @@ a.view-shipping-label-link{
     }
 }
 
-.sales-report-form{
+.report-forms{
     display: flex;
     flex-direction: row;
+}
+
+.sales-report-form{
+    width: 50%;
+    padding-right: 24px;
 
     form{
-        width: 50%;
         display: flex;
         flex-direction: row;
+    }
+}
+
+.profit-report-form{
+    width: 50%;
+    form{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+#order-note{
+    height: 130px;
+}
+
+.order-notes-list{
+    margin-bottom: 24px;
+
+    ul{
+        display: block;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        max-height: 400px;
+        overflow: auto;
+
+        li{
+            padding: 6px 0;
+            margin-bottom: 6px;
+        }
+    }
+
+    .order-note-date{
+        font-size: 13px;
+        text-align: right;
+        color: #555;
+    }
+
+    .order-note{
+        font-size: 14px;
+        padding: 12px;
+        border-radius: 4px;
+
+        &.public{
+            background-color: #BEE3F8;
+        }
+
+        &.private{
+            background-color: #E2E8F0;
+        }
     }
 }

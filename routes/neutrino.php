@@ -12,32 +12,44 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
         Route::get('/', ['uses' => $namespacePrefix.'NeutrinoController@index', 'as' => 'dashboard']);
 		Route::get('/dashboard', ['uses' => $namespacePrefix.'NeutrinoController@index', 'as' => 'dashboard']);
 
-		Route::get('/pages', $namespacePrefix.'Admin\PageController@index')->name('page');
-		Route::get('/page/{id}', $namespacePrefix.'Admin\PageController@get')->name('page');
-		Route::get('/page', $namespacePrefix.'Admin\PageController@getCreate')->name('page');
-		Route::post('/pages', $namespacePrefix.'Admin\PageController@create');
-		Route::put('/page/{id}', $namespacePrefix.'Admin\PageController@update');
-		Route::delete('/pages/{id}', $namespacePrefix.'Admin\PageController@delete');
-		Route::get('/pages-trash', $namespacePrefix.'Admin\PageController@getTrash')->name('page');
-		Route::get('/pages/recover/{id}', $namespacePrefix.'Admin\PageController@recover');
-		Route::get('/pages/destroy/{id}', $namespacePrefix.'Admin\PageController@destroy');
+        Route::group([ 'as' => 'pages.'], function () use ( $namespacePrefix ) {
 
-		Route::get('/entries', $namespacePrefix.'Admin\EntryController@index')->name('entry');
-		Route::get('/entry/{id}', $namespacePrefix.'Admin\EntryController@get')->name('entry');
-		Route::get('/entry', $namespacePrefix.'Admin\EntryController@getCreate')->name('entry');
-		Route::post('/entries', $namespacePrefix.'Admin\EntryController@create');
-		Route::put('/entry/{id}', $namespacePrefix.'Admin\EntryController@update');
-		Route::post('/entry/terms/remove', $namespacePrefix.'Admin\EntryController@removeEntryTerm');
-		Route::delete('/entries/{id}', $namespacePrefix.'Admin\EntryController@delete');
-		Route::get('/entries-trash', $namespacePrefix.'Admin\EntryController@getTrash')->name('entry');
-		Route::get('/entries/recover/{id}', $namespacePrefix.'Admin\EntryController@recover');
-		Route::get('/entries/destroy/{id}', $namespacePrefix.'Admin\EntryController@destroy');
+    		Route::get('/pages', $namespacePrefix.'Admin\PageController@index')->name('all');
+    		Route::get('/page/{id}', $namespacePrefix.'Admin\PageController@get')->name('edit');
+    		Route::get('/page', $namespacePrefix.'Admin\PageController@getCreate')->name('show');
+    		Route::post('/pages', $namespacePrefix.'Admin\PageController@create')->name('create');
+    		Route::put('/page/{id}', $namespacePrefix.'Admin\PageController@update')->name('update');
+    		Route::delete('/pages/{id}', $namespacePrefix.'Admin\PageController@delete')->name('delete');
+    		Route::get('/pages-trash', $namespacePrefix.'Admin\PageController@getTrash')->name('trash');
+    		Route::get('/pages/recover/{id}', $namespacePrefix.'Admin\PageController@recover')->name('recover');
+    		Route::get('/pages/destroy/{id}', $namespacePrefix.'Admin\PageController@destroy')->name('destroy');
 
-		Route::get('/moderate-comments', $namespacePrefix.'Admin\CommentController@moderateComments')->name('entry');
-		Route::get('/comments', $namespacePrefix.'Admin\CommentController@all')->name('entry');
-		Route::post('/comment/{id}', $namespacePrefix.'Admin\CommentController@replyComment');
-		Route::delete('/comment/{id}', $namespacePrefix.'Admin\CommentController@deleteComment');
-		Route::get('/comment/{id}/approve', $namespacePrefix.'Admin\CommentController@approveComment');
+        });
+
+        Route::group([ 'as' => 'entries.'], function () use ( $namespacePrefix ) {
+
+    		Route::get('/entries', $namespacePrefix.'Admin\EntryController@index')->name('all');
+    		Route::get('/entry/{id}', $namespacePrefix.'Admin\EntryController@get')->name('edit');
+    		Route::get('/entry', $namespacePrefix.'Admin\EntryController@getCreate')->name('show');
+    		Route::post('/entries', $namespacePrefix.'Admin\EntryController@create')->name('create');
+    		Route::put('/entry/{id}', $namespacePrefix.'Admin\EntryController@update')->name('update');
+    		Route::post('/entry/terms/remove', $namespacePrefix.'Admin\EntryController@removeEntryTerm')->name('terms.remove');
+    		Route::delete('/entries/{id}', $namespacePrefix.'Admin\EntryController@delete')->name('delete');
+    		Route::get('/entries-trash', $namespacePrefix.'Admin\EntryController@getTrash')->name('trash');
+    		Route::get('/entries/recover/{id}', $namespacePrefix.'Admin\EntryController@recover')->name('recover');
+    		Route::get('/entries/destroy/{id}', $namespacePrefix.'Admin\EntryController@destroy')->name('destroy');
+
+        });
+
+        Route::group([ 'as' => 'comments.'], function () use ( $namespacePrefix ) {
+
+    		Route::get('/moderate-comments', $namespacePrefix.'Admin\CommentController@moderateComments')->name('moderate');
+    		Route::get('/comments', $namespacePrefix.'Admin\CommentController@all')->name('all');
+    	    Route::post('/comment/{id}', $namespacePrefix.'Admin\CommentController@replyComment')->name('reply');
+    		Route::delete('/comment/{id}', $namespacePrefix.'Admin\CommentController@deleteComment')->name('delete');
+    		Route::get('/comment/{id}/approve', $namespacePrefix.'Admin\CommentController@approveComment')->name('apprive');
+
+        });
 
 		Route::get('/entry-types', $namespacePrefix.'Admin\EntryController@indexEntryTypes')->name('entry-types');
 		Route::post('/entry-types', $namespacePrefix.'Admin\EntryController@createEntryType');
@@ -88,6 +100,7 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::get('/settings/{id}',  $namespacePrefix.'Admin\SettingsController@get')->name('settings');
 		Route::put('/settings/{id}',  $namespacePrefix.'Admin\SettingsController@update');
 		Route::delete('/settings/{id}',  $namespacePrefix.'Admin\SettingsController@delete');
+        Route::get('/settings/activity/log',  $namespacePrefix.'Admin\SettingsController@getActivityLog');
 
 		Route::get('/roles',  $namespacePrefix.'Admin\RolesController@index')->name('users');
 		Route::post('/roles',  $namespacePrefix.'Admin\RolesController@create');

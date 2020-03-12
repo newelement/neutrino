@@ -10,6 +10,7 @@ use Newelement\LaravelCalendarEvent\Models\TemplateCalendarEvent;
 use Newelement\Neutrino\Models\ObjectMedia;
 use Newelement\Neutrino\Models\EventSlug;
 use Newelement\Neutrino\Models\Place;
+use Newelement\Neutrino\Models\ActivityLog;
 use Carbon\Carbon;
 
 class EventController extends Controller
@@ -49,12 +50,12 @@ class EventController extends Controller
 			'YEAR' => RecurringFrequenceType::YEAR,
 			'NTHWEEKDAY' => RecurringFrequenceType::NTHWEEKDAY
 		];
-		
+
 		$freqType = $request->frequency_type ? $types[$request->frequency_type] : null ;
 		$endRecurTime = $request->end_recurring_date ? Carbon::parse($request->end_recurring_date.' '.$request->end_recurring_time) : null ;
-		
+
 		$place = null;
-		
+
 		if( $request->place ){
     		$place = Place::find( $request->place );
 		}
@@ -86,6 +87,17 @@ class EventController extends Controller
 
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'event.create',
+            'object_type' => 'event',
+            'object_id' => $calendarEvent->id,
+            'content' => 'Event created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/events/'.$calendarEvent->id)->with('success', 'Event created.');
 
 	}
@@ -97,9 +109,9 @@ class EventController extends Controller
 		        ->where('calendar_events.id', $id)
 		        ->select('calendar_events.*', 'event_slugs.slug')
 		        ->first();
-		        
+
 		$locations = Place::orderBy('location_name', 'asc')->get();
-		
+
 		return view('neutrino::admin.events.edit', ['event' => $event, 'locations' => $locations]);
 	}
 
@@ -120,16 +132,16 @@ class EventController extends Controller
 			'YEAR' => RecurringFrequenceType::YEAR,
 			'NTHWEEKDAY' => RecurringFrequenceType::NTHWEEKDAY
 		];
-		
+
 		$freqType = $request->frequency_type ? $types[$request->frequency_type] : null ;
 		$endRecurTime = $request->end_recurring_date ? Carbon::parse($request->end_recurring_date.' '.$request->end_recurring_time) : null ;
-		
+
 		$place = null;
-		
+
 		if( $request->place ){
     		$place = Place::find( $request->place );
 		}
-        
+
 		$calendarEvent = CalendarEvent::find($id);
 		$calendarEvent = $calendarEvent->editCalendarEvent([
 		    'title'                         => $request->title,
@@ -142,7 +154,7 @@ class EventController extends Controller
 		    'is_public'                     => true,
 		    'end_of_recurring'              => $endRecurTime
 		], $user = null, $place);
-		
+
 		$newId = $calendarEvent? $calendarEvent->id : $id;
 
         EventSlug::where('event_id', $id)->update(['event_id' => $newId]);
@@ -165,7 +177,18 @@ class EventController extends Controller
 				'featured' => 1
 			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
 		}
-        
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'event.updated',
+            'object_type' => 'event',
+            'object_id' => $newId,
+            'content' => 'Event updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/events/'.$newId)->with('success', 'Event updated.');
 
 	}
@@ -175,6 +198,18 @@ class EventController extends Controller
 	{
 		$calendarEvent = CalendarEvent::find($id);
 		$isDeleted = $calendarEvent->deleteCalendarEvent($isRecurring = $calendarEvent->is_recurring);
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'event.deleted',
+            'object_type' => 'event',
+            'object_id' => $id,
+            'content' => 'Event deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/events')->with('success', 'Event deleted.');
 	}
 

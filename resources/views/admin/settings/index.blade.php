@@ -5,13 +5,16 @@
 		<div class="content">
 			<h2>Settings</h2>
 
-			<ul class="tabs" style="margin-bottom: 12px; border-bottom: 1px solid #444444">
+			<ul class="tabs smaller" style="margin-bottom: 12px; border-bottom: 1px solid #444444">
 				<li>
 					<a class="active" href="#settings">Settings</a>
 				</li>
 				<li>
 					<a  href="#custom-settings">Custom Settings</a>
 				</li>
+                <li>
+                    <a id="activity-log-tab"  href="#activity-log">Activity Log</a>
+                </li>
 				<li>
 					<a href="#cache">Cache</a>
 				</li>
@@ -123,6 +126,14 @@
                     </p>
 
 				</div>
+                <div id="activity-log" class="tab-content" style="padding-top: 24px;">
+                    <table id="activity-log-table" class="table" cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
 			</div>
 
 

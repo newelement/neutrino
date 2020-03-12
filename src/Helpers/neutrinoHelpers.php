@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Str;
+use Newelement\Neutrino\Models\ActivityLog;
 
 function toSlug($text, $type = false)
 {
@@ -1704,6 +1705,11 @@ function _getMenuSlot($num = 0){
     }
 
     return $arrs;
+}
+
+function isRouteGroup($group){
+    $routeName = Route::currentRouteName();
+    return strpos($routeName, $group);
 }
 
 function getBlocks(){

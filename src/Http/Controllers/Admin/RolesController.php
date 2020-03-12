@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Newelement\Neutrino\Facades\Neutrino;
 use Newelement\Neutrino\Models\Role;
 use Illuminate\Support\Str;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class RolesController extends Controller
 {
@@ -40,6 +41,17 @@ class RolesController extends Controller
     	$role->display_name = $request->display_name;
 		$role->save();
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'role.create',
+            'object_type' => 'role',
+            'object_id' => $role->id,
+            'content' => 'Role created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/roles')->with('success', 'Role created.');
 	}
 
@@ -61,6 +73,16 @@ class RolesController extends Controller
     	$role->display_name = $request->display_name;
 		$role->save();
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'role.updated',
+            'object_type' => 'role',
+            'object_id' => $role->id,
+            'content' => 'Role updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/roles')->with('success', 'Role updated.');
 	}
@@ -68,6 +90,17 @@ class RolesController extends Controller
 	public function delete($id)
 	{
 		Role::find($id)->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'role.delete',
+            'object_type' => 'role',
+            'object_id' => $id,
+            'content' => 'Role deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
 
 		return redirect('/admin/roles')->with('success', 'Role deleted.');
 	}

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Newelement\Neutrino\Facades\Neutrino;
 use Newelement\Neutrino\Models\ObjectMedia;
 use Newelement\Neutrino\Models\Place;
+use Newelement\Neutrino\Models\ActivityLog;
 
 class LocationController extends Controller
 {
@@ -57,6 +58,17 @@ class LocationController extends Controller
 
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'place.create',
+            'object_type' => 'place',
+            'object_id' => $location->id,
+            'content' => 'Place created',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/locations/'.$location->id)->with('success', 'Location created.');
 
 	}
@@ -104,6 +116,17 @@ class LocationController extends Controller
 			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
 		}
 
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'place.updated',
+            'object_type' => 'place',
+            'object_id' => $location->id,
+            'content' => 'Place updated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/locations/'.$id)->with('success', 'Location updated.');
 
 	}
@@ -113,6 +136,18 @@ class LocationController extends Controller
 	{
 		$location = Place::find($id);
 		$location->delete();
+
+        ActivityLog::insert([
+            'activity_package' => 'neutrino',
+            'activity_group' => 'place.deleted',
+            'object_type' => 'place',
+            'object_id' => $id,
+            'content' => 'Place deleted',
+            'log_level' => 1,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
 		return redirect('/admin/locations')->with('success', 'Location deleted.');
 	}
 
