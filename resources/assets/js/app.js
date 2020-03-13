@@ -2749,8 +2749,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     html += response.data.note.notes;
                 html += '</div>';
                 html += '</li>';
-
+                $('#order-note').val('');
                 $('.order-notes-list ul').prepend(html);
+                $('.no-notes-msg').remove();
 
                 $('.order-notes-message').html('<p class="text-center" style="font-size: 14px">Note added.</p>');
 
