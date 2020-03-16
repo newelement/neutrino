@@ -156,6 +156,7 @@
                     <span class="new-order-counter">{{ $orderCount }}</span>
                 @endif
                 </li>
+                <li><a href="/admin/subscriptions"><span class="dash">-</span> Subscription Plans</a>
                 <li><a href="/admin/shoppe-reports"><span class="dash">-</span> Reports</a></li>
     		    <li><a href="/admin/shoppe-settings"><span class="dash">-</span> Shoppe Settings</a></li>
 		    </ul>

@@ -128,7 +128,9 @@ if( editor ){
 	      "insertdatetime media nonbreaking table directionality",
 	      "template paste textpattern"
 	    ],
-	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+        //menubar:false,
+        menubar: 'insert view format tools',
+	    toolbar: "insertfile undo redo | styleselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
 		relative_urls: false,
 		mobile: {
 		    theme: 'mobile',
@@ -1692,12 +1694,19 @@ window.addEventListener('DOMContentLoaded', (e) => {
         if( $(this).val() === 'download' ){
             $('#product-file-row').show();
             $('#product-role-row').hide();
+            $('#product-subscription-row').hide();
+        } else if ( $(this).val() === 'subscription' ) {
+            $('#product-role-row').hide();
+            $('#product-file-row').hide();
+            $('#product-subscription-row').show();
         } else if ( $(this).val() === 'role' ) {
             $('#product-role-row').show();
             $('#product-file-row').hide();
+            $('#product-subscription-row').hide();
         } else {
             $('#product-file-row').hide();
             $('#product-role-row').hide();
+            $('#product-subscription-row').hide();
         }
     });
 

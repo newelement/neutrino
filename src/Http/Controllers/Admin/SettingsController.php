@@ -217,7 +217,7 @@ class SettingsController extends Controller
                 'group' => $log->activity_group,
                 'object' => '',
                 'activity' => $log->content,
-                'user' => $log->createdUser->name,
+                'user' => $log->createdUser? $log->createdUser->name : 'Guest',
                 'level' => $log->log_level,
                 'created_on' => $log->created_at->timezone( config('neutrino.timezone') )->format('m-j-y g:i a')
             ];
