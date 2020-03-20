@@ -24,7 +24,7 @@
 						</div>
 					</div>
 
-                    @if( getSetting('enable_block_editor') && request('editor_type') !== 'C' )
+                    @if( request('editor_type') !== 'C' )
                     <div class="form-row">
                         <label class="label-col align-top full-width" for="content">Block Editor</label>
                         <div class="input-col full-width">

@@ -127,6 +127,8 @@ trait Blocks
         foreach( (array) $blocks as $block){
             if( $block->tag ){
                 $htmls[] = $this->getTag($block->tag, $block->value);
+            } else if( $block->name === 'freetext' ){
+                $htmls[] = $this->compileBaseBlock($block);
             } else {
                 $htmls[] = $this->compileBlock($block);
             }
@@ -172,6 +174,17 @@ trait Blocks
         }
 
         return $rendered;
+    }
+
+    private function compileBaseBlock($block)
+    {
+        $name = $block->name;
+
+        switch($name){
+            case 'freetext':
+                return $block->value;
+            break;
+        }
     }
 
     private function compileBlock($block)

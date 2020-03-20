@@ -731,5 +731,5 @@ function getBlockField($block, $field = ''){
             return $field->value;
         }
     }
-    return value;
+    return $value;
 }
