@@ -67,6 +67,8 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::get('/taxonomies/{type}/{id}', $namespacePrefix.'Admin\TaxonomiesController@getEdit')->name('taxonomies');
 		Route::post('/taxonomies/{type}/{id}', $namespacePrefix.'Admin\TaxonomiesController@update');
 		Route::delete('/taxonomies/{type}/{id}', $namespacePrefix.'Admin\TaxonomiesController@delete');
+        Route::post('/sort/terms', $namespacePrefix.'Admin\TaxonomiesController@sortTerms');
+        Route::post('/sort/taxonomy', $namespacePrefix.'Admin\TaxonomiesController@sortTaxonomy');
 
 		Route::get('/media', $namespacePrefix.'Admin\MediaController@index')->name('media');
 

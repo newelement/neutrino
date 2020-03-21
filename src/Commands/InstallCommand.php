@@ -53,7 +53,6 @@ class InstallCommand extends Command
         // Publish only relevant resources on install
 
         $this->call('vendor:publish', ['--provider' => NeutrinoServiceProvider::class]); // , '--tag' => $tags
-        $this->call('vendor:publish', ['--provider' => ImageServiceProviderLaravel5::class]);
 		$this->call('vendor:publish', ['--provider' => 'Newelement\LaravelCalendarEvent\ServiceProvider']);
         $this->call('vendor:publish', ['--provider' => 'Kyslik\ColumnSortable\ColumnSortableServiceProvider', '--tag' => 'config']);
 

@@ -187,6 +187,7 @@ h2, h3{
     border-radius: 10px;
     height: 20px;
     min-width: 20px;
+    padding: 0 3px;
     line-height: 19px;
     font-weight: 700;
     text-align: center;
@@ -881,11 +882,19 @@ h2, h3{
 		width: 100%;
 		padding-right: 0;
 	}
+
+    &.terms-content{
+        width: 60%;
+    }
 }
 
 .sidebar{
 	width: 30%;
 	padding: 12px 0 24px 32px;
+
+    &.terms-sidebar{
+        width: 40%;
+    }
 }
 
 .btn,
@@ -1286,6 +1295,10 @@ select::-ms-expand {
 		}
 	}
 
+}
+
+.tax-sort-handle{
+    cursor: ns-resize;
 }
 
 .restore-content-modal{

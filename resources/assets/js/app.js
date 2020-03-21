@@ -1033,6 +1033,23 @@ function updateObjectRepeaterSort(){
 	}
 }
 
+function updateTaxSort(type){
+    let items = document.querySelectorAll('.tax-item');
+    let formData = new FormData;
+    items.forEach((v) => {
+        let id = v.getAttribute('data-id');
+        formData.append('items[]', id);
+    });
+
+    let url = type === 'tax'? '/admin/sort/terms' : '/admin/sort/taxonomy';
+    HTTP.post(url, formData)
+        .then(response => {
+        })
+        .catch(e => {
+            console.log('sort error');
+        });
+}
+
 function snackbar(type, message){
 	var x = document.getElementById("snackbar");
 	x.innerHTML = message;
@@ -1295,8 +1312,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
 	$('.lfm-social-image').click(function(e){
 		e.preventDefault();
 		let multiple = false ;
-		let inputId = 'social-image';
-		let previewId = 'social-image-preview';
+		let inputId = $(this).attr('data-input');
+        let previewId = $(this).attr('data-preview');
+        console.log(inputId, previewId);
 		showFMinput(inputId, previewId, 'image', multiple);
 	});
 
@@ -1710,6 +1728,12 @@ window.addEventListener('DOMContentLoaded', (e) => {
         }
     });
 
+    $('#subscription-id').change( (e) => {
+        let opt = e.target.options[e.target.selectedIndex];
+        let amount = opt.getAttribute('data-amount');
+        document.getElementById('price').value = amount;
+    });
+
 	$('#item-file').click(function(e){
 		e.preventDefault();
 		let multiple = false ;
@@ -1895,6 +1919,44 @@ window.addEventListener('DOMContentLoaded', (e) => {
 			},
 		});
 	}
+
+    let taxTable = document.querySelector('.tax-table');
+    let taxTypeTable = document.querySelector('.tax-type-table');
+    if(taxTable){
+        Sortable.create(taxTable, {
+            handle: '.tax-sort-handle',
+            easing: "cubic-bezier(1, 0, 0, 1)",
+            animation: 150,
+            onEnd: function (e) {
+                //updateObjectRepeaterSort();
+                updateTaxSort('tax');
+            },
+            onAdd: function (e) {
+                //console.log('ADD',e);
+            },
+            onStart: function (evt) {
+                evt.oldIndex;
+            },
+        });
+    }
+
+    if(taxTypeTable){
+        Sortable.create(taxTypeTable, {
+            handle: '.tax-sort-handle',
+            easing: "cubic-bezier(1, 0, 0, 1)",
+            animation: 150,
+            onEnd: function (e) {
+                //updateObjectRepeaterSort();
+                updateTaxSort('taxtype');
+            },
+            onAdd: function (e) {
+                //console.log('ADD',e);
+            },
+            onStart: function (evt) {
+                evt.oldIndex;
+            },
+        });
+    }
 
 	$('.repeater-fields-group').on('click', '.repeater-group-toggle', function(e){
 		e.preventDefault();

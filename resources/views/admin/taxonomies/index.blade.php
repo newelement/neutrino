@@ -2,22 +2,24 @@
 @section('title', 'Taxonomy Terms | ')
 @section('content')
 	<div class="container">
-		<div class="content">
+		<div class="content terms-content">
 			<h2>{{ str_plural($taxonomy->title) }}</h2>
 
 			<table cellpadding="0" cellspacing="0" class="table">
 				<thead>
 					<tr>
+                        <th width="20"></th>
 						<th class="text-left">{{ $taxonomy->title }}</th>
 						<th>Slug</th>
 						<th>Parent</th>
 						<th width="80"></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="tax-table">
 				@foreach( $taxonomies as $tax )
 					<tr>
-						<td data-label="Title">
+                        <td class="tax-sort-handle"><i class="fal fa-sort"></i></td>
+						<td class="tax-item" data-id="{{ $tax->id }}" data-label="Title">
 							<a href="/admin/taxonomies/{{ $taxonomy->id }}/{{ $tax->id }}">{{ $tax->title }}</a>
 						</td>
 						<td data-label="Slug" class="text-center">
@@ -41,13 +43,9 @@
 				@endforeach
 				</tbody>
 			</table>
-
-			<div class="pagination-links">
-				{{ $taxonomies->links() }}
-			</div>
 		</div>
 
-		<aside class="sidebar">
+		<aside class="sidebar terms-sidebar">
 			@if( !$edit )
 			<h3>Create {{ str_singular($taxonomy->title) }}</h3>
 			<form action="/admin/taxonomies/{{ $taxonomy->id }}" method="post">
@@ -67,12 +65,12 @@
 					<div class="form-row">
 						<label class="label-col" for="desc">Description</label>
 						<div class="input-col">
-							<textarea id="desc" name="description" style="height: 100px;">{{ old('description', $edit_taxonomy->description) }}</textarea>
+							<textarea id="desc" class="small-editor" name="description" style="height: 180px;">{{ old('description', $edit_taxonomy->description) }}</textarea>
 						</div>
 					</div>
 
 					<div class="form-row">
-						<label class="label-col">Image
+						<label class="label-col">Featured Image
 							<a class="lfm-featured-image" data-input="featured-image" data-preview="featured-image-preview">
 								<i class="fas fa-image"></i> Choose
 							</a>
@@ -113,6 +111,61 @@
 						</div>
 					</div>
 
+                    <div class="form-row">
+                        <label class="label-col">Social Image
+                            <a class="lfm-social-image" data-input="social-image" data-preview="social-image-preview">
+                                <i class="fas fa-image"></i> Choose
+                            </a>
+                        </label>
+                        <div class="input-col">
+                            <input id="social-image" class="file-list-input" value="{{ $edit_taxonomy->social_image_1? $edit_taxonomy->social_image_1 : '' }}" type="text" name="social_image_1">
+                            <div id="social-image-preview" class="featured-image-preview">
+                                <img class="lfm-preview-image" src="{{ $edit_taxonomy->social_image_1? $edit_taxonomy->social_image_1 : '' }}" style="height: 160px;">
+                                @if($edit_taxonomy->social_image_1)
+                                <a class="clear-social-image" href="/">&times;</a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="label-col">Twitter Image
+                            <a class="lfm-social-image" data-input="social-image1" data-preview="social-image-preview1">
+                                <i class="fas fa-image"></i> Choose
+                            </a>
+                        </label>
+                        <div class="input-col">
+                            <input id="social-image1" class="file-list-input" value="{{ $edit_taxonomy->social_image_2? $edit_taxonomy->social_image_2 : '' }}" type="text" name="social_image_2">
+                            <div id="social-image-preview1" class="featured-image-preview">
+                                <img class="lfm-preview-image" src="{{ $edit_taxonomy->social_image_2? $edit_taxonomy->social_image_2 : '' }}" style="height: 160px;">
+                                @if($edit_taxonomy->social_image_2)
+                                <a class="clear-lfm-image" data-input="social-image1" data-preview="social-image-preview1" href="/">&times;</a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="label-col" for="social-description">Social Description</label>
+                        <div class="input-col">
+                            <textarea id="social-description" name="social_description" style="height: 130px;">{{ old('social_description', $edit_taxonomy->social_description) }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="label-col" for="meta-description">Meta Description</label>
+                        <div class="input-col">
+                            <textarea id="meta-description" name="meta_description" style="height: 80px;">{{ old('meta_description', $edit_taxonomy->meta_description) }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="label-col" for="keywords">Keywords</label>
+                        <div class="input-col">
+                            <input id="keywords" type="text" name="keywords" value="{{ old('keywords', $edit_taxonomy->keywords) }}">
+                        </div>
+                    </div>
+
 					@endif
 
 					@foreach( $field_groups as $group )
@@ -152,4 +205,12 @@
 		</aside>
 
 	</div>
+@endsection
+
+@section('js')
+<script>
+window.editorCss = '<?php echo getEditorCss(); ?>';
+window.blocks = <?php echo getBlocks() ?>;
+window.currentBlocks = [];
+</script>
 @endsection

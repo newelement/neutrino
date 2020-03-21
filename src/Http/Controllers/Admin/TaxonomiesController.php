@@ -20,13 +20,19 @@ class TaxonomiesController extends Controller
 
 	public function indexTypes()
 	{
-		$taxonomies = TaxonomyType::orderBy('title', 'asc')->paginate(15);
+		$taxonomies = TaxonomyType::orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
 		$edit_taxonomy = new \stdClass();
 		$edit_taxonomy->title = '';
 		$edit_taxonomy->slug = '';
 		$edit_taxonomy->description = '';
+        $edit_taxonomy->meta_description = '';
+        $edit_taxonomy->social_description = '';
+        $edit_taxonomy->keywords = '';
+        $edit_taxonomy->social_image_1 = '';
+        $edit_taxonomy->social_image_2 = '';
 		$edit_taxonomy->hierarchical = 1;
 		$edit_taxonomy->taxonomy_image = '';
+        $edit_taxonomy->featuredImage = false;
 		$edit_taxonomy->show_on = collect([]);
 
 		$entryTypes = EntryType::orderBy('entry_type', 'asc')->get();
@@ -40,13 +46,18 @@ class TaxonomiesController extends Controller
 
 	public function index($id)
 	{
-		$taxonomies = Taxonomy::where('taxonomy_type_id', $id)->orderBy('title', 'asc')->paginate(20);
-		$taxes = Taxonomy::where('taxonomy_type_id', $id)->orderBy('title', 'asc')->get();
+		$taxonomies = Taxonomy::where('taxonomy_type_id', $id)->orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
+		$taxes = Taxonomy::where('taxonomy_type_id', $id)->orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
 		$taxonomy = TaxonomyType::where('id', $id)->first();
 		$edit_taxonomy = new \stdClass();
 		$edit_taxonomy->title = '';
 		$edit_taxonomy->slug = '';
 		$edit_taxonomy->description = '';
+        $edit_taxonomy->meta_description = '';
+        $edit_taxonomy->social_description = '';
+        $edit_taxonomy->keywords = '';
+        $edit_taxonomy->social_image_1 = '';
+        $edit_taxonomy->social_image_2 = '';
 		$edit_taxonomy->taxonomy_image = '';
 		$edit_taxonomy->featuredImage = false;
 
@@ -73,6 +84,11 @@ class TaxonomiesController extends Controller
 		$tax->title = $request->title;
 		$tax->slug = toSlug($request->title, 'taxonomy');
 		$tax->description = $request->description;
+        $tax->meta_description = $request->meta_description;
+        $tax->social_description = $request->social_description;
+        $tax->keywords = $request->keywords;
+        $tax->social_image_1 = $request->social_image_1;
+        $tax->social_image_2 = $request->social_image_2;
 		$tax->taxonomy_type_id = $id;
 		$tax->taxonomy_image = $request->taxonomy_image;
 		$tax->parent_id = $request->parent_id;
@@ -82,7 +98,7 @@ class TaxonomiesController extends Controller
 			$path = $request->featured_image;
 			$media = new ObjectMedia;
 			$media->object_id = $tax->id;
-			$media->object_type = 'taxonomy';
+			$media->object_type = 'taxonomy_type';
 			$media->featured = 1;
 			$media->file_path = parse_url($path, PHP_URL_PATH);
 			$media->save();
@@ -119,6 +135,11 @@ class TaxonomiesController extends Controller
 		$tax->title = $request->title;
 		$tax->slug = toSlug($request->title, 'taxonomy_type');
 		$tax->description = $request->description;
+        $tax->meta_description = $request->meta_description;
+        $tax->social_description = $request->social_description;
+        $tax->keywords = $request->keywords;
+        $tax->social_image_1 = $request->social_image_1;
+        $tax->social_image_2 = $request->social_image_2;
 		$tax->hierarchical = $request->hierarchical? $request->hierarchical : 0;
 		$tax->show_on = implode(',',$request->show_on);
 		$tax->save();
@@ -141,7 +162,7 @@ class TaxonomiesController extends Controller
 	{
 		$tax = TaxonomyType::find($id);
 		$tax->show_on = collect(explode(',',$tax->show_on));
-		$taxonomies = TaxonomyType::orderBy('title', 'asc')->paginate(15);
+		$taxonomies = TaxonomyType::orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
 		$entryTypes = EntryType::orderBy('entry_type', 'asc')->get();
 
 		return view('neutrino::admin.taxonomies.index-types', [
@@ -156,7 +177,7 @@ class TaxonomiesController extends Controller
 		$tax = Taxonomy::find($id);
 		$taxes = Taxonomy::where('taxonomy_type_id', $type)->where('id', '<>', $tax->id)->orderBy('title', 'asc')->get();
 		$taxonomy = TaxonomyType::where('id', $type)->first();
-		$taxonomies = Taxonomy::orderBy('title', 'asc')->paginate(20);
+		$taxonomies = Taxonomy::orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
 
 		$fieldGroups = $this->getFieldGroups('taxonomy', $taxonomy->slug);
 
@@ -175,9 +196,29 @@ class TaxonomiesController extends Controller
 		$tax = TaxonomyType::find($id);
 		$tax->title = $request->title;
 		$tax->description = $request->description;
+        $tax->meta_description = $request->meta_description;
+        $tax->social_description = $request->social_description;
+        $tax->keywords = $request->keywords;
+        $tax->social_image_1 = $request->social_image_1;
+        $tax->social_image_2 = $request->social_image_2;
 		$tax->hierarchical = $request->hierarchical? $request->hierarchical : 0;
 		$tax->show_on = is_array($request->show_on)? implode(',', $request->show_on) : '';
 		$tax->save();
+
+        if( $request->featured_image ){
+            $path = $request->featured_image;
+            ObjectMedia::updateOrCreate([
+                'object_id' => $tax->id,
+                'object_type' => 'taxonomy_type',
+                'featured' => 1
+            ], [ 'file_path' => parse_url($path, PHP_URL_PATH) ]);
+        } else {
+            ObjectMedia::where([
+                'object_id' => $tax->id,
+                'object_type' => 'taxonomy_type',
+                'featured' => 1
+                ])->delete();
+        }
 
         ActivityLog::insert([
             'activity_package' => 'neutrino',
@@ -205,6 +246,11 @@ class TaxonomiesController extends Controller
 		$tax->title = $request->title;
 		//$tax->slug = toSlug($request->title, 'taxonomy');
 		$tax->description = $request->description;
+        $tax->meta_description = $request->meta_description;
+        $tax->social_description = $request->social_description;
+        $tax->keywords = $request->keywords;
+        $tax->social_image_1 = $request->social_image_1;
+        $tax->social_image_2 = $request->social_image_2;
 		$tax->taxonomy_type_id = $type;
 		$tax->parent_id = $request->parent_id? $request->parent_id : 0;
 		$tax->save();
@@ -295,5 +341,29 @@ class TaxonomiesController extends Controller
 
 		return redirect('/admin/taxonomies/'.$type->id)->with('success', $title.' deleted.');
 	}
+
+    public function sortTerms(Request $request)
+    {
+        $terms = $request->items;
+
+        foreach( $terms as $key => $id ){
+            $id = (int) $id;
+            $tax = Taxonomy::find($id);
+            $tax->sort = $key;
+            $tax->save();
+        }
+    }
+
+    public function sortTaxonomy(Request $request)
+    {
+        $taxonomies = $request->items;
+
+        foreach( $taxonomies as $key => $id ){
+            $id = (int) $id;
+            $tax = TaxonomyType::find($id);
+            $tax->sort = $key;
+            $tax->save();
+        }
+    }
 
 }

@@ -45,11 +45,13 @@ class NeutrinoServiceProvider extends ServiceProvider
 	{
 
 		$viewsDirectory = __DIR__.'/../resources/views';
+        $adminViewsDirectory = __DIR__.'/../resources/views/admin';
 		$publishAssetsDirectory = __DIR__.'/../publishable/assets';
 
         $this->loadViewsFrom($viewsDirectory, 'neutrino');
 
 		$this->publishes([$viewsDirectory => base_path('resources/views/vendor/neutrino')], 'views');
+        $this->publishes([$adminViewsDirectory => base_path('resources/views/vendor/neutrino/admin')], 'adminviews');
 		$this->publishes([ $publishAssetsDirectory => public_path('vendor/newelement/neutrino') ], 'public');
         $router->aliasMiddleware('admin.user', NeutrinoAdminMiddleware::class);
 		$this->loadTranslationsFrom(realpath(__DIR__.'/../publishable/lang'), 'neutrino');
@@ -102,6 +104,7 @@ class NeutrinoServiceProvider extends ServiceProvider
     {
         $this->commands(Commands\InstallCommand::class);
         $this->commands(Commands\AdminCommand::class);
+        $this->commands(Commands\UpdateCommand::class);
     }
 
     private function initActions()
