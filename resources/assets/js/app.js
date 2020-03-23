@@ -9,6 +9,7 @@ import datepicker from 'js-datepicker'
 import flatpickr from "flatpickr";
 import moment from 'moment';
 window.moment = moment;
+import Choices from 'choices.js'
 import Tabulator from 'tabulator-tables';
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
 import axios from 'axios';
@@ -1293,6 +1294,11 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 	}
 
+    const choiceElements = document.querySelectorAll('.js-choice');
+    if( choiceElements.length ){
+        const choices = new Choices('.js-choice');
+    }
+
 	$('.lfm-featured-image').click(function(e){
 		e.preventDefault();
 		let multiple = false ;
@@ -1716,6 +1722,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         } else if ( $(this).val() === 'subscription' ) {
             $('#product-role-row').hide();
             $('#product-file-row').hide();
+            $('#taxable').attr('checked', true);
             $('#product-subscription-row').show();
         } else if ( $(this).val() === 'role' ) {
             $('#product-role-row').show();

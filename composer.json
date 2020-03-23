@@ -3,7 +3,6 @@
     "description": "A Laravel CMS eCommerce package",
     "keywords": ["laravel", "cms", "admin", "shop", "ecommerce"],
     "license": "MIT",
-    "version": "1.1.500",
     "homepage": "https://newelementdesigns.com/neutrino/",
     "support": {
         "issues": "https://github.com/newelement/neutrino/issues",

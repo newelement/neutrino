@@ -971,6 +971,25 @@ a.btn{
             padding-left: 24px;
         }
 
+        &.has-choices{
+            display: block;
+            flex-direction: inherit;
+            align-items: inherit;
+            justify-content: inherit;
+
+            .choices{
+                width: 100%;
+
+                .choices__inner{
+                    border-radius: 0;
+                    background-color: #fff;
+                    min-height: 50px;
+                    border: 1px solid #ccc;
+                }
+
+            }
+        }
+
 		&.row{
 			flex-direction: row;
 			flex-wrap: wrap;
@@ -2652,6 +2671,8 @@ progress[value]::-webkit-progress-bar {
 @import '~flatpickr/dist/themes/dark.css';
 @import '~tabulator-tables/src/scss/tabulator.scss';
 @import '~tabulator-tables/src/scss/tabulator_simple.scss';
+//@import '~choices.js/src/styles/base.scss';
+@import '~choices.js/src/styles/choices.scss';
 
 @media( max-width: 950px ){
 
