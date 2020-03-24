@@ -88,7 +88,7 @@
 							<p>{{ $group->description }}</p>
 						@endif
 						@foreach( $group->fields as $field )
-						{!! _generateField($field, 'entry', $entry->id) !!}
+						{!! _generateField($field) !!}
 						@endforeach
 					@endforeach
 

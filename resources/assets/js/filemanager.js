@@ -192,7 +192,7 @@ window.fm = new Vue({
         },
 		deleteFile(file){
 			let formData = new FormData;
-			formData.append('path', file.path);
+			formData.append('path', file.path+'/'+file.filename);
 			formData.append('_method', 'delete');
 
 			HTTP.post('/admin/filemanager/file', formData)

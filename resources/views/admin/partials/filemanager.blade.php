@@ -32,7 +32,7 @@
 					<a class="fm-delete-item" href="/" @click.prevent="deleteFile(file)">&times;</a>
 					<div class="fm-list-inner" :class="{ selected: file.selected }" @click="selectFile(file)">
 						<img v-if="file.image" :id="'image-'+index" :src="file.sizes.original" style="display: none">
-						<img v-if="file.image" :src="'/storage/'+file.path">
+						<img v-if="file.image" :src="file.url">
 						<div v-if="!file.image" class="fm-file-icon">
 							<span>@{{ file.info.extension }}</span>
 							<i class="fal fa-file"></i>
@@ -93,12 +93,12 @@
 				<h3>File Info</h3>
 				<p>
 					<strong>Thumb URL:</strong><br>
-					@{{ baseUrl }}/storage/@{{ selectedFile.path }}
+					@{{ selectedFile.url }}
 				</p>
 				<div v-if="selectedFile.image">
 					<h3>Sizes</h3>
 					<ul class="sizes-list">
-						<li style="margin-bottom: 12px;" v-for="(size, name) in selectedFile.sizes"><strong>@{{ name }}</strong><br>@{{ baseUrl }}@{{size}}</li>
+						<li style="margin-bottom: 12px;" v-for="(size, name) in selectedFile.sizes"><strong>@{{ name }}</strong><br>@{{size}}</li>
 					</ul>
 				</div>
 			</div>
