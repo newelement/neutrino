@@ -58,6 +58,7 @@ let chosenFeatured = {};
 let chosenAttributes = [];
 let $form = $('.media-drop-zone');
 let droppedFiles = false;
+let cf_config;
 
 let refundObj = {
     amount: 0.00,
@@ -85,6 +86,7 @@ let fields = [
 
 let editor = document.querySelector('.editor');
 let smallEditor = document.querySelector('.small-editor');
+let cfeditor = document.querySelector('.cf-editor');
 
 if( smallEditor ){
     var editor_config_small = {
@@ -158,6 +160,49 @@ if( editor ){
 		editor_config
 	);
 }
+
+if( typeof editorCss !== 'undefined' && cfeditor ){
+
+    cf_config = {
+        path_absolute : "/",
+        selector: ".cf-editor",
+        height: 600,
+        width: '100%',
+        skin: "oxide-dark",
+        plugins: [
+          "advlist autolink lists link image imagetools charmap print preview hr anchor pagebreak",
+          "searchreplace wordcount visualblocks visualchars code fullscreen",
+          "insertdatetime media nonbreaking table directionality",
+          "template paste textpattern"
+        ],
+        //menubar:false,
+        menubar: 'insert view format tools',
+        toolbar: "insertfile undo redo | styleselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
+        relative_urls: false,
+        mobile: {
+            theme: 'mobile',
+            plugins: [ 'lists', 'autolink', 'image', 'link' ],
+            toolbar: [ 'undo', 'bold', 'billist', 'link', 'italic', 'styleselect', 'image' ]
+        },
+        file_picker_callback: function(callback, value, meta) {
+            //console.log(meta, value);
+            var type = 'image' === meta.filetype ? 'image' : 'file';
+            showFMeditor(type);
+            window.addEventListener('message', (event) => {
+                if( event.data.mceAction === 'insert' ){
+                    let name = event.data.content.split('/').pop();
+                    let obj = type === 'image'? { alt: '' } : { text: name } ;
+                    callback(event.data.content, obj);
+                }
+            });
+        },
+        body_id: 'block-editor',
+        content_css : editorCss
+    };
+
+    tinymce.init(cf_config);
+}
+
 
 function readURL(input) {
 	$('#preview').hide();
@@ -2681,9 +2726,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 		$('#repeater-fields-group'+id).append($rootHtml);
 
-		tinymce.remove();
+		tinymce.remove('.cf-editor');
 		setTimeout(function(){
-			tinymce.init(editor_config);
+			tinymce.init(cf_config);
 		}, 1000);
 
 	});

@@ -371,8 +371,8 @@ class MediaController extends Controller
     private function getSizes($file)
     {
         $sizes = [];
-        $basename = basename($image);
-        $urlInfo = parse_url($image);
+        $basename = basename($file);
+        $urlInfo = parse_url($file);
         $fullpath = str_replace('/storage/', '', $urlInfo['path']);
         $justPath = str_replace( $basename, '', $fullpath);
 

@@ -1367,7 +1367,7 @@ function _generateField($field, $objectType = false, $id = 0, $repeater = false,
 				$html .= '<label class="label-col align-top full-width" for="'.$fieldId.'">'.$field->field_label.'</label>';
 				$html .= '<div class="input-col full-width">';
 
-				$html .= '<textarea data-type="editor" class="editor" id="'.$fieldId.'"
+				$html .= '<textarea data-type="editor" class="cf-editor" id="'.$fieldId.'"
 							name="cfs'.$fieldName.'"
 							'.($isClone? 'disabled' : '').'
 							'.( $field->field_required && !$isClone ? 'required' : '' ).'
