@@ -83,7 +83,7 @@ class EventController extends Controller
 				'object_id' => $calendarEvent->id,
 				'object_type' => 'event',
 				'featured' => 1
-			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
+			], [ 'file_path' => $request->featured_image ]);
 
 		}
 
@@ -175,7 +175,7 @@ class EventController extends Controller
 				'object_id' => $newId,
 				'object_type' => 'event',
 				'featured' => 1
-			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
+			], [ 'file_path' => $request->featured_image ]);
 		}
 
         ActivityLog::insert([

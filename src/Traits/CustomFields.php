@@ -210,11 +210,11 @@ trait CustomFields
 						}
 						if( $fieldData->field_type === 'file' ){
 							$field_type = 'file';
-							$repeaterValue = parse_url($repeaterValue, PHP_URL_PATH);
+							$repeaterValue = $repeaterValue;
 						}
 						if( $fieldData->field_type === 'image' ){
 							$field_type = 'image';
-							$repeaterValue = parse_url($repeaterValue, PHP_URL_PATH);
+							$repeaterValue = $repeaterValue;
 						}
 						$update['field_'.$field_type] = $repeaterValue;
 						$update['field_type'] = $fieldData->field_type;

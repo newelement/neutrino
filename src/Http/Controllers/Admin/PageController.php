@@ -104,7 +104,7 @@ class PageController extends Controller
 			'meta_description' => $request->meta_description ,
 			'status' => $request->status? $request->status : 'P',
             'editor_type' => $request->editor_type? $request->editor_type : 'B',
-			'social_image' => parse_url($request->social_image, PHP_URL_PATH),
+			'social_image' => $request->social_image,
 			'protected' => $request->protected ? implode(',',$request->protected) : ''
 		]);
 
@@ -114,7 +114,7 @@ class PageController extends Controller
 			$media->object_id = $page->id;
 			$media->object_type = 'page';
 			$media->featured = 1;
-			$media->file_path = parse_url($path, PHP_URL_PATH);
+			$media->file_path = $path;
 			$media->save();
 		}
 
@@ -225,7 +225,7 @@ class PageController extends Controller
 		$page->meta_description = $request->meta_description ;
 		$page->status = $request->status? $request->status : 'P' ;
         $page->editor_type = $request->editor_type? $request->editor_type : 'B' ;
-		$page->social_image = parse_url($request->social_image, PHP_URL_PATH);
+		$page->social_image = $request->social_image;
 		$page->protected = $request->protected ? implode(',',$request->protected) : '';
 		$page->save();
 
@@ -244,7 +244,7 @@ class PageController extends Controller
 				'object_id' => $page->id,
 				'object_type' => 'page',
 				'featured' => 1
-			], [ 'file_path' => parse_url($path, PHP_URL_PATH) ]);
+			], [ 'file_path' => $path ]);
 		} else {
 			ObjectMedia::where([
 				'object_id' => $page->id,

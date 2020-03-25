@@ -120,7 +120,7 @@ class EntryController extends Controller
 		$entry->meta_description = $request->meta_description ;
 		$entry->entry_type = $request->entry_type? $request->entry_type : 'entry';
 		$entry->allow_comments = $request->allow_comments? 1 : 0 ;
-		$entry->social_image = parse_url($request->social_image, PHP_URL_PATH);
+		$entry->social_image = $request->social_image;
 		$entry->protected = $request->protected? implode(',',$request->protected) : '';
 		$entry->save();
 
@@ -146,7 +146,7 @@ class EntryController extends Controller
 			$media->object_id = $entry->id;
 			$media->object_type = 'entry';
 			$media->featured = 1;
-			$media->file_path = parse_url($path, PHP_URL_PATH);
+			$media->file_path = $path;
 			$media->save();
 		}
 
@@ -288,7 +288,7 @@ class EntryController extends Controller
 		$entry->meta_description = $request->meta_description ;
 		$entry->entry_type = $request->entry_type;
 		$entry->allow_comments = $request->allow_comments? 1 : 0 ;
-		$entry->social_image = parse_url($request->social_image, PHP_URL_PATH);
+		$entry->social_image = $request->social_image;
 		$entry->protected = $request->protected? implode(',',$request->protected) : '';
 		$entry->save();
 
@@ -322,7 +322,7 @@ class EntryController extends Controller
 				'object_id' => $entry->id,
 				'object_type' => 'entry',
 				'featured' => 1
-			], [ 'file_path' => parse_url($path, PHP_URL_PATH) ]);
+			], [ 'file_path' => $path]);
 		} else {
 			ObjectMedia::where([
 				'object_id' => $entry->id,

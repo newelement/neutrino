@@ -100,7 +100,7 @@ class TaxonomiesController extends Controller
 			$media->object_id = $tax->id;
 			$media->object_type = 'taxonomy_type';
 			$media->featured = 1;
-			$media->file_path = parse_url($path, PHP_URL_PATH);
+			$media->file_path = $path;
 			$media->save();
 		}
 
@@ -211,7 +211,7 @@ class TaxonomiesController extends Controller
                 'object_id' => $tax->id,
                 'object_type' => 'taxonomy_type',
                 'featured' => 1
-            ], [ 'file_path' => parse_url($path, PHP_URL_PATH) ]);
+            ], [ 'file_path' => $path ]);
         } else {
             ObjectMedia::where([
                 'object_id' => $tax->id,
@@ -261,7 +261,7 @@ class TaxonomiesController extends Controller
 				'object_id' => $tax->id,
 				'object_type' => 'taxonomy',
 				'featured' => 1
-			], [ 'file_path' => parse_url($path, PHP_URL_PATH) ]);
+			], [ 'file_path' => $path ]);
 		} else {
 			ObjectMedia::where([
 				'object_id' => $tax->id,

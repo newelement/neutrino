@@ -54,7 +54,7 @@ class LocationController extends Controller
 				'object_id' => $location->id,
 				'object_type' => 'location',
 				'featured' => 1
-			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
+			], [ 'file_path' => $request->featured_image ]);
 
 		}
 
@@ -113,7 +113,7 @@ class LocationController extends Controller
 				'object_id' => $id,
 				'object_type' => 'location',
 				'featured' => 1
-			], [ 'file_path' => parse_url($request->featured_image, PHP_URL_PATH) ]);
+			], [ 'file_path' => $request->featured_image ]);
 		}
 
         ActivityLog::insert([
