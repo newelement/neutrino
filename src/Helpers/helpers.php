@@ -605,29 +605,34 @@ function getImageSizes($image){
     if( !$image ){
         return [];
     }
-	$sizes = [];
-	$image = str_replace('/storage/', '', $image);
-	$pathInfo = pathinfo($image);
-	$dir = $pathInfo['dirname'];
+    $sizes = [];
+    $basename = basename($image);
+    $urlInfo = parse_url($image);
+    $fullpath = str_replace('/storage/', '', $urlInfo['path']);
+    $justPath = str_replace( $basename, '', $fullpath);
 
-	$imageSizes = config('neutrino.media.image_sizes');
+    $imageSizes = config('neutrino.media.image_sizes');
 
     foreach( $imageSizes as $key => $value ){
-        $path = $dir.'/_'.$key.'/'.$pathInfo['basename'];
+        $path = $justPath.'_'.$key.'/'.$basename;
+
         $exists = Storage::disk(config('neutrino.storage.filesystem'))->exists($path);
-        $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
-        $sizes[$key] = $url;
+        if( $exists ){
+            $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
+            $sizes[$key] = $url;
+        }
+
     }
 
-    $ogPath = $dir.'/_original/'.$pathInfo['basename'];
+    $ogPath = $justPath.'_original/'.$basename;
     $ogExists = Storage::disk(config('neutrino.storage.filesystem'))->exists($ogPath);
 
     if( $ogExists ){
-        $url = Storage::disk(config('neutrino.storage.filesystem'))->exists($ogPath);
-    	$sizes['original'] = $url;
+        $url = Storage::disk(config('neutrino.storage.filesystem'))->url($ogPath);
+        $sizes['original'] = $url;
     }
 
-	return $sizes;
+    return $sizes;
 }
 
 function shoppeExists(){

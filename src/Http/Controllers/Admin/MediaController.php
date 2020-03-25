@@ -371,22 +371,30 @@ class MediaController extends Controller
     private function getSizes($file)
     {
         $sizes = [];
-        $pathInfo = pathinfo($file);
-        $dir = $pathInfo['dirname'];
+        $basename = basename($image);
+        $urlInfo = parse_url($image);
+        $fullpath = str_replace('/storage/', '', $urlInfo['path']);
+        $justPath = str_replace( $basename, '', $fullpath);
 
         $imageSizes = config('neutrino.media.image_sizes');
 
         foreach( $imageSizes as $key => $value ){
-            $path = $dir.'/_'.$key.'/'.$pathInfo['basename'];
-            $exists = Storage::disk($this->disk)->exists($path);
-            $sizes[$key] = Storage::disk($this->disk)->url($path);
+            $path = $justPath.'_'.$key.'/'.$basename;
+
+            $exists = Storage::disk(config('neutrino.storage.filesystem'))->exists($path);
+            if( $exists ){
+                $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
+                $sizes[$key] = $url;
+            }
+
         }
 
-        $ogPath = $dir.'/_original/'.$pathInfo['basename'];
-        $ogExists = Storage::disk($this->disk)->exists($ogPath);
+        $ogPath = $justPath.'_original/'.$basename;
+        $ogExists = Storage::disk(config('neutrino.storage.filesystem'))->exists($ogPath);
 
         if( $ogExists ){
-            $sizes['original'] = Storage::disk($this->disk)->url($ogPath);
+            $url = Storage::disk(config('neutrino.storage.filesystem'))->url($ogPath);
+            $sizes['original'] = $url;
         }
 
         unset($sizes['thumb']);
