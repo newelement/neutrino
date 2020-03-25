@@ -363,6 +363,7 @@ class MediaController extends Controller
 
     private function fileExists($file)
     {
+        //$parsed = parse_url($file);
         $exists = Storage::disk($this->disk)->exists($file);
         return $exists;
     }

@@ -615,14 +615,16 @@ function getImageSizes($image){
     foreach( $imageSizes as $key => $value ){
         $path = $dir.'/_'.$key.'/'.$pathInfo['basename'];
         $exists = Storage::disk(config('neutrino.storage.filesystem'))->exists($path);
-        $sizes[$key] = '/storage/'.$path;
+        $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
+        $sizes[$key] = $url;
     }
 
     $ogPath = $dir.'/_original/'.$pathInfo['basename'];
     $ogExists = Storage::disk(config('neutrino.storage.filesystem'))->exists($ogPath);
 
     if( $ogExists ){
-    	$sizes['original'] = '/storage/'.$ogPath;
+        $url = Storage::disk(config('neutrino.storage.filesystem'))->exists($ogPath);
+    	$sizes['original'] = $url;
     }
 
 	return $sizes;
