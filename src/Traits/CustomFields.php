@@ -149,10 +149,10 @@ trait CustomFields
 				$update['field_text'] = $value;
             break;
 			case 'file' :
-			    $update['field_file'] = parse_url($value, PHP_URL_PATH);
+			    $update['field_file'] = $value;
 			break;
 			case 'image' :
-				$update['field_image'] = parse_url($value, PHP_URL_PATH);
+				$update['field_image'] = $value;
 			break;
 			case 'select' :
 				$update['field_text'] = implode(',', $value);

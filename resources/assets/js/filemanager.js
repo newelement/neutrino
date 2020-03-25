@@ -226,7 +226,7 @@ window.fm = new Vue({
 				if( file.image ){
 					this.chooseSize(file);
 				} else {
-					this.useFile('/storage/'+file.path);
+					this.useFile(file.url);
 				}
 			}
 
@@ -244,12 +244,12 @@ window.fm = new Vue({
 				let preview = document.getElementById(this.previewId);
 
 				if( !this.multiple ){
-					input.value = '/storage/'+file.path;
+					input.value = file.url;
 					if( this.fileType === 'image' ){
 						preview.innerHTML = '';
 						let  $img = document.createElement('img');
 						$img.setAttribute('class', 'lfm-preview-image');
-						$img.setAttribute('src', '/storage/'+file.path);
+						$img.setAttribute('src', file.url);
 				        preview.appendChild($img);
 						preview.innerHTML = preview.innerHTML+'<a class="clear-lfm-image" data-preview-id="'+this.previewId+'" data-input-id="'+this.inputId+'" href="/">&times;</a>';
 					}
@@ -262,7 +262,7 @@ window.fm = new Vue({
                     $input.setAttribute('type', 'hidden');
                     $input.setAttribute('name', 'gallery_images[]');
                     $input.setAttribute('data-gallery-image-id', id);
-                    $input.value = '/storage/'+file.path;
+                    $input.value = file.url;
 					input.appendChild($input);
 					if( this.fileType === 'image' ){
                         let $galImgWrap = document.createElement('div');
@@ -279,7 +279,7 @@ window.fm = new Vue({
 						let  $img = document.createElement('img');
 						$img.setAttribute('class', 'lfm-preview-image');
                         $img.setAttribute('data-gallery-image-id', id);
-						$img.setAttribute('src', '/storage/'+file.path);
+						$img.setAttribute('src', file.url);
                         $galImgWrap.appendChild($img);
                         $galImgWrap.appendChild($aClose);
 						preview.appendChild($galImgWrap);
@@ -304,7 +304,6 @@ window.fm = new Vue({
 			this.showFileInfoPanel = false;
 		},
 		chooseSize(file){
-			console.log(file);
 			this.sizeOptions = file.sizes;
 			this.showSizeChooser = true;
 		},
