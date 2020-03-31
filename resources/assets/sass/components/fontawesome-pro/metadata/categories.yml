@@ -23,6 +23,7 @@ alert:
     - alarm-exclamation
     - bell
     - bell-exclamation
+    - bell-on
     - bell-school-slash
     - bell-slash
     - bells
@@ -39,6 +40,11 @@ alert:
     - map-marker-exclamation
     - radiation
     - radiation-alt
+    - sensor
+    - sensor-alert
+    - sensor-fire
+    - sensor-on
+    - sensor-smoke
     - skull-crossbones
     - star-exclamation
     - wind-warning
@@ -49,6 +55,7 @@ animals:
     - badger-honey
     - bat
     - cat
+    - cat-space
     - cow
     - crow
     - deer
@@ -66,6 +73,7 @@ animals:
     - hippo
     - horse
     - horse-head
+    - horse-saddle
     - kiwi-bird
     - monkey
     - narwhal
@@ -79,6 +87,7 @@ animals:
     - rabbit-fast
     - ram
     - sheep
+    - skull-cow
     - snake
     - spider
     - spider-black-widow
@@ -266,15 +275,26 @@ arrows:
   label: Arrows
 audio-video:
   icons:
+    - album
+    - album-collection
+    - amp-guitar
     - audio-description
     - backward
+    - betamax
+    - boombox
     - broadcast-tower
+    - camcorder
+    - camera-home
+    - camera-movie
+    - camera-polaroid
     - circle
     - closed-captioning
+    - cloud-music
     - compress
     - compress-alt
     - compress-arrows-alt
     - compress-wide
+    - computer-speaker
     - drone
     - drone-alt
     - eject
@@ -289,12 +309,17 @@ audio-video:
     - file-video
     - film
     - film-alt
+    - film-canister
     - forward
+    - head-side-headphones
     - headphones
+    - image-polaroid
     - microphone
     - microphone-alt
     - microphone-alt-slash
     - microphone-slash
+    - microphone-stand
+    - mp3-player
     - music
     - pause
     - pause-circle
@@ -303,6 +328,7 @@ audio-video:
     - play
     - play-circle
     - podcast
+    - projector
     - random
     - rectangle-landscape
     - rectangle-portrait
@@ -316,14 +342,20 @@ audio-video:
     - rss
     - rss-square
     - scrubber
+    - signal-stream
+    - speaker
+    - speakers
     - step-backward
     - step-forward
     - stop
     - stop-circle
     - sync
     - sync-alt
+    - tv
+    - tv-alt
     - undo
     - undo-alt
+    - vhs
     - video
     - volume
     - volume-down
@@ -331,6 +363,8 @@ audio-video:
     - volume-off
     - volume-slash
     - volume-up
+    - waveform
+    - waveform-path
     - webcam
     - webcam-slash
     - youtube
@@ -353,14 +387,21 @@ automotive:
     - car-side
     - car-tilt
     - car-wash
+    - caravan
+    - caravan-alt
     - cars
     - charging-station
     - engine-warning
+    - flux-capacitor
+    - garage
+    - garage-car
+    - garage-open
     - gas-pump
     - gas-pump-slash
     - motorcycle
     - oil-can
     - oil-temp
+    - rv
     - shuttle-van
     - steering-wheel
     - tachometer
@@ -380,9 +421,11 @@ automotive:
     - tire-flat
     - tire-pressure-warning
     - tire-rugged
+    - trailer
     - truck
     - truck-monster
     - truck-pickup
+    - wagon-covered
   label: Automotive
 autumn:
   icons:
@@ -425,6 +468,7 @@ beverage:
     - burger-soda
     - cocktail
     - coffee
+    - coffee-pot
     - coffee-togo
     - flask
     - flask-poison
@@ -437,6 +481,7 @@ beverage:
     - glass-martini-alt
     - glass-whiskey
     - glass-whiskey-rocks
+    - jug
     - mug
     - mug-hot
     - mug-marshmallows
@@ -458,6 +503,9 @@ buildings:
     - container-storage
     - dungeon
     - farm
+    - garage
+    - garage-car
+    - garage-open
     - gopuram
     - home
     - home-alt
@@ -468,8 +516,11 @@ buildings:
     - hospital-user
     - hospitals
     - hotel
+    - house
     - house-damage
+    - house-day
     - house-flood
+    - house-night
     - igloo
     - industry
     - industry-alt
@@ -524,8 +575,10 @@ business:
     - city
     - clipboard
     - coffee
+    - coffee-pot
     - columns
     - compass
+    - computer-classic
     - copy
     - copyright
     - cut
@@ -542,11 +595,13 @@ business:
     - file-spreadsheet
     - file-user
     - folder
+    - folder-download
     - folder-minus
     - folder-open
     - folder-plus
     - folder-times
     - folder-tree
+    - folder-upload
     - folders
     - glasses
     - globe
@@ -554,7 +609,9 @@ business:
     - industry
     - industry-alt
     - keynote
+    - lamp-desk
     - landmark
+    - laptop-house
     - marker
     - mind-share
     - money-check-edit
@@ -581,8 +638,11 @@ business:
     - print
     - print-slash
     - project-diagram
+    - projector
     - registered
+    - router
     - save
+    - scanner-image
     - shredder
     - sitemap
     - socks
@@ -608,12 +668,17 @@ camping:
     - boot
     - campfire
     - campground
+    - caravan
+    - caravan-alt
     - cauldron
     - compass
+    - faucet
+    - faucet-drip
     - fire
     - fire-alt
     - fire-smoke
     - first-aid
+    - flashlight
     - frog
     - hiking
     - map
@@ -631,6 +696,7 @@ camping:
     - sunset
     - toilet-paper
     - toilet-paper-alt
+    - trailer
     - tree
     - tree-alt
     - tree-large
@@ -693,6 +759,7 @@ chat:
     - comment-lines
     - comment-medical
     - comment-minus
+    - comment-music
     - comment-plus
     - comment-slash
     - comment-smile
@@ -755,6 +822,10 @@ childhood:
     - cookie
     - cookie-bite
     - duck
+    - flashlight
+    - game-console-handheld
+    - gamepad
+    - gamepad-alt
     - globe-snow
     - ice-cream
     - mitten
@@ -767,6 +838,8 @@ clothing:
   icons:
     - boot
     - graduation-cap
+    - hat-cowboy
+    - hat-cowboy-side
     - hat-santa
     - hat-winter
     - hat-witch
@@ -866,8 +939,10 @@ communication:
     - phone-volume
     - rss
     - rss-square
+    - signal-stream
     - tty
     - voicemail
+    - walkie-talkie
     - webcam
     - webcam-slash
     - wifi
@@ -876,39 +951,53 @@ computers:
   icons:
     - brackets
     - brackets-curly
+    - computer-classic
+    - computer-speaker
     - database
     - desktop
     - desktop-alt
+    - disc-drive
     - download
     - ethernet
     - hdd
     - headphones
     - keyboard
     - laptop
+    - laptop-house
     - memory
     - microchip
     - mobile
     - mobile-alt
     - mobile-android
     - mobile-android-alt
+    - mouse
+    - mouse-alt
+    - mp3-player
     - phone-laptop
     - plug
     - power-off
     - print
+    - router
     - satellite
     - satellite-dish
     - save
+    - scanner-image
     - sd-card
     - server
     - sim-card
+    - speaker
+    - speakers
     - stream
     - tablet
     - tablet-alt
     - tablet-android
     - tablet-android-alt
     - tv
+    - tv-music
     - tv-retro
     - upload
+    - usb-drive
+    - watch-calculator
     - webcam
     - webcam-slash
   label: Computers
@@ -991,13 +1080,17 @@ date-time:
     - calendar-plus
     - calendar-times
     - clock
+    - flux-capacitor
     - hourglass
     - hourglass-end
     - hourglass-half
     - hourglass-start
+    - house-day
+    - house-night
     - snooze
     - stopwatch
     - watch
+    - watch-calculator
   label: Date & Time
 design:
   icons:
@@ -1006,6 +1099,7 @@ design:
     - bring-forward
     - bring-front
     - brush
+    - camera-polaroid
     - clone
     - copy
     - crop
@@ -1026,6 +1120,8 @@ design:
     - highlighter
     - icons
     - icons-alt
+    - image-polaroid
+    - lasso
     - layer-group
     - layer-minus
     - layer-plus
@@ -1049,6 +1145,7 @@ design:
     - ruler-horizontal
     - ruler-vertical
     - save
+    - scanner-image
     - send-back
     - send-backward
     - splotch
@@ -1161,6 +1258,7 @@ editors:
     - trash-alt
     - trash-restore
     - trash-restore-alt
+    - typewriter
     - underline
     - undo
     - undo-alt
@@ -1255,14 +1353,19 @@ energy:
     - burn
     - burrito
     - charging-station
+    - fan
     - fire
     - fire-alt
     - gas-pump
     - gas-pump-slash
+    - heat
+    - house-day
+    - house-night
     - industry
     - industry-alt
     - leaf
     - lightbulb
+    - outlet
     - plug
     - poop
     - power-off
@@ -1292,6 +1395,7 @@ files:
     - file-exclamation
     - file-image
     - file-minus
+    - file-music
     - file-pdf
     - file-plus
     - file-powerpoint
@@ -1445,6 +1549,7 @@ fruit-vegetable:
   label: Fruits & Vegetables
 games:
   icons:
+    - alien-monster
     - chess
     - chess-bishop
     - chess-bishop-alt
@@ -1477,10 +1582,13 @@ games:
     - dice-three
     - dice-two
     - dreidel
+    - game-console-handheld
     - gamepad
+    - gamepad-alt
     - ghost
     - headset
     - heart
+    - joystick
     - playstation
     - puzzle-piece
     - spade
@@ -1605,6 +1713,7 @@ hands:
     - hand-holding-box
     - hand-holding-heart
     - hand-holding-magic
+    - hand-holding-medical
     - hand-holding-seedling
     - hand-holding-usd
     - hand-holding-water
@@ -1620,13 +1729,17 @@ hands:
     - hand-receiving
     - hand-rock
     - hand-scissors
+    - hand-sparkles
     - hand-spock
     - hands
     - hands-heart
     - hands-helping
     - hands-usd
+    - hands-wash
     - handshake
     - handshake-alt
+    - handshake-alt-slash
+    - handshake-slash
     - praying-hands
     - thumbs-down
     - thumbs-up
@@ -1681,11 +1794,14 @@ holiday:
   label: Holiday
 hotel:
   icons:
+    - air-conditioner
     - alarm-clock
     - alarm-snooze
     - baby-carriage
     - bath
     - bed
+    - bed-bunk
+    - bed-empty
     - briefcase
     - car
     - car-building
@@ -1701,15 +1817,22 @@ hotel:
     - dryer
     - dryer-alt
     - dumbbell
+    - fan-table
     - fireplace
     - glass-martini
     - glass-martini-alt
+    - heat
     - hot-tub
     - hotel
     - infinity
     - key
+    - lamp-desk
     - luggage-cart
+    - microwave
+    - outlet
+    - oven
     - paw-alt
+    - refrigerator
     - shower
     - shuttle-van
     - smoking
@@ -1722,10 +1845,12 @@ hotel:
     - swimmer
     - swimming-pool
     - tv
+    - tv-alt
     - tv-retro
     - umbrella-beach
     - utensils
     - utensils-alt
+    - vacuum
     - washer
     - wheelchair
     - wifi
@@ -1733,13 +1858,27 @@ hotel:
   label: Hotel
 household:
   icons:
+    - air-conditioner
     - bath
     - bed
+    - bed-alt
+    - bed-bunk
+    - bed-empty
+    - bell
+    - bell-on
     - blanket
     - blender
+    - blinds
+    - blinds-open
+    - blinds-raised
     - books
+    - box-tissue
+    - camera-home
+    - cctv
     - chair
     - chair-office
+    - coffee
+    - coffee-pot
     - couch
     - door-closed
     - door-open
@@ -1747,16 +1886,72 @@ household:
     - dryer-alt
     - dungeon
     - fan
+    - fan-table
+    - faucet
+    - faucet-drip
     - fireplace
+    - flashlight
+    - garage
+    - garage-car
+    - garage-open
+    - heat
+    - house
+    - house-day
+    - house-leave
+    - house-night
+    - house-return
+    - house-signal
+    - house-user
     - lamp
+    - lamp-desk
+    - lamp-floor
+    - laptop-house
+    - light-ceiling
+    - light-switch
+    - light-switch-off
+    - light-switch-on
+    - lightbulb
+    - lightbulb-on
     - loveseat
     - mailbox
+    - microwave
+    - outlet
+    - oven
+    - plug
+    - pump-soap
+    - refrigerator
+    - sensor
+    - sensor-alert
+    - sensor-fire
+    - sensor-on
+    - sensor-smoke
     - shower
+    - signal-stream
+    - sink
+    - siren
+    - siren-on
+    - snowflake
+    - soap
+    - sort-circle
+    - sort-circle-down
+    - sort-circle-up
+    - speaker
+    - speakers
+    - sprinkler
+    - temperature-down
+    - temperature-up
     - toilet-paper
     - toilet-paper-alt
+    - toilet-paper-slash
     - tv
+    - tv-alt
     - tv-retro
+    - vacuum
+    - vacuum-robot
     - washer
+    - webcam
+    - window-frame
+    - window-frame-open
   label: Household
 images:
   icons:
@@ -1764,6 +1959,7 @@ images:
     - bolt
     - camera
     - camera-alt
+    - camera-polaroid
     - camera-retro
     - chalkboard
     - clone
@@ -1778,9 +1974,11 @@ images:
     - file-image
     - film
     - film-alt
+    - film-canister
     - id-badge
     - id-card
     - image
+    - image-polaroid
     - images
     - photo-video
     - portrait
@@ -1885,6 +2083,7 @@ interfaces:
     - info-circle
     - info-square
     - language
+    - lasso
     - magic
     - marker
     - medal
@@ -2069,6 +2268,7 @@ maps:
     - briefcase
     - building
     - car
+    - cctv
     - coffee
     - compass-slash
     - crosshairs
@@ -2175,6 +2375,7 @@ maps:
     - shopping-basket
     - shopping-cart
     - shower
+    - skull-cow
     - snowplow
     - street-view
     - subway
@@ -2232,6 +2433,7 @@ maritime:
     - swimmer
     - treasure-chest
     - turtle
+    - walkie-talkie
     - water
     - water-lower
     - water-rise
@@ -2270,6 +2472,7 @@ marketing:
     - poll-h
     - search-dollar
     - search-location
+    - signal-stream
     - sparkles
     - user-crown
     - users-crown
@@ -2308,6 +2511,7 @@ mathematics:
     - times
     - union
     - value-absolute
+    - watch-calculator
     - wave-sine
     - wave-square
     - wave-triangle
@@ -2316,6 +2520,8 @@ medical:
   icons:
     - allergies
     - ambulance
+    - bacteria
+    - bacterium
     - band-aid
     - biohazard
     - bone
@@ -2345,8 +2551,13 @@ medical:
     - file-prescription
     - files-medical
     - first-aid
+    - hand-holding-medical
     - head-side-brain
+    - head-side-cough
+    - head-side-cough-slash
+    - head-side-mask
     - head-side-medical
+    - head-side-virus
     - heart
     - heart-rate
     - heartbeat
@@ -2362,6 +2573,7 @@ medical:
     - laptop-medical
     - lips
     - lungs
+    - lungs-virus
     - microscope
     - monitor-heart-rate
     - mortar-pestle
@@ -2374,10 +2586,12 @@ medical:
     - prescription-bottle
     - prescription-bottle-alt
     - procedures
+    - pump-medical
     - radiation
     - radiation-alt
     - scalpel
     - scalpel-path
+    - shield-virus
     - skeleton
     - smoking
     - smoking-ban
@@ -2398,6 +2612,9 @@ medical:
     - users-medical
     - vial
     - vials
+    - virus
+    - virus-slash
+    - viruses
     - walker
     - watch-fitness
     - weight
@@ -2413,11 +2630,15 @@ moving:
     - box-open
     - box-up
     - boxes-alt
+    - caravan
+    - caravan-alt
     - container-storage
     - couch
     - dolly
     - dolly-empty
     - fragile
+    - house-leave
+    - house-return
     - lamp
     - loveseat
     - people-carry
@@ -2429,39 +2650,88 @@ moving:
     - sign
     - suitcase
     - tape
+    - trailer
     - truck-container
     - truck-couch
     - truck-loading
     - truck-moving
     - truck-ramp
+    - vacuum
     - wine-glass
   label: Moving
 music:
   icons:
+    - album
+    - album-collection
+    - amp-guitar
+    - banjo
     - bells
+    - boombox
+    - cassette-tape
+    - clarinet
+    - cloud-music
+    - comment-alt-music
+    - comment-music
+    - computer-speaker
+    - cowbell
+    - cowbell-more
     - drum
     - drum-steelpan
     - ear
     - file-audio
+    - file-music
+    - flute
+    - gramophone
     - guitar
+    - guitar-electric
+    - guitars
+    - head-side-headphones
     - headphones
     - headphones-alt
+    - kazoo
+    - list-music
     - mandolin
+    - microphone
+    - microphone-alt
+    - microphone-alt-slash
+    - microphone-slash
+    - microphone-stand
+    - mp3-player
     - music
+    - music-alt
+    - music-alt-slash
+    - music-slash
     - napster
+    - piano
+    - piano-keyboard
     - play
+    - radio
+    - radio-alt
+    - record-vinyl
+    - sax-hot
+    - saxophone
     - sliders-h
     - sliders-h-square
     - sliders-v
     - sliders-v-square
     - soundcloud
+    - speaker
+    - speakers
     - spotify
+    - triangle-music
+    - trumpet
+    - turntable
+    - tv-music
+    - user-music
+    - violin
     - volume
     - volume-down
     - volume-mute
     - volume-off
     - volume-slash
     - volume-up
+    - waveform
+    - waveform-path
     - whistle
   label: Music
 objects:
@@ -2894,6 +3164,7 @@ religion:
   icons:
     - ankh
     - atom
+    - bahai
     - bible
     - church
     - cross
@@ -2902,7 +3173,6 @@ religion:
     - gopuram
     - hamsa
     - hanukiah
-    - haykal
     - jedi
     - journal-whills
     - kaaba
@@ -2971,14 +3241,22 @@ science:
   label: Science
 science-fiction:
   icons:
+    - alien
+    - alien-monster
+    - atom
     - atom-alt
+    - cat-space
+    - comet
     - drone
     - drone-alt
     - eclipse
     - eclipse-alt
+    - flux-capacitor
     - galactic-republic
     - galactic-senate
+    - galaxy
     - globe
+    - hand-spock
     - jedi
     - jedi-order
     - journal-whills
@@ -2986,18 +3264,51 @@ science-fiction:
     - moon
     - moon-stars
     - old-republic
+    - planet-moon
+    - planet-ringed
+    - police-box
+    - portal-enter
+    - portal-exit
+    - radar
+    - raygun
     - robot
     - rocket
+    - rocket-launch
     - satellite
     - satellite-dish
+    - solar-system
     - space-shuttle
+    - space-station-moon
+    - space-station-moon-alt
+    - star-shooting
+    - starfighter
+    - starfighter-alt
     - stars
+    - starship
+    - starship-freighter
+    - sword-laser
+    - sword-laser-alt
+    - swords-laser
+    - telescope
+    - transporter
+    - transporter-1
+    - transporter-2
+    - transporter-3
+    - transporter-empty
+    - ufo
+    - ufo-beam
+    - user-alien
     - user-astronaut
+    - user-robot
+    - user-visor
+    - watch-calculator
   label: Science Fiction
 security:
   icons:
+    - badge-sheriff
     - ban
     - bug
+    - cctv
     - debug
     - do-not-enter
     - door-closed
@@ -3023,11 +3334,15 @@ security:
     - shield
     - shield-alt
     - shield-check
+    - siren
+    - siren-on
     - unlock
     - unlock-alt
+    - usb-drive
     - user-lock
     - user-secret
     - user-shield
+    - user-unlock
     - whistle
   label: Security
 shapes:
@@ -3089,6 +3404,8 @@ shopping:
     - shopping-cart
     - store
     - store-alt
+    - store-alt-slash
+    - store-slash
     - truck
     - truck-container
     - tshirt
@@ -3118,6 +3435,7 @@ social:
     - share
     - share-alt
     - share-square
+    - signal-stream
     - sparkles
     - star
     - thumbs-down
@@ -3138,6 +3456,7 @@ spinners:
     - atom
     - atom-alt
     - badge
+    - bahai
     - bullseye-arrow
     - certificate
     - circle-notch
@@ -3148,7 +3467,6 @@ spinners:
     - dharmachakra
     - eclipse-alt
     - fan
-    - haykal
     - hurricane
     - life-ring
     - palette
@@ -3418,11 +3736,17 @@ toggle:
     - dot-circle
     - location
     - location-slash
+    - microphone
+    - microphone-slash
     - star
     - star-half
     - star-half-alt
     - toggle-off
     - toggle-on
+    - volume
+    - volume-slash
+    - wifi
+    - wifi-slash
   label: Toggle
 travel:
   icons:
@@ -3431,17 +3755,22 @@ travel:
     - bed
     - bus
     - bus-alt
+    - cactus
     - car-bus
+    - caravan
+    - caravan-alt
     - cars
     - cocktail
     - concierge-bell
     - dumbbell
+    - flux-capacitor
     - glass-martini
     - glass-martini-alt
     - globe-africa
     - globe-americas
     - globe-asia
     - globe-europe
+    - horse-saddle
     - hot-tub
     - hotel
     - island-tropical
@@ -3451,10 +3780,12 @@ travel:
     - map-marked-alt
     - monument
     - passport
+    - phone-rotary
     - plane
     - plane-arrival
     - plane-departure
     - rings-wedding
+    - rv
     - shuttle-van
     - spa
     - suitcase
@@ -3464,7 +3795,10 @@ travel:
     - taxi
     - tram
     - tree-palm
+    - tv
+    - tv-alt
     - umbrella-beach
+    - wagon-covered
     - wine-glass
     - wine-glass-alt
   label: Travel
@@ -3493,6 +3827,7 @@ users-people:
     - id-card-alt
     - male
     - meh
+    - people-arrows
     - people-carry
     - person-booth
     - person-carry
@@ -3526,6 +3861,7 @@ users-people:
     - user-circle
     - user-clock
     - user-cog
+    - user-cowboy
     - user-crown
     - user-edit
     - user-friends
@@ -3537,6 +3873,7 @@ users-people:
     - user-md
     - user-md-chat
     - user-minus
+    - user-music
     - user-ninja
     - user-nurse
     - user-plus
@@ -3546,11 +3883,13 @@ users-people:
     - user-tag
     - user-tie
     - user-times
+    - user-unlock
     - users
     - users-class
     - users-cog
     - users-crown
     - users-medical
+    - users-slash
     - walking
     - wheelchair
   label: Users & People
@@ -3574,14 +3913,17 @@ vehicles:
     - drone
     - drone-alt
     - fighter-jet
+    - flux-capacitor
     - helicopter
     - horse
+    - horse-saddle
     - motorcycle
     - paper-plane
     - pegasus
     - plane
     - plane-alt
     - rocket
+    - rocket-launch
     - rv
     - ship
     - shopping-cart
@@ -3591,6 +3933,10 @@ vehicles:
     - snowmobile
     - snowplow
     - space-shuttle
+    - starfighter
+    - starfighter-alt
+    - starship
+    - starship-freighter
     - subway
     - taxi
     - tractor
@@ -3600,6 +3946,8 @@ vehicles:
     - truck-monster
     - truck-pickup
     - truck-plow
+    - ufo
+    - ufo-beam
     - wheelchair
   label: Vehicles
 weather:
@@ -3628,6 +3976,7 @@ weather:
     - eclipse-alt
     - fire-smoke
     - fog
+    - heat
     - house-flood
     - humidity
     - hurricane
@@ -3651,10 +4000,12 @@ weather:
     - sun-haze
     - sunrise
     - sunset
+    - temperature-down
     - temperature-frigid
     - temperature-high
     - temperature-hot
     - temperature-low
+    - temperature-up
     - thunderstorm
     - thunderstorm-moon
     - thunderstorm-sun

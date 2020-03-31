@@ -180,6 +180,7 @@
 
 .fm-type{
 	text-align: center;
+    position: relative;
 
 	&.folder{
 		i{
@@ -187,6 +188,22 @@
 			color: #777;
 			line-height: .8;
 		}
+
+        .folder-loader{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 48px;
+            z-index: 2;
+
+            i{
+                font-size: 26px;
+                color: #fff;
+            }
+        }
+
 	}
 	&.file{
 
@@ -313,6 +330,16 @@
 		text-decoration: none;
 		font-weight: 700;
 		transition: all .25s ease;
+        position: relative;
+
+        i{
+            position: absolute;
+            font-size: 16px;
+            left: 40%;
+            top: 24px;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
 
 		&:hover{
 			color: #888;

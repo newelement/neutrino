@@ -64,12 +64,12 @@ class UpdateCommand extends Command
         $initData = $this->ask('Do you want to update the Neutrino application views? CAUTION this will overwrite any Neutrino views you may have altered. If you do not update the views you may need to update them manually. See documentation for more info. [Y/N]');
 
         if( $initData === 'y' || $initData === 'Y' ){
-            $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'views', '--force' => '' ]);
+            $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'views', '--force' => true ]);
         }
-        $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'adminviews', '--force' => '' ]);
+        $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'adminviews', '--force' => true ]);
 
         $this->info('Updating assets...');
-        $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'public', '--force' => '' ]);
+        $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'public', '--force' => true ]);
 
         $this->info('Clearing application cache...');
         \Storage::disk('public')->delete('assets/css/all.css');

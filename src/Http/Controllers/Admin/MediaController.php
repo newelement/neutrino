@@ -12,6 +12,10 @@ class MediaController extends Controller
 {
     private $pathRoot = 'uploads';
     private $disk = 'public';
+    private $fileIgnores = [
+        '.DS_Store',
+    ];
+
     private $folderIgnores = [
         '_thumb',
         '_small',
@@ -61,9 +65,20 @@ class MediaController extends Controller
             $i++;
         }
 
+        $folders = array_values($folders);
+
+        foreach( $folders as $key => $folder ){
+            $folders[$key] = [ 'path' => $folder, 'loading' => false ];
+        }
+
         foreach( $files as $file ){
             $pathInfo = pathinfo($file);
+            if( in_array($pathInfo['basename'], $this->fileIgnores) ){
+                continue;
+            }
+
             $isImage = $this->imageType($pathInfo['extension']);
+
             $arr = [
                 'id' => uniqid(),
                 'path' => $pathInfo['dirname'],
@@ -203,6 +218,7 @@ class MediaController extends Controller
             case 'image/png':
             case 'image/gif':
             case 'jpg':
+            case 'jpeg':
             case 'png':
             case 'gif':
                 $image = true;
@@ -234,8 +250,9 @@ class MediaController extends Controller
         $path = $request->path;
         $folderName = $request->folder_name;
         $delete = false;
+        $slash = $this->disk === 's3' || $this->disk === 'S3'? '/': '';
         if( strlen($folderName) > 2 ){
-            $delete = Storage::disk($this->disk)->deleteDirectory($folderName);
+            $delete = Storage::disk($this->disk)->deleteDirectory($folderName.$slash);
         }
 
         ActivityLog::insert([
@@ -254,6 +271,19 @@ class MediaController extends Controller
     {
         $path = $request->path;
         $deleted = Storage::disk($this->disk)->delete($path);
+        $pathinfo = pathinfo($path);
+        $adjpath = $pathinfo['dirname'];
+        $imageName = $pathinfo['basename'];
+        $sizes = config('neutrino.media.image_sizes');
+
+        if(Storage::disk($this->disk)->exists($adjpath.'/_original/'.$imageName)){
+            Storage::disk($this->disk)->delete($adjpath.'/_original/'.$imageName);
+        }
+        foreach( $sizes as $key => $size ){
+            if(Storage::disk($this->disk)->exists($adjpath.'/_'.$this->sanitizeSizeName($key).'/'.$imageName)){
+                Storage::disk($this->disk)->delete($adjpath.'/_'.$this->sanitizeSizeName($key).'/'.$imageName);
+            }
+        }
 
         ActivityLog::insert([
             'activity_package' => 'neutrino',

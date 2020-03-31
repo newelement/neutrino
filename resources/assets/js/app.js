@@ -59,6 +59,7 @@ let chosenAttributes = [];
 let $form = $('.media-drop-zone');
 let droppedFiles = false;
 let cf_config;
+let $clearDatetimePicker = document.querySelectorAll('.clear-datetime-picker');
 
 let refundObj = {
     amount: 0.00,
@@ -3141,6 +3142,17 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
         profitStartDate.getRange();
         profitEndDate.getRange();
+    }
+
+    if($clearDatetimePicker.length){
+        $clearDatetimePicker.forEach( (el) => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                let pickerId = e.target.getAttribute('data-date-picker');
+                let dPicker = document.querySelector('[data-date-picker="'+pickerId+'"]');
+                dPicker.value = '';
+            });
+        });
     }
 
 });

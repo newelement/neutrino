@@ -50,6 +50,7 @@
                             <ul class="navbar-nav ml-auto">
                             {!! getMenu('Main Menu', 'html', [ 'ul_parent' => false, 'ul_class' => 'navbar-nav ml-auto'] ) !!}
                             @if( shoppeExists() )
+                            <li class="nav-item"><a class="nav-link" href="/{{ config('shoppe.slugs.store_landing') }}">Products</a></li>
                             <li class="nav-item"><a class="nav-link" href="/cart">Cart <span class="shoppe-cart-count">{{ cartCount() }}</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="/{{ config('shoppe.slugs.customer_account') }}">Account</a></li>
                             @endif

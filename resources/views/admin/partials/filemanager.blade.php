@@ -10,7 +10,7 @@
 			<div class="fm-path-wrap">
 				Current Path:
 				<span class="fm-path-crumbs">
-					<span v-for="(path, index) in paths"><span class="path-sep">/</span><a v-if="index < paths.length-1"  href="/" @click.prevent="gotoPath(path.path)">@{{ path.name }}</a><span v-if=" paths.length-1 === index ">@{{ path.name }}</span>
+					<span v-for="(path, index) in paths"><span class="path-sep">/</span><a class="path-crumb" v-if="index < paths.length-1"  href="/" @click.prevent="gotoPath(path)">@{{ path.name }} <i v-if="path.loading" class="fal fa-circle-notch fa-spin" v-cloak></i></a><span v-if=" paths.length-1 === index ">@{{ path.name }}</span>
 					</span>
 				</span>
 			</div>
@@ -20,18 +20,21 @@
 				</ul>
 			</div>
 			<ul class="folders-files-list">
-				<li v-for="item in items.folders" class="fm-type folder">
+				<li v-for="(item, index) in items.folders" class="fm-type folder">
 					<a class="fm-delete-item" href="/" @click.prevent="deleteFolder(item)">&times;</a>
 					<a href="/" class="fm-list-inner" @click.prevent="gotoPath(item)">
 						<i class="fas fa-folder"></i>
-						<div class="fm-folder-name">@{{ item | itemName }}</div>
+						<div class="fm-folder-name">@{{ item.path | itemName }}</div>
 					</a>
+                    <div v-if="item.loading" class="folder-loader" v-cloak>
+                        <i class="fal fa-circle-notch fa-spin"></i>
+                    </div>
 				</li>
 				<li v-for="(file, index ) in items.files" :key="file.id" class="fm-type file">
 					<a v-if="file.image" class="fm-edit-item" href="/" @click.prevent="showEditImage(file, index)"><i class="fal fa-pencil-ruler"></i></a>
 					<a class="fm-delete-item" href="/" @click.prevent="deleteFile(file)">&times;</a>
 					<div class="fm-list-inner" :class="{ selected: file.selected }" @click="selectFile(file)">
-						<img v-if="file.image" :id="'image-'+index" :src="file.sizes.original" style="display: none">
+						<img v-if="file.image" :id="'image-'+index" src="" :data-original-image="file.sizes.original" style="display: none">
 						<img v-if="file.image" :src="file.url">
 						<div v-if="!file.image" class="fm-file-icon">
 							<span>@{{ file.info.extension }}</span>

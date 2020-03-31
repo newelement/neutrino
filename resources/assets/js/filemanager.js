@@ -23,6 +23,7 @@ window.fm = new Vue({
 		path: 'uploads',
 		standaloneMode: true,
         isBlockEditor: false,
+        isGallery: false,
         backgroundImage: false,
         inlineImage: false,
         imageId: '',
@@ -95,16 +96,19 @@ window.fm = new Vue({
 				this.log(e);
 			});
 		},
-		gotoPath(path){
-			this.path = path;
-			this.generatePathLinks(path);
+		gotoPath(item){
+            item.loading = true;
+			this.path = item.path;
+			this.generatePathLinks(item.path);
 			this.closeFileInfoPanel();
-			HTTP.get('/admin/filemanager?path='+path+'&file_type='+this.fileType)
+			HTTP.get('/admin/filemanager?path='+item.path+'&file_type='+this.fileType)
 			.then(response => {
 				this.items = response.data.fileData.items;
+                item.loading = false;
 			})
 			.catch(e => {
 				this.log(e);
+                item.loading = false;
 			});
 		},
 		generatePathLinks(path){
@@ -117,7 +121,7 @@ window.fm = new Vue({
 					slash = '/';
 				}
 				val += slash+v;
-				let item = { name: v, path: val };
+				let item = { name: v, path: val, loading: false };
 				pathArr.push(item);
 			});
 			this.paths = pathArr;
@@ -143,7 +147,7 @@ window.fm = new Vue({
 
 				HTTP.post('/admin/filemanager/folder?path='+this.path, formData)
 				.then(response => {
-					this.items.folders.unshift(this.path+'/'+this.folderName);
+					this.items.folders.unshift( {path: this.path+'/'+this.folderName, loading: false} );
 					this.folderName = '';
 					this.folderModal = false;
 				})
@@ -154,15 +158,17 @@ window.fm = new Vue({
 		},
 		deleteFolder(folder){
 			let formData = new FormData;
-			formData.append('folder_name', folder);
+			formData.append('folder_name', folder.path);
 			formData.append('_method', 'delete');
-
+            folder.loading = true;
 			HTTP.post('/admin/filemanager/folder?path='+this.path, formData)
 			.then(response => {
+                folder.loading = false;
 				this.items.folders.splice( this.items.folders.indexOf(folder), 1);
 			})
 			.catch(e => {
 				this.log(e);
+                folder.loading = false;
 			});
 		},
 		getUploadParams(){
@@ -204,21 +210,30 @@ window.fm = new Vue({
 			});
 		},
 		showEditImage(file, i){
+            let self = this;
+			let canvas = document.createElement('canvas');
+			let context = canvas.getContext('2d');
+			let emptyImg = document.getElementById('image-'+i);
+            let originalUrl = emptyImg.getAttribute('data-original-image');
+            emptyImg.src = originalUrl;
 
-			var canvas = document.createElement('canvas');
-			var context = canvas.getContext('2d');
-			var img = document.getElementById('image-'+i);
-			canvas.width = img.width;
-			canvas.height = img.height;
-			context.drawImage(img, 0, 0 );
-			var myData = context.getImageData(0, 0, img.width, img.height);
+            var img = new Image();
+            img.addEventListener("load", (el) => {
 
-			let imgEl = document.getElementById('image-'+i);
-			this.imgSrc = imgEl.getAttribute('src');
-			this.editImageModal = true;
-			this.showOverlay = true;
+                canvas.width = el.path[0].width;
+                canvas.height = el.path[0].height;
+                context.drawImage(img, 0, 0 );
+                var myData = context.getImageData(0, 0, el.path[0].width, el.path[0].height);
 
-			this.currentEditImage = file;
+                self.imgSrc = originalUrl;
+                self.editImageModal = true;
+                self.showOverlay = true;
+
+                self.currentEditImage = file;
+
+            });
+            img.src = originalUrl;
+
 		},
 		selectFile(file){
 

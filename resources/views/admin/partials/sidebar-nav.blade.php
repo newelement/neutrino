@@ -156,7 +156,8 @@
                     <span class="new-order-counter">{{ $orderCount }}</span>
                 @endif
                 </li>
-                <li><a href="/admin/subscriptions"><span class="dash">-</span> Subscription Plans</a>
+                <li><a href="/admin/subscriptions"><span class="dash">-</span> Subscriptions</a>
+                <li><a href="/admin/subscription-plans"><span class="dash">-</span> Subscription Plans</a>
                 <li><a href="/admin/stripe/tax-rates"><span class="dash">-</span> Subscription Tax Rates</a>
                 <li><a href="/admin/shoppe-reports"><span class="dash">-</span> Reports</a></li>
     		    <li><a href="/admin/shoppe-settings"><span class="dash">-</span> Shoppe Settings</a></li>
@@ -277,6 +278,15 @@
             @endif
         </li>
         @endforeach
+        <li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.galleries') active open @endif">
+            <a href="/admin/galleries">
+                <i class="fal fa-image-polaroid fa-fw"></i> <span class="parent-nav-title">Galleries</span>
+            </a>
+            <ul @if( \Route::currentRouteName() === 'neutrino.galleries') class="open" @endif>
+                <li><a href="/admin/galleries"><span class="dash">-</span> All Galleries</a></li>
+                <li><a href="/admin/gallery"><span class="dash">-</span> Create Gallery</a></li>
+            </ul>
+        </li>
 		<li @if( \Route::currentRouteName() === 'neutrino.custom-fields') class="active" @endif>
 		    <a href="/admin/custom-fields">
     		    <i class="fal fa-ballot fa-fw"></i> <span class="parent-nav-title">Custom Fields</span>
