@@ -1097,6 +1097,25 @@ function updateTaxSort(type){
         });
 }
 
+function updateGalleryImageSort(){
+    /*
+    let items = document.querySelectorAll('.tax-item');
+    let formData = new FormData;
+    items.forEach((v) => {
+        let id = v.getAttribute('data-id');
+        formData.append('items[]', id);
+    });
+
+    let url = type === 'tax'? '/admin/sort/terms' : '/admin/sort/taxonomy';
+    HTTP.post(url, formData)
+        .then(response => {
+        })
+        .catch(e => {
+            console.log('sort error');
+        });
+    */
+}
+
 function snackbar(type, message){
 	var x = document.getElementById("snackbar");
 	x.innerHTML = message;
@@ -1166,16 +1185,41 @@ function showFMeditor(type){
 	fm.showFileManager();
 }
 
-function showFMinputGallery(inputId, previewId, type, multiple){
+function showFMinputGallery(previewId, type, multiple){
     fm.standaloneMode = false;
     fm.selectionMode = true;
-    fm.multiple = multiple;
-    fm.inputId = inputId;
+    fm.multiple = true;
     fm.previewId = previewId;
     fm.fileType = type;
     fm.callback = false;
+    fm.isGallery = true;
+    fm.galleryItems = [];
     fm.boot();
     fm.showFileManager();
+}
+
+window.insertGalleryImagesCallback = function(galleryItems){
+    let galleryImagesList = document.querySelector('.gallery-images-list');
+    galleryItems.forEach( (image, i) => {
+        let id = ID();
+        let sortHandle = '<span class="gal-sort-handle"><i class="fal fa-sort"></i></span>';
+        let img = '<div class="gallery-image-item"><img src="'+image.url+'" alt="gallery image"><input type="hidden" name="gallery_items['+id+'][image]" value="'+image.url+'"></div>';
+        let title = '<div class="form-grid-col"><label for="title-'+id+'">Title</label><div class="input-grid-col"><input id="title-'+id+'" name="gallery_items['+id+'][title]" type="text"></div></div>';
+        let caption = '<div class="form-grid-col"><label for="caption-'+id+'">Caption</label><div class="input-grid-col"><textarea id="caption-'+id+'" name="gallery_items['+id+'][caption]"></textarea></div></div>';
+        let featured = '<div class="form-grid-col"><label for="featured-'+id+'">Featured</label><div class="input-grid-col"><label><input id="featured-'+id+'" name="gallery_items['+id+'][featured]" type="checkbox"> Yes</label></div></div>';
+        let remove = '<div class="remove-gallery-item"><a class="remove-gallery-item-btn" data-id="'+id+'" href="#">&times;</a></div>'
+
+        let html = '<li class="gallery-item" data-id="'+id+'">';
+            html += sortHandle;
+            html += img;
+            html += title;
+            html += caption;
+            html += featured;
+            html += remove;
+        html += '</li>';
+
+        $('.gallery-images-list').prepend(html);
+    });
 }
 
 function addVariationAttribue(el){
@@ -1359,6 +1403,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
         let inputId = 'gallery-image';
         let previewId = 'gallery-image-preview';
         showFMinput(inputId, previewId, 'image', multiple);
+    });
+
+    $('.lfm-gallery-images').click(function(e){
+        e.preventDefault();
+        let multiple = true ;
+        let previewId = 'gallery-images-list';
+        showFMinputGallery(previewId, 'image', multiple);
     });
 
 	$('.lfm-social-image').click(function(e){
@@ -1973,16 +2024,58 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		});
 	}
 
-    let taxTable = document.querySelector('.tax-table');
+    let termList = document.querySelectorAll('.term-list');
     let taxTypeTable = document.querySelector('.tax-type-table');
-    if(taxTable){
-        Sortable.create(taxTable, {
+    if(termList.length){
+        termList.forEach( (el) => {
+            Sortable.create(el, {
+                handle: '.tax-sort-handle',
+                easing: "cubic-bezier(1, 0, 0, 1)",
+                animation: 150,
+                group: 'nested',
+                swapThreshold: 0.65,
+                onEnd: function (e) {
+                    updateTaxSort('tax');
+                },
+                onAdd: function (e) {
+                },
+                onStart: function (evt) {
+                    evt.oldIndex;
+                },
+            });
+        });
+    }
+
+    let termChlidren = document.querySelectorAll('.term-children');
+
+    if(termChlidren .length){
+        termChlidren .forEach( (el, i) => {
+            Sortable.create(el, {
+                handle: '.tax-sort-handle',
+                easing: "cubic-bezier(1, 0, 0, 1)",
+                animation: 150,
+                group: 'nested-'+i,
+                swapThreshold: 0.65,
+                onEnd: function (e) {
+                    updateTaxSort('tax');
+                },
+                onAdd: function (e) {
+                },
+                onStart: function (evt) {
+                },
+            });
+        });
+    }
+
+    if(taxTypeTable){
+        Sortable.create(taxTypeTable, {
             handle: '.tax-sort-handle',
             easing: "cubic-bezier(1, 0, 0, 1)",
             animation: 150,
+            swapThreshold: 0.65,
             onEnd: function (e) {
                 //updateObjectRepeaterSort();
-                updateTaxSort('tax');
+                updateTaxSort('taxtype');
             },
             onAdd: function (e) {
                 //console.log('ADD',e);
@@ -1993,17 +2086,17 @@ window.addEventListener('DOMContentLoaded', (e) => {
         });
     }
 
-    if(taxTypeTable){
-        Sortable.create(taxTypeTable, {
-            handle: '.tax-sort-handle',
+    let $galleryImagesList = document.querySelector('.gallery-images-list');
+    if( $galleryImagesList ){
+       Sortable.create($galleryImagesList, {
+            handle: '.gal-sort-handle',
             easing: "cubic-bezier(1, 0, 0, 1)",
             animation: 150,
+            swapThreshold: 0.65,
             onEnd: function (e) {
-                //updateObjectRepeaterSort();
-                updateTaxSort('taxtype');
+                updateGalleryImageSort();
             },
             onAdd: function (e) {
-                //console.log('ADD',e);
             },
             onStart: function (evt) {
                 evt.oldIndex;
@@ -2783,6 +2876,30 @@ window.addEventListener('DOMContentLoaded', (e) => {
 			}
 		});
 	});
+
+    $('.gallery-images-list').on('click', '.remove-gallery-item-btn', function(e){
+        e.preventDefault();
+        let $this = $(this);
+        console.log(e);
+        let id = e.target.getAttribute('data-id');
+        console.log(id);
+        Swal.fire({
+              title: 'Remove',
+              text: "Are you sure you want to remove this image from the gallery?.",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#333',
+              cancelButtonColor: '#ccc',
+              confirmButtonText: 'Yes,remove!'
+        }).then(function (isConfirm) {
+            if(isConfirm.dismiss !== 'cancel'){
+
+                $('.gallery-item[data-id="'+id+'"]').remove();
+                HTTP.post('/admin/galleries/images/'+id, { '_method': 'delete' });
+
+            }
+        });
+    });
 
 	$('.destroy-btn').click(function(e){
 		//let conf = confirm('Are you sure you want to delete this?');

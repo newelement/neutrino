@@ -688,6 +688,90 @@ h2, h3{
 	}
 }
 
+.term-list{
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a{
+        text-decoration: none;
+    }
+
+    > li{
+        padding: 8px 12px;
+        margin-bottom: 6px;
+        background-color: #EDF2F7;
+        border: 1px solid darken(#EDF2F7, 10%);
+    }
+
+    ul{
+        display: block;
+        margin: 6px 0 0 0;
+        padding: 0 0 0 24px;
+        list-style: none;
+
+        li{
+            padding: 8px 12px;
+            background-color: #EBF8FF;
+            margin-bottom: 4px;
+            border: 1px solid darken(#EBF8FF, 10%);
+
+            ul li{
+                background-color: #BEE3F8;
+                border: 1px solid darken(#BEE3F8, 10%);
+            }
+        }
+    }
+}
+
+.term-list-inner{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .tax-sort-handle{
+        display: block;
+        width: 16px;
+        text-align: center;
+        margin-right: 8px;
+    }
+
+    a{
+        display: block;
+        padding: 1px 6px 3px 6px;
+        line-height: 1.1;
+        transition: background-color .25s ease, color .25s ease;
+        border-radius: 3px;
+
+        &:hover{
+            background-color: #555;
+            color: #fff;
+        }
+    }
+
+    form{
+        margin-left: auto;
+    }
+
+    .delete-btn{
+        background-color: transparent;
+        color: #222;
+    }
+}
+
+.term-slug-badge{
+    display: inline-block;
+    background-color: #48BB78;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-left: 12px;
+    border-radius: 10px;
+    line-height: 1.1;
+    padding: 1px 5px 3px 5px;
+}
+
 .delete-object{
 	color: darken(red, 15%);
 	background: transparent;
@@ -952,6 +1036,15 @@ a.btn{
 			width: 100%;
 			padding-bottom: 12px;
 			position: relative;
+            display: flex;
+
+            .lfm-gallery-images{
+                cursor: pointer;
+                transition: color .25s ease;
+                &:hover{
+                    color: #888;
+                }
+            }
 		}
 	}
 
@@ -1220,6 +1313,97 @@ select::-ms-expand {
         pointer-events: none;
     }
 }
+
+.gallery-images-list{
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 12px;
+    border: 1px dashed #999;
+    list-style: none;
+
+    li{
+        display: flex;
+        flex-direction: row;
+        background-color: #fff;
+        border-top: 3px solid #b8e6fa;
+        border-bottom: 3px solid #b8e6fa;
+        padding: 12px;
+    }
+
+    .gal-sort-handle{
+        display: block;
+        width: 16px;
+        text-align: center;
+        font-size: 18px;
+        cursor: ns-resize;
+    }
+
+    .remove-gallery-item{
+        width: 20px;
+        position: relative;
+
+        a{
+            text-decoration: none;
+            font-size: 22px;
+            color: darken(red, 15%);
+        }
+    }
+
+    .form-grid-col{
+        padding: 12px;
+        flex-grow: 1;
+
+        label{
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="date"],
+        input[type="datetime-local"],
+        input[type="time"],
+        input[type="password"],
+        textarea{
+            width: 100%;
+            height: 50px;
+            text-indent: 14px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: border-color .3s ease;
+
+            &:focus{
+                border-color: #333;
+            }
+
+            &::-webkit-input-placeholder { color: #CCC; }
+            &:-moz-placeholder { color: #CCC; }
+            &::-moz-placeholder { color: #CCC; }
+            &:-ms-input-placeholder { color: #CCC; }
+
+        }
+
+        textarea{
+            text-indent: 0;
+            padding: 12px;
+            height: 80px;
+        }
+    }
+}
+
+.gallery-image-item{
+    padding: 0 12px;
+    width: 150px;
+    img{
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+
 
 .recurring-inputs{
 	width: 100%;

@@ -29,7 +29,8 @@ return [
     ],
 
     'short_codes' => [
-        ['name' => 'Form', 'tag' => 'form', 'callback' => 'Newelement\\Neutrino\\Http\\Controllers\\ContentController::form_short_code' ]
+        ['name' => 'Form', 'tag' => 'form', 'callback' => 'Newelement\\Neutrino\\Http\\Controllers\\ContentController::form_short_code' ],
+        ['name' => 'Gallery', 'tag' => 'gallery', 'callback' => 'Newelement\\Neutrino\\Http\\Controllers\\ContentController::gallery_short_code' ]
     ],
 
     'protected_route' => 'login',

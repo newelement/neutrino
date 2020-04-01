@@ -1101,4 +1101,19 @@ class ContentController extends Controller
         return $form;
     }
 
+    public static function gallery_short_code( $attrs = [] ){
+        $args = [];
+
+        $args['show_title'] = isset($attrs['show_title']) && $attrs['show_title'] === 'true'? true : false;
+        $args['show_description'] = isset($attrs['show_description']) && $attrs['show_description'] === 'true'? true : false;
+        $args['theme'] = isset($attrs['theme'])? $attrs['theme'] : false;
+        $args['slides_to_show'] = isset($attrs['slides_to_show'])? $attrs['slides_to_show'] : false;
+        $args['slides_to_scroll'] = isset($attrs['slides_to_scroll'])? $attrs['slides_to_scroll'] : false;
+        $args['dots'] = isset($attrs['dots']) && $attrs['dots'] === 'true'? true : false;
+        $args['autoplay'] = isset($attrs['autoplay']) && $attrs['autoplay'] === 'true'? true : false;
+
+        $gallery = getGalleryHTML($attrs['id'], $args);
+        return $gallery;
+    }
+
 }

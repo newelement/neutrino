@@ -5,6 +5,7 @@
 			<div class="fm-toolbar">
 				<a href="/" title="Create folder" @click.prevent="showCreateFolderModal()"><i class="fal fa-folder-plus fa-fw"></i></a>
 				Selected Files: @{{ selectedFiles.length }}
+                <a href="#" class="use-chosen-btn" @click.prevent="selectAllImages()" v-if="isGallery">Select/Deselect All</a>
                 <a class="use-chosen-btn" v-if="selectedFiles.length > 0" href="#" @click.prevent="useChosenFiles()" role="button" v-cloak>Use Chosen File@{{ selectedFiles.length > 1 ? 's' : '' }}</span></a>
 			</div>
 			<div class="fm-path-wrap">

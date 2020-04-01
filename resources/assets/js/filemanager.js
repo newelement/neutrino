@@ -24,6 +24,7 @@ window.fm = new Vue({
 		standaloneMode: true,
         isBlockEditor: false,
         isGallery: false,
+        galleryItems: [],
         backgroundImage: false,
         inlineImage: false,
         imageId: '',
@@ -103,6 +104,7 @@ window.fm = new Vue({
 			this.closeFileInfoPanel();
 			HTTP.get('/admin/filemanager?path='+item.path+'&file_type='+this.fileType)
 			.then(response => {
+                this.galleryItems = [];
 				this.items = response.data.fileData.items;
                 item.loading = false;
 			})
@@ -235,6 +237,13 @@ window.fm = new Vue({
             img.src = originalUrl;
 
 		},
+        selectAllImages(){
+            this.items.files.forEach( (obj) => {
+                if( obj.image ){
+                    this.selectFile(obj);
+                }
+            });
+        },
 		selectFile(file){
 
 			if(this.callback){
@@ -245,12 +254,24 @@ window.fm = new Vue({
 				}
 			}
 
+
             if( this.selectionMode && !this.callback ){
                 file.selected = !file.selected;
                 if( !this.multiple && this.selectedFiles.length > 1 ){
                     file.selected = !file.selected;
                     this.showError('You can only select one file.');
                 }
+            }
+
+            if( this.isGallery ){
+                if( file.selected ){
+                    if( this.galleryItems.indexOf(file) < 0  ){
+                        this.galleryItems.push(file);
+                    }
+                } else {
+                    this.galleryItems.splice( this.galleryItems.indexOf(file), 1);
+                }
+
             }
 
 			if( !this.standaloneMode && this.selectionMode && this.inputId.length > 0){
@@ -421,6 +442,11 @@ window.fm = new Vue({
 			this.closeFileManager();
 		},
         useChosenFiles(){
+
+            if( this.isGallery ){
+                insertGalleryImagesCallback(this.galleryItems);
+            }
+
             this.closeFileManager();
         },
 		showFileManager(){
@@ -429,6 +455,8 @@ window.fm = new Vue({
 		},
 		closeFileManager(){
 			this.closeFileInfoPanel();
+            this.isGallery = false;
+            this.galleryItems = [];
 			let $fm = document.getElementById('filemanager');
 			$fm.classList.remove('show');
 		},

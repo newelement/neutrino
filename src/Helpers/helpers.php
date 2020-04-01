@@ -14,6 +14,7 @@ use Newelement\Neutrino\Models\CfObjectData;
 use Newelement\Neutrino\Models\CfFields;
 use Newelement\Neutrino\Models\CfRule;
 use Newelement\Neutrino\Models\Setting;
+use Newelement\Neutrino\Models\Gallery;
 use Newelement\Neutrino\Models\Form;
 use Newelement\Neutrino\Models\FormField;
 use Newelement\Neutrino\Http\Controllers\ContentController;
@@ -421,6 +422,18 @@ function parseFieldType($field){
 
 function getFieldSettings($settings){
     return json_decode($settings);
+}
+
+
+/*
+*
+* GALLERY SHORTCODE
+*
+*
+*/
+
+function getGalleryHTML($id, $args){
+
 }
 
 

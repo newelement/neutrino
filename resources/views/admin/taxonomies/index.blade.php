@@ -5,44 +5,9 @@
 		<div class="content terms-content">
 			<h2>{{ str_plural($taxonomy->title) }}</h2>
 
-			<table cellpadding="0" cellspacing="0" class="table">
-				<thead>
-					<tr>
-                        <th width="20"></th>
-						<th class="text-left">{{ $taxonomy->title }}</th>
-						<th>Slug</th>
-						<th>Parent</th>
-						<th width="80"></th>
-					</tr>
-				</thead>
-				<tbody class="tax-table">
-				@foreach( $taxonomies as $tax )
-					<tr>
-                        <td class="tax-sort-handle"><i class="fal fa-sort"></i></td>
-						<td class="tax-item" data-id="{{ $tax->id }}" data-label="Title">
-							<a href="/admin/taxonomies/{{ $taxonomy->id }}/{{ $tax->id }}">{{ $tax->title }}</a>
-						</td>
-						<td data-label="Slug" class="text-center">
-							{{ $tax->slug }}
-						</td>
-						<td data-label="Parent" class="text-center">
-							@if( $tax->parent_id > 0 )
-							{{ $tax->parentId->title }}
-							@endif
-						</td>
-						<td data-label="Delete" class="text-center">
-							@if( $tax->slug !== 'category' )
-							<form action="/admin/taxonomies/{{ $taxonomy->id }}/{{$tax->id}}" method="post">
-								@csrf
-								@method('delete')
-								<button type="submit" class="delete-btn">&times;</button>
-							</form>
-							@endif
-						</td>
-					</tr>
-				@endforeach
-				</tbody>
-			</table>
+			<ul class="term-list">
+                @each('neutrino::admin.partials.term', $taxonomies, 'tax')
+			</ul>
 		</div>
 
 		<aside class="sidebar terms-sidebar">
@@ -195,7 +160,7 @@
 					<button type="submit" class="btn full">Create {{ $taxonomy->title }}</button>
 					@else
 
-					<button type="submit" class="btn full" style="margin-bottom: 24px;">Edit {{ $taxonomy->title }}</button>
+					<button type="submit" class="btn full" style="margin-bottom: 24px;">Save {{ $taxonomy->title }}</button>
 					<p class="text-center">
 						<a href="/admin/taxonomies/{{ $taxonomy->id }}">Clear to create {{ strtolower($taxonomy->title) }} type</a>
 					</p>

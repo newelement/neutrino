@@ -64,6 +64,9 @@ function checkSlug($slug, $type, $count = 0)
 		case 'place':
 			$exists = DB::table('places')->where(['slug' => $slug ])->first();
 		break;
+        case 'gallery':
+            $exists = DB::table('galleries')->where(['slug' => $slug ])->first();
+        break;
         case 'attribute':
             $exists = DB::table('product_attributes')->where(['slug' => $slug ])->first();
         break;

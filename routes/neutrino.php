@@ -124,6 +124,14 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::put('/locations/{id}',  $namespacePrefix.'Admin\LocationController@update');
 		Route::delete('/locations/{id}',  $namespacePrefix.'Admin\LocationController@delete');
 
+        Route::get('/galleries',  $namespacePrefix.'Admin\GalleryController@index')->name('galleries');
+        Route::post('/galleries',  $namespacePrefix.'Admin\GalleryController@create');
+        Route::get('/gallery',  $namespacePrefix.'Admin\GalleryController@getCreate')->name('galleries');
+        Route::get('/galleries/{id}',  $namespacePrefix.'Admin\GalleryController@get')->name('galleries');
+        Route::put('/galleries/{id}',  $namespacePrefix.'Admin\GalleryController@update');
+        Route::delete('/galleries/{id}',  $namespacePrefix.'Admin\GalleryController@delete');
+        Route::delete('/galleries/images/{id}',  $namespacePrefix.'Admin\GalleryController@deleteImage');
+
 		Route::get('/menus',  $namespacePrefix.'Admin\MenuController@index')->name('menus');
 		Route::post('/menus',  $namespacePrefix.'Admin\MenuController@create');
 		Route::get('/menus/{id}',  $namespacePrefix.'Admin\MenuController@get')->name('menus');

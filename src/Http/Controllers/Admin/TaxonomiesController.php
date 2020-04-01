@@ -46,7 +46,7 @@ class TaxonomiesController extends Controller
 
 	public function index($id)
 	{
-		$taxonomies = Taxonomy::where('taxonomy_type_id', $id)->orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
+		$taxonomies = Taxonomy::where(['taxonomy_type_id' => $id, 'parent_id' => 0])->orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
 		$taxes = Taxonomy::where('taxonomy_type_id', $id)->orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
 		$taxonomy = TaxonomyType::where('id', $id)->first();
 		$edit_taxonomy = new \stdClass();
@@ -63,6 +63,8 @@ class TaxonomiesController extends Controller
 
 		$fieldGroups = $this->getFieldGroups('taxonomy', $taxonomy->slug);
 
+        $taxonomies = $this->listCategories($taxonomies);
+
 		return view('neutrino::admin.taxonomies.index', [
 		        'taxonomies' => $taxonomies,
 		        'taxonomy' => $taxonomy,
@@ -71,6 +73,24 @@ class TaxonomiesController extends Controller
 		        'field_groups' => $fieldGroups,
 		        'edit' => false]);
 	}
+
+    private function listCategories($categories)
+    {
+        $data = [];
+
+        foreach($categories as $category){
+            $data[] = [
+                'title' => $category->title,
+                'id' => $category->id,
+                'parent_id' => $category->parent_id,
+                'taxonomy_id' => $category->taxonomyType->id,
+                'slug' => $category->slug,
+                'children' => $this->listCategories($category->children),
+            ];
+        }
+
+        return $data;
+    }
 
 	public function create(Request $request, $id)
 	{
@@ -177,9 +197,11 @@ class TaxonomiesController extends Controller
 		$tax = Taxonomy::find($id);
 		$taxes = Taxonomy::where('taxonomy_type_id', $type)->where('id', '<>', $tax->id)->orderBy('title', 'asc')->get();
 		$taxonomy = TaxonomyType::where('id', $type)->first();
-		$taxonomies = Taxonomy::orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
+		$taxonomies = Taxonomy::where(['taxonomy_type_id' => $type, 'parent_id' => 0])->orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
 
 		$fieldGroups = $this->getFieldGroups('taxonomy', $taxonomy->slug);
+
+        $taxonomies = $this->listCategories($taxonomies);
 
 		return view('neutrino::admin.taxonomies.index', [
 		            'taxonomies' => $taxonomies,
