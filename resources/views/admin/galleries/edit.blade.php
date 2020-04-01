@@ -6,7 +6,7 @@
     @method('put')
     <div class="container">
         <div class="content">
-            <h2>Create Gallery</h2>
+            <h2>Edit Gallery</h2>
 
             <div class="form-row">
                 <label class="label-col" for="title">Gallery Title</label>
