@@ -436,6 +436,11 @@ function getGalleryHTML($id, $args){
 
 }
 
+function getGallery($id){
+    $gallery = Gallery::find($id);
+    return $gallery;
+}
+
 
 /*
 * CUSTOM FIELDS Helper Functions

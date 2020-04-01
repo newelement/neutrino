@@ -27,7 +27,7 @@
     		    <i class="fal fa-file fa-fw"></i> <span class="parent-nav-title">Pages</span>
             </a>
 			<ul @if( isRouteGroup('pages.') ) class="open" @endif>
-				<li><a @if( isRouteGroup('pages.all') ) class="active" @endif href="/admin/pages"><span class="dash">-</span> All Pages</a></li>
+				<li><a @if( isRouteGroup('pages.all') ) class="active" @endif href="/admin/pages"><span class="dash">-</span> Pages</a></li>
 				<li><a @if( isRouteGroup('pages.show') ) class="active" @endif href="/admin/page"><span class="dash">-</span> Create Page</a></li>
 			</ul>
 		</li>
@@ -137,7 +137,7 @@
     		    <i class="fal fa-shopping-cart fa-fw"></i> <span class="parent-nav-title">Products</span>
             </a>
 		    <ul @if( \Route::currentRouteName() === 'shoppe.products') class="open" @endif>
-    		    <li><a href="/admin/products"><span class="dash">-</span> All Products</a></li>
+    		    <li><a href="/admin/products"><span class="dash">-</span> Products</a></li>
     		    <li><a href="/admin/product"><span class="dash">-</span> Create Product</a></li>
                 <li><a href="/admin/product-attributes"><span class="dash">-</span> Attributes</a></li>
 		    </ul>
@@ -186,7 +186,7 @@
     		    <i class="fal fa-calendar-alt fa-fw"></i> <span class="parent-nav-title">Events</span>
             </a>
 			<ul @if( \Route::currentRouteName() === 'neutrino.events') class="open" @endif>
-				<li><a href="/admin/events"><span class="dash">-</span> All Events</a></li>
+				<li><a href="/admin/events"><span class="dash">-</span> Events</a></li>
 				<li><a href="/admin/event"><span class="dash">-</span> Create Event</a></li>
 				<li><a href="/admin/locations"><span class="dash">-</span> Locations</a></li>
 			</ul>
@@ -213,7 +213,7 @@
     		    <i class="fal fa-clipboard-list-check fa-fw"></i> <span class="parent-nav-title">Forms</span>
             </a>
 			<ul @if( \Route::currentRouteName() === 'neutrino.forms') class="open" @endif>
-				<li><a href="/admin/forms"><span class="dash">-</span> All Forms</a></li>
+				<li><a href="/admin/forms"><span class="dash">-</span> Forms</a></li>
 				<li><a href="/admin/form"><span class="dash">-</span> Create Form</a></li>
 			</ul>
 		</li>
@@ -280,10 +280,10 @@
         @endforeach
         <li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.galleries') active open @endif">
             <a href="/admin/galleries">
-                <i class="fal fa-image-polaroid fa-fw"></i> <span class="parent-nav-title">Galleries</span>
+                <i class="fal fa-images fa-fw"></i> <span class="parent-nav-title">Galleries</span>
             </a>
             <ul @if( \Route::currentRouteName() === 'neutrino.galleries') class="open" @endif>
-                <li><a href="/admin/galleries"><span class="dash">-</span> All Galleries</a></li>
+                <li><a href="/admin/galleries"><span class="dash">-</span> Galleries</a></li>
                 <li><a href="/admin/gallery"><span class="dash">-</span> Create Gallery</a></li>
             </ul>
         </li>
@@ -315,7 +315,7 @@
     		    <i class="fal fa-users fa-fw"></i> <span class="parent-nav-title">Users</span>
             </a>
 			<ul @if( \Route::currentRouteName() === 'neutrino.users') class="open" @endif>
-				<li><a href="/admin/users"><span class="dash">-</span> All Users</a></li>
+				<li><a href="/admin/users"><span class="dash">-</span> Users</a></li>
 				<li><a href="/admin/user"><span class="dash">-</span> Create User</a></li>
 				<li><a href="/admin/roles"><span class="dash">-</span> Roles</a></li>
 			</ul>
