@@ -134,6 +134,23 @@ class GalleryController extends Controller
 
 	}
 
+    public function updateSort(Request $request)
+    {
+        $images = $request->gallery_items;
+
+        $updates = [];
+        $i = 0;
+        foreach( $images as $id ){
+            if( is_numeric($id) ){
+                $updated = GalleryImage::where('id', $id)->update(
+                    [ 'sort' => $i ]
+                );
+                $i++;
+            }
+        }
+
+        return response()->json(['sorted' => true]);
+    }
 
 	public function delete($id)
 	{

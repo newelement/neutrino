@@ -1098,22 +1098,21 @@ function updateTaxSort(type){
 }
 
 function updateGalleryImageSort(){
-    /*
-    let items = document.querySelectorAll('.tax-item');
+
+    let items = document.querySelectorAll('.gallery-item');
     let formData = new FormData;
     items.forEach((v) => {
         let id = v.getAttribute('data-id');
-        formData.append('items[]', id);
+        formData.append('gallery_items[]', id);
     });
 
-    let url = type === 'tax'? '/admin/sort/terms' : '/admin/sort/taxonomy';
+    let url = '/admin/sort/gallery';
     HTTP.post(url, formData)
         .then(response => {
         })
-        .catch(e => {
-            console.log('sort error');
-        });
-    */
+    .catch(e => {
+        console.log('sort error');
+    });
 }
 
 function snackbar(type, message){

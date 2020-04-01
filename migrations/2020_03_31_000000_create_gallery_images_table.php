@@ -16,7 +16,7 @@ class CreateGalleryImagesTable extends Migration
         Schema::create('gallery_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('gallery_id');
-            $table->string('title', 255);
+            $table->string('title', 255)->nullable();
             $table->text('image_path');
             $table->boolean('featured')->default('0');
             $table->text('description')->nullable();

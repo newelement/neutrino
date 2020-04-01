@@ -131,6 +131,7 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
         Route::put('/galleries/{id}',  $namespacePrefix.'Admin\GalleryController@update');
         Route::delete('/galleries/{id}',  $namespacePrefix.'Admin\GalleryController@delete');
         Route::delete('/galleries/images/{id}',  $namespacePrefix.'Admin\GalleryController@deleteImage');
+        Route::post('/sort/gallery',  $namespacePrefix.'Admin\GalleryController@updateSort');
 
 		Route::get('/menus',  $namespacePrefix.'Admin\MenuController@index')->name('menus');
 		Route::post('/menus',  $namespacePrefix.'Admin\MenuController@create');
