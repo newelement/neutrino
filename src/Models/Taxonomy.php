@@ -28,11 +28,29 @@ class Taxonomy extends Model
 		return $this->hasMany(self::class, 'parent_id', 'id')->orderBy('sort', 'asc')->orderBy('title', 'asc');
     }
 
+    public function products()
+    {
+        return $this->hasMany('\Newelement\Neutrino\Models\ObjectTerm', 'taxonomy_id', 'id')
+                ->where('object_type', 'product')
+                ->with('products');
+            /*
+        return $this->hasManyThrough('\Newelement\Shoppe\Models\Product', '\Newelement\Neutrino\Models\ObjectTerm', 'taxonomy_id', 'id', 'id', 'object_id')
+                ->where('object_type', 'product')
+                ->with('products');
+                */
+    }
+
 	public function url()
 	{
 		$url = $this->generateUrl();
 		$tax = DB::table('taxonomy_types')->where('id', $this->taxonomy_type_id)->first();
-		return '/'.$tax->slug.'/'.$url;
+        if( count(\Request::segments()) > 1 && $tax->slug !== 'product-category' ){
+            $fullUrl = '/'.$tax->slug.'/'.$url;
+        }
+        if( $tax->slug === 'product-category' ){
+            $fullUrl = strpos( $url, config('shoppe.slugs.store_landing') )? '/'.config('shoppe.slugs.store_landing').'/'.str_replace( config('shoppe.slugs.store_landing'), '', $url) : '/'.config('shoppe.slugs.store_landing').'/'.$url;
+        }
+		return $fullUrl;
 	}
 
 	private function generateUrl($parent_id = 0)

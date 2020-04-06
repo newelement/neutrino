@@ -136,6 +136,28 @@ return [
 
             'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@testimonial',
             'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@testimonialCompiler'
-        ]
+        ],
+        [
+            'name' => 'gallery',
+            'title' => 'Gallery',
+            'icon' => 'images',
+            'tag' => false,
+            'contentEditable' => false,
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@galleryTemplate',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@galleryCompiler',
+            'fields' => [
+                ['name' => 'gallery' , 'value' => '', 'allow_blocks' => false]
+            ],
+            'value' => '',
+            'blocks' => [],
+            'group' => false,
+            'options' => [
+                    ['type' => 'dropdown', 'name' => 'theme', 'label' => 'Theme', 'value' => '', 'options' => [
+                        ['label' => 'Grid', 'value' => 'grid'],
+                        ['label' => 'Carousel', 'value' => 'carousel'],
+                    ]
+                ]
+            ]
+        ],
     ],
 ];

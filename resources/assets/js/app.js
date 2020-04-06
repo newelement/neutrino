@@ -3365,7 +3365,7 @@ Vue2.component('block-item-actions', {
     props: [ 'blockItem', 'blockIndex' ],
     mixins: [ clickaway ],
     data: () => ({
-        showBlockItemOptions: false
+
     }),
     methods: {
         removeBlockItem(){
@@ -3375,7 +3375,13 @@ Vue2.component('block-item-actions', {
                 this.$root.currentBlocks.splice( this.$root.currentBlocks[this.blockIndex], 1);
             }
 
+        },
+        away(){
+            this.blockItem.showBlockItemOptions = false;
         }
+    },
+    mounted(){
+       console.log(this.blockItem.options);
     },
     template: `<div>
                 <div class="block-item-options">
@@ -3386,7 +3392,7 @@ Vue2.component('block-item-actions', {
                     </a>
                 </div>
             </div>
-            <div v-if="blockItem.showBlockItemOptions" class="block-item-options-list" v-cloak>
+            <div v-if="blockItem.showBlockItemOptions" v-on-clickaway="away" class="block-item-options-list" v-cloak>
                         <div v-for="option in blockItem.options">
                             <div v-if="option.type === 'text' " class="bi-option-item">
                                 <label><span>{{ option.label }}</span>
@@ -3413,7 +3419,7 @@ Vue2.component('block-item-actions', {
                                 </label>
                             </div>
                         </div>
-                        <div class="bi-delete-item">
+                        <div v-if="blockItem.group" class="bi-delete-item">
                             <a href="#" class="delete-block-item" @click.prevent="removeBlockItem(blockItem)">Delete Block Item</a>
                         </div>
                     </div>
@@ -3571,6 +3577,7 @@ const blockEditor = new Vue2({
             newBlock['tag'] = block.tag? block.tag : false;
             newBlock['template'] = block.template? block.template : false;
             newBlock['contentEditable'] = block.contentEditable? block.contentEditable : false;
+            newBlock['showBlockItemOptions'] = false;
             newBlock['value'] = '';
             newBlock['title'] = block.title;
             newBlock['name'] = block.name;

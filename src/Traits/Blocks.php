@@ -112,7 +112,7 @@ trait Blocks
                 'value' => '',
                 'blocks' => [],
                 'group' => false
-            ],
+            ]
         ];
     }
 
@@ -189,7 +189,6 @@ trait Blocks
 
     private function compileBlock($block)
     {
-        //dd($block);
         $compiled = '';
 
         if( isset($block->name) ){

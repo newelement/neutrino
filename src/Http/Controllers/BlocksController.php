@@ -3,6 +3,7 @@ namespace Newelement\Neutrino\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Newelement\Neutrino\Traits\Blocks;
+use Newelement\Neutrino\Models\Gallery;
 
 class BlocksController extends Controller
 {
@@ -21,7 +22,7 @@ class BlocksController extends Controller
             $newBlock = [];
             $newBlock['id'] = uniqid();
             $newBlock['value'] = '';
-            $newBlock['group'] = isset($block['group'])? $block['group'] : false;;
+            $newBlock['group'] = isset($block['group'])? $block['group'] : false;
             $newBlock['name'] = isset($block['name'])? $block['name'] : false;
             $newBlock['title'] = isset($block['title'])? $block['title'] : false;
             $newBlock['icon'] = isset($block['icon'])? $block['icon'] : false;
@@ -29,6 +30,8 @@ class BlocksController extends Controller
             $newBlock['contentEditable'] = isset($block['contentEditable'])? $block['contentEditable'] : false;
             $newBlock['blocks'] = isset($block['block'])? $block['blocks'] : [];
             $newBlock['fields'] = isset($block['fields'])? $block['fields'] : [];
+            $newBlock['options'] = isset($block['options'])? $block['options'] : [];
+            $newBlock['showBlockItemOptions'] = false;
             $newBlock['group_options'] = isset($block['group_options'])? $block['group_options'] : [];
 
             $template = '';
@@ -88,6 +91,19 @@ class BlocksController extends Controller
     public function accordionCompiler($json)
     {
         $html = view('neutrino::blocks.accordion.compiled', [ 'data' => $json ])->render();
+        return  $html;
+    }
+
+    public function galleryTemplate($blockData)
+    {
+        $galleries = Gallery::orderBy('title', 'asc')->get();
+        $html = view('neutrino::blocks.gallery.template', [ 'data' => $blockData, 'galleries' => $galleries ])->render();
+        return  $html;
+    }
+
+    public function galleryCompiler($json)
+    {
+        $html = view('neutrino::blocks.gallery.compiled', [ 'data' => $json ])->render();
         return  $html;
     }
 }

@@ -39,6 +39,9 @@ class ContentController extends Controller
 
 	private $bladeVendor = 'neutrino::';
 	private static $shortcode_tags = [];
+    protected $hiddenTaxonomies = [
+        'product-category'
+    ];
 
 	public function __construct(){}
 
@@ -154,7 +157,9 @@ class ContentController extends Controller
 				return EntryType::where('slug', $parent)->first();
 			});
 		} else {
-			$entryType = EntryType::where('slug', $parent)->first();
+            if( !in_array( $parent, $hiddenTaxonomies ) ){
+			    $entryType = EntryType::where('slug', $parent)->first();
+            }
 		}
 
 

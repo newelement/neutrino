@@ -16,7 +16,7 @@
             @if( count($menuItem0['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem0['named_route']) class="open" @endif>
                 @foreach( $menuItem0['children'] as $menuChildren0 )
-                <li><a href="{{ $menuChildren0['url'] }}"><span class="dash">-</span> {{ $menuChildren0['title'] }}</a></li>
+                <li><a href="{{ $menuChildren0['url'] }}">{{ $menuChildren0['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -27,8 +27,8 @@
     		    <i class="fal fa-file fa-fw"></i> <span class="parent-nav-title">Pages</span>
             </a>
 			<ul @if( isRouteGroup('pages.') ) class="open" @endif>
-				<li><a @if( isRouteGroup('pages.all') ) class="active" @endif href="/admin/pages"><span class="dash">-</span> Pages</a></li>
-				<li><a @if( isRouteGroup('pages.show') ) class="active" @endif href="/admin/page"><span class="dash">-</span> Create Page</a></li>
+				<li><a @if( isRouteGroup('pages.all') ) class="active" @endif href="/admin/pages">All Pages</a></li>
+				<li><a @if( isRouteGroup('pages.show') ) class="active" @endif href="/admin/page">Create Page</a></li>
 			</ul>
 		</li>
 		@php
@@ -42,7 +42,7 @@
             @if( count($menuItem1['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem1['named_route']) class="open" @endif>
                 @foreach( $menuItem1['children'] as $menuChildren1 )
-                <li><a href="{{ $menuChildren1['url'] }}"><span class="dash">-</span> {{ $menuChildren1['title'] }}</a></li>
+                <li><a href="{{ $menuChildren1['url'] }}">{{ $menuChildren1['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -62,23 +62,23 @@
 			@endphp
 			<ul @if( \Route::currentRouteName() === 'neutrino.entry-types' || isRouteGroup('entries.') || isRouteGroup('comments.') ) class="open" @endif>
 				<li>
-				    <a href="/admin/entries?entry_type=post"><span class="dash">-</span> Post</a>
+				    <a href="/admin/entries?entry_type=post">Post</a>
 				</li>
 				@php
 				$entryTypes = _getEntryTypes();
 				@endphp
 				@foreach( $entryTypes as $entryType )
-					<li><a href="/admin/entries?entry_type={{ $entryType->slug }}"><span class="dash">-</span> {{ $entryType->entry_type }}</a></li>
+					<li><a href="/admin/entries?entry_type={{ $entryType->slug }}">{{ $entryType->entry_type }}</a></li>
 				@endforeach
-				<li><a @if( isRouteGroup('comments.all')) class="active" @endif href="/admin/comments"><span class="dash">-</span> Comments</a></li>
-				<li><a @if( isRouteGroup('comments.moderate')) class="active" @endif href="/admin/moderate-comments"><span class="dash">-</span> Moderate Comments</a>
+				<li><a @if( isRouteGroup('comments.all')) class="active" @endif href="/admin/comments">Comments</a></li>
+				<li><a @if( isRouteGroup('comments.moderate')) class="active" @endif href="/admin/moderate-comments">Moderate Comments</a>
 				@php
 				if( $commentCount > 0 ){
 					echo '<span class="moderate-counter">'.$commentCount.'</span>';
 				}
 				@endphp
 				</li>
-				<li><a href="/admin/entry-types"><span class="dash">-</span> Edit Entry Types</a></li>
+				<li><a href="/admin/entry-types">Edit Entry Types</a></li>
 			</ul>
 		</li>
 		@php
@@ -92,7 +92,7 @@
             @if( count($menuItem2['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem2['named_route']) class="open" @endif>
                 @foreach( $menuItem2['children'] as $menuChildren2 )
-                <li><a href="{{ $menuChildren2['url'] }}"><span class="dash">-</span> {{ $menuChildren2['title'] }}</a></li>
+                <li><a href="{{ $menuChildren2['url'] }}">{{ $menuChildren2['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -103,12 +103,12 @@
     		    <i class="fal fa-folders fa-fw"></i> <span class="parent-nav-title">Taxonomies</span>
 		    </a>
 			<ul @if( \Route::currentRouteName() === 'neutrino.taxonomies') class="open" @endif>
-				<li><a href="/admin/taxonomies/1"><span class="dash">-</span> Categories</a></li>
+				<li><a href="/admin/taxonomies/1">Categories</a></li>
 				@php $taxTypes = _getTaxonomyTypes(); @endphp
 				@foreach( $taxTypes as $taxType )
-				<li><a href="/admin/taxonomies/{{ $taxType->id }}"><span class="dash">-</span> {{ str_plural($taxType->title) }}</a></li>
+				<li><a href="/admin/taxonomies/{{ $taxType->id }}">{{ str_plural($taxType->title) }}</a></li>
 				@endforeach
-				<li><a href="/admin/taxonomy-types"><span class="dash">-</span> Edit Taxonomies</a></li>
+				<li><a href="/admin/taxonomy-types">Edit Taxonomies</a></li>
 			</ul>
 		</li>
 		@php
@@ -122,7 +122,7 @@
             @if( count($menuItem3['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem3['named_route']) class="open" @endif>
                 @foreach( $menuItem3['children'] as $menuChildren3 )
-                <li><a href="{{ $menuChildren3['url'] }}"><span class="dash">-</span> {{ $menuChildren3['title'] }}</a></li>
+                <li><a href="{{ $menuChildren3['url'] }}">{{ $menuChildren3['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -137,9 +137,9 @@
     		    <i class="fal fa-shopping-cart fa-fw"></i> <span class="parent-nav-title">Products</span>
             </a>
 		    <ul @if( \Route::currentRouteName() === 'shoppe.products') class="open" @endif>
-    		    <li><a href="/admin/products"><span class="dash">-</span> Products</a></li>
-    		    <li><a href="/admin/product"><span class="dash">-</span> Create Product</a></li>
-                <li><a href="/admin/product-attributes"><span class="dash">-</span> Attributes</a></li>
+    		    <li><a href="/admin/products">All Products</a></li>
+    		    <li><a href="/admin/product">Create Product</a></li>
+                <li><a href="/admin/product-attributes">Attributes</a></li>
 		    </ul>
 		</li>
 		<li class="has-dropdown @if( \Route::currentRouteName() === 'shoppe.shoppe' || \Route::currentRouteName() === 'shoppe.orders') active open @endif">
@@ -150,17 +150,17 @@
                 @endif
 		    </a>
 		    <ul @if( \Route::currentRouteName() === 'shoppe.shoppe') class="open" @endif>
-                <li><a href="/admin/shoppe"><span class="dash">-</span> Dashboard</a>
-                <li><a href="/admin/orders"><span class="dash">-</span> Orders</a>
+                <li><a href="/admin/shoppe">Dashboard</a>
+                <li><a href="/admin/orders">Orders</a>
                 @if( $orderCount > 0 )
                     <span class="new-order-counter">{{ $orderCount }}</span>
                 @endif
                 </li>
-                <li><a href="/admin/subscriptions"><span class="dash">-</span> Subscriptions</a>
-                <li><a href="/admin/subscription-plans"><span class="dash">-</span> Subscription Plans</a>
-                <li><a href="/admin/stripe/tax-rates"><span class="dash">-</span> Subscription Tax Rates</a>
-                <li><a href="/admin/shoppe-reports"><span class="dash">-</span> Reports</a></li>
-    		    <li><a href="/admin/shoppe-settings"><span class="dash">-</span> Shoppe Settings</a></li>
+                <li><a href="/admin/subscriptions">Subscriptions</a>
+                <li><a href="/admin/subscription-plans">Subscription Plans</a>
+                <li><a href="/admin/stripe/tax-rates">Subscription Tax Rates</a>
+                <li><a href="/admin/shoppe-reports">Reports</a></li>
+    		    <li><a href="/admin/shoppe-settings">Shoppe Settings</a></li>
 		    </ul>
 		</li>
 		@endif
@@ -175,7 +175,7 @@
             @if( count($menuItem4['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem4['named_route']) class="open" @endif>
                 @foreach( $menuItem4['children'] as $menuChildren4 )
-                <li><a href="{{ $menuChildren4['url'] }}"><span class="dash">-</span> {{ $menuChildren4['title'] }}</a></li>
+                <li><a href="{{ $menuChildren4['url'] }}">{{ $menuChildren4['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -186,9 +186,9 @@
     		    <i class="fal fa-calendar-alt fa-fw"></i> <span class="parent-nav-title">Events</span>
             </a>
 			<ul @if( \Route::currentRouteName() === 'neutrino.events') class="open" @endif>
-				<li><a href="/admin/events"><span class="dash">-</span> Events</a></li>
-				<li><a href="/admin/event"><span class="dash">-</span> Create Event</a></li>
-				<li><a href="/admin/locations"><span class="dash">-</span> Locations</a></li>
+				<li><a href="/admin/events">All Events</a></li>
+				<li><a href="/admin/event">Create Event</a></li>
+				<li><a href="/admin/locations">Locations</a></li>
 			</ul>
 		</li>
 		@php
@@ -202,7 +202,7 @@
             @if( count($menuItem5['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem5['named_route']) class="open" @endif>
                 @foreach( $menuItem5['children'] as $menuChildren5 )
-                <li><a href="{{ $menuChildren5['url'] }}"><span class="dash">-</span> {{ $menuChildren5['title'] }}</a></li>
+                <li><a href="{{ $menuChildren5['url'] }}">{{ $menuChildren5['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -213,8 +213,8 @@
     		    <i class="fal fa-clipboard-list-check fa-fw"></i> <span class="parent-nav-title">Forms</span>
             </a>
 			<ul @if( \Route::currentRouteName() === 'neutrino.forms') class="open" @endif>
-				<li><a href="/admin/forms"><span class="dash">-</span> Forms</a></li>
-				<li><a href="/admin/form"><span class="dash">-</span> Create Form</a></li>
+				<li><a href="/admin/forms">All Forms</a></li>
+				<li><a href="/admin/form">Create Form</a></li>
 			</ul>
 		</li>
 		@php
@@ -228,7 +228,7 @@
             @if( count($menuItem6['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem6['named_route']) class="open" @endif>
                 @foreach( $menuItem6['children'] as $menuChildren6 )
-                <li><a href="{{ $menuChildren6['url'] }}"><span class="dash">-</span> {{ $menuChildren6['title'] }}</a></li>
+                <li><a href="{{ $menuChildren6['url'] }}">{{ $menuChildren6['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -250,7 +250,7 @@
             @if( count($menuItem7['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem7['named_route']) class="open" @endif>
                 @foreach( $menuItem7['children'] as $menuChildren7 )
-                <li><a href="{{ $menuChildren7['url'] }}"><span class="dash">-</span> {{ $menuChildren7['title'] }}</a></li>
+                <li><a href="{{ $menuChildren7['url'] }}">{{ $menuChildren7['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -272,7 +272,7 @@
             @if( count($menuItem8['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem8['named_route']) class="open" @endif>
                 @foreach( $menuItem8['children'] as $menuChildren8 )
-                <li><a href="{{ $menuChildren8['url'] }}"><span class="dash">-</span> {{ $menuChildren8['title'] }}</a></li>
+                <li><a href="{{ $menuChildren8['url'] }}">{{ $menuChildren8['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -283,8 +283,8 @@
                 <i class="fal fa-images fa-fw"></i> <span class="parent-nav-title">Galleries</span>
             </a>
             <ul @if( \Route::currentRouteName() === 'neutrino.galleries') class="open" @endif>
-                <li><a href="/admin/galleries"><span class="dash">-</span> Galleries</a></li>
-                <li><a href="/admin/gallery"><span class="dash">-</span> Create Gallery</a></li>
+                <li><a href="/admin/galleries">All Galleries</a></li>
+                <li><a href="/admin/gallery">Create Gallery</a></li>
             </ul>
         </li>
 		<li @if( \Route::currentRouteName() === 'neutrino.custom-fields') class="active" @endif>
@@ -304,7 +304,7 @@
             @if( count($menuItem9['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem9['named_route']) class="open" @endif>
                 @foreach( $menuItem9['children'] as $menuChildren9 )
-                <li><a href="{{ $menuChildren9['url'] }}"><span class="dash">-</span> {{ $menuChildren9['title'] }}</a></li>
+                <li><a href="{{ $menuChildren9['url'] }}">{{ $menuChildren9['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif
@@ -315,9 +315,9 @@
     		    <i class="fal fa-users fa-fw"></i> <span class="parent-nav-title">Users</span>
             </a>
 			<ul @if( \Route::currentRouteName() === 'neutrino.users') class="open" @endif>
-				<li><a href="/admin/users"><span class="dash">-</span> Users</a></li>
-				<li><a href="/admin/user"><span class="dash">-</span> Create User</a></li>
-				<li><a href="/admin/roles"><span class="dash">-</span> Roles</a></li>
+				<li><a href="/admin/users">All Users</a></li>
+				<li><a href="/admin/user">Create User</a></li>
+				<li><a href="/admin/roles">Roles</a></li>
 			</ul>
 		</li>
 		@php
@@ -331,7 +331,7 @@
             @if( count($menuItem10['children']) > 0)
             <ul @if( \Route::currentRouteName() === $menuItem10['named_route']) class="open" @endif>
                 @foreach( $menuItem10['children'] as $menuChildren10 )
-                <li><a href="{{ $menuChildren9['url'] }}"><span class="dash">-</span> {{ $menuChildren10['title'] }}</a></li>
+                <li><a href="{{ $menuChildren9['url'] }}">{{ $menuChildren10['title'] }}</a></li>
                 @endforeach
             </ul>
             @endif

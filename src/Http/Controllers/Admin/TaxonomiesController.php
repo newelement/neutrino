@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use Newelement\Neutrino\Facades\Neutrino;
 use Newelement\Neutrino\Models\Taxonomy;
 use Newelement\Neutrino\Models\TaxonomyType;
@@ -130,6 +131,9 @@ class TaxonomiesController extends Controller
 			$this->parseCustomFields($customFields, $tax->id, 'taxonomy');
 		}
 
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
+
         ActivityLog::insert([
             'activity_package' => 'neutrino',
             'activity_group' => 'taxonomy.create',
@@ -163,6 +167,9 @@ class TaxonomiesController extends Controller
 		$tax->hierarchical = $request->hierarchical? $request->hierarchical : 0;
 		$tax->show_on = implode(',',$request->show_on);
 		$tax->save();
+
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
 
         ActivityLog::insert([
             'activity_package' => 'neutrino',
@@ -242,6 +249,9 @@ class TaxonomiesController extends Controller
                 ])->delete();
         }
 
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
+
         ActivityLog::insert([
             'activity_package' => 'neutrino',
             'activity_group' => 'taxonomytype.update',
@@ -298,6 +308,9 @@ class TaxonomiesController extends Controller
 			$this->parseCustomFields($customFields, $tax->id, 'taxonomy');
 		}
 
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
+
         ActivityLog::insert([
             'activity_package' => 'neutrino',
             'activity_group' => 'taxonomy.updated',
@@ -327,6 +340,9 @@ class TaxonomiesController extends Controller
 
         $type->delete();
 
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
+
         ActivityLog::insert([
             'activity_package' => 'neutrino',
             'activity_group' => 'taxonomytype.delete',
@@ -349,6 +365,9 @@ class TaxonomiesController extends Controller
 		ObjectTerm::where('taxonomy_id', $term->id)->delete();
 		$title = $term->title;
 		$term->delete();
+
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
 
         ActivityLog::insert([
             'activity_package' => 'neutrino',
@@ -374,6 +393,9 @@ class TaxonomiesController extends Controller
             $tax->sort = $key;
             $tax->save();
         }
+
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
     }
 
     public function sortTaxonomy(Request $request)
@@ -386,6 +408,9 @@ class TaxonomiesController extends Controller
             $tax->sort = $key;
             $tax->save();
         }
+
+        Cache::forget('menu_product_categories');
+        Cache::forget('menu_product_categories_arr');
     }
 
 }
