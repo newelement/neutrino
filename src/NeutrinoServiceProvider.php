@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use TorMorten\Eventy\Facades\Events as Eventy;
 
 use Newelement\Neutrino\Facades\Neutrino as NeutrinoFacade;
