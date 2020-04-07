@@ -61,8 +61,8 @@ class UpdateCommand extends Command
         $process->setTimeout(null);
         $process->setWorkingDirectory(base_path())->run();
 
-        $this->info('Merging config...');
-        $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'config', '--force' => true ]);
+        //$this->info('Merging config...');
+        //$this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'config']);
 
         $initData = $this->ask('Do you want to update the Neutrino application views? CAUTION this will overwrite any Neutrino views you may have altered. If you do not update the views you may need to update them manually. See documentation for more info. [Y/N]');
 

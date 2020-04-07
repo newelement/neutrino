@@ -34,9 +34,6 @@ class CreatePagesTable extends Migration
 			$table->softDeletes();
 			$table->index('slug');
             $table->index('title');
-            $table->index('content');
-            $table->index('short_content');
-            //$table->index('block_content');
 			$table->index('status');
 			$table->index('created_by');
 			$table->index('updated_by');

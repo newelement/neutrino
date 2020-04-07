@@ -562,6 +562,33 @@ h2, h3{
 
 }
 
+.table{
+
+    tbody.table-row-children{
+        border: 0;
+
+        tr{
+            td{
+                border: 0;
+                background-color: lighten(#b9e6fa, 10%);
+
+                &:first-child{
+                    padding-left: 32px;
+                }
+            }
+        }
+
+         tr:last-child td {
+             border-bottom: 1px solid #ccc;
+        }
+
+        tr:first-child td {
+             border-top: 1px solid #ccc;
+        }
+    }
+
+}
+
 .system-page{
     display: inline-block;
     font-size: 13px;
@@ -2725,6 +2752,45 @@ progress[value]::-webkit-progress-bar {
 
     input[type="radio"]{
         display: none;
+    }
+}
+
+.simple-pagination-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    margin-bottom: 24px;
+
+    .simple-prev{
+        margin-right: auto;
+    }
+
+    .simple-next{
+        margin-left: auto;
+    }
+
+    div{
+        display: inline-block;
+        flex: 0 1 auto;
+        width: 180px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    a{
+        display: block;
+        text-decoration: none;
+        padding: 4px 18px;
+        border: 1px solid #444;
+        transition: background-color .25s ease, color .25s ease;
+
+        &:hover{
+            background-color: #444;
+            color: #fff;
+        }
     }
 }
 

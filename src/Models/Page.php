@@ -100,6 +100,11 @@ class Page extends Model
 		return $this->belongsTo(self::class, 'parent_id', 'id' );
 	}
 
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id', 'id')->orderBy('title', 'asc');
+    }
+
 	private function generateUrl($parent_id = 0)
 	{
 		if( $parent_id === 0 ){

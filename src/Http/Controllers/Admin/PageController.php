@@ -16,6 +16,9 @@ use Newelement\Neutrino\Models\Role;
 use Newelement\Neutrino\Models\Backup;
 use Newelement\Neutrino\Traits\Blocks;
 use Newelement\Neutrino\Models\ActivityLog;
+use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PageController extends Controller
 {
@@ -29,14 +32,30 @@ class PageController extends Controller
 	{
 		if( $request->s && strlen($request->s) ){
 			$pages = Page::search($request->s)->sortable('title')->paginate(30);
+            $pagesTotal = $pages;
 		} else {
-			$pages = Page::sortable('title')->paginate(30);
+			$pagesTotal = Page::where('parent_id', 0)->sortable('title')->get();
+            $pages = $this->listPages($pagesTotal)->forPage( $page, 30)->values();
 		}
+
+        $page = $request->page? $request->page : 1;
 
 		$trashed = Page::onlyTrashed()->get();
 
-		return view('neutrino::admin.pages.index', ['pages' => $pages, 'trashed' => count($trashed)]);
+		return view('neutrino::admin.pages.index', ['pages' => $pages, 'page_count'=> $pagesTotal->count(), 'page' => $page, 'trashed' => count($trashed)]);
 	}
+
+    private function listPages($pages)
+    {
+        $data = collect();
+
+        foreach($pages as $page){
+            $page->sub_pages = $this->listPages($page->children);
+            $data->push($page);
+        }
+
+        return $data;
+    }
 
 	public function getCreate()
 	{
