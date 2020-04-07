@@ -30,6 +30,9 @@ class PageController extends Controller
 
 	public function index(Request $request)
 	{
+
+        $page = $request->page? $request->page : 1;
+
 		if( $request->s && strlen($request->s) ){
 			$pages = Page::search($request->s)->sortable('title')->paginate(30);
             $pagesTotal = $pages;
@@ -37,8 +40,6 @@ class PageController extends Controller
 			$pagesTotal = Page::where('parent_id', 0)->sortable('title')->get();
             $pages = $this->listPages($pagesTotal)->forPage( $page, 30)->values();
 		}
-
-        $page = $request->page? $request->page : 1;
 
 		$trashed = Page::onlyTrashed()->get();
 
