@@ -217,24 +217,36 @@ function _checkCurrentParentRequest($arr, $url, $s){
 */
 function getContent($args = [], $content = false){
 
-	if( !$content ){
+    if( !$content ){
+
         $data = view()->shared('objectData');
 
         if( $data ){
             if( $data->editor_type === 'B' ){
 
-                // TODO
-                // There will be a setting soon to cache block content
+                if( getSetting('cache') ){
+                    $content = Cache::rememberForever('block_'.$data->data_type.'_'.$data->slug, function () use ($data) {
 
-                $blocksJSON = json_decode($data->block_content);
-                $blocksController = new BlocksController;
-                $content = $blocksController->compileBlocks($blocksJSON);
+                        $blocksJSON = json_decode($data->block_content);
+                        $blocksController = new BlocksController;
+                        $content = $blocksController->compileBlocks($blocksJSON);
+
+                        return $content;
+                    });
+                } else {
+                    $blocksJSON = json_decode($data->block_content);
+                    $blocksController = new BlocksController;
+                    $content = $blocksController->compileBlocks($blocksJSON);
+                }
+
+
             } else {
                 $content = $data->content;
             }
         } else {
             $content = false;
         }
+
     }
 
     if( isset($args['strip_shortcodes']) &&  $args['strip_shortcodes'] ){
@@ -243,7 +255,8 @@ function getContent($args = [], $content = false){
         $content = ContentController::doShortCodes($content);
     }
 
-	$content = html_entity_decode($content);
+    $content = html_entity_decode($content);
+
     return $content;
 }
 

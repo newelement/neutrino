@@ -310,6 +310,7 @@ class EntryController extends Controller
 
 		// Save in cache
 		Cache::forget('entry_'.$entry->slug);
+        Cache::forget('block_entry_'.$entry->slug);
 		if( getSetting('cache') ){
 			Cache::rememberForever('entry_'.$entry->slug, function() use($entry){
 	            return $entry;

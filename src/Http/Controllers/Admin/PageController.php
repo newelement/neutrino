@@ -252,6 +252,7 @@ class PageController extends Controller
 		// Save in cache
 		$slug = $page->slug === 'home'? 'index' : $page->slug;
 		Cache::forget('page_'.$slug);
+        Cache::forget('block_page_'.$slug);
 		if( getSetting('cache') ){
 			Cache::rememberForever('page_'.$slug, function() use ($page){
 				return $page;
