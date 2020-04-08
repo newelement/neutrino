@@ -217,7 +217,9 @@ class MediaController extends Controller
             case 'image/jpeg':
             case 'image/png':
             case 'image/gif':
+            case 'image/webp':
             case 'jpg':
+            case 'webp':
             case 'jpeg':
             case 'png':
             case 'gif':
