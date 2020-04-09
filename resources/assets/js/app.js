@@ -1097,6 +1097,23 @@ function updateTaxSort(type){
         });
 }
 
+function updatePageSort(){
+    let items = document.querySelectorAll('.page-item');
+    let formData = new FormData;
+    items.forEach((v) => {
+        let id = v.getAttribute('data-id');
+        formData.append('pages[]', id);
+    });
+
+    let url = '/admin/pages/sort';
+    HTTP.post(url, formData)
+        .then(response => {
+        })
+    .catch(e => {
+        console.log('sort error');
+    });
+}
+
 function updateGalleryImageSort(){
 
     let items = document.querySelectorAll('.gallery-item');
@@ -2024,6 +2041,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
 	}
 
     let termList = document.querySelectorAll('.term-list');
+    let pageList = document.querySelectorAll('.sort-pages-list');
+    let pageChildrenList = document.querySelectorAll('.sort-pages-children-list');
     let taxTypeTable = document.querySelector('.tax-type-table');
     if(termList.length){
         termList.forEach( (el) => {
@@ -2045,10 +2064,29 @@ window.addEventListener('DOMContentLoaded', (e) => {
         });
     }
 
+    if(pageList.length){
+        pageList.forEach( (el) => {
+            Sortable.create(el, {
+                easing: "cubic-bezier(1, 0, 0, 1)",
+                animation: 150,
+                group: 'nested',
+                swapThreshold: 0.65,
+                onEnd: function (e) {
+                    updatePageSort();
+                },
+                onAdd: function (e) {
+                },
+                onStart: function (evt) {
+                    evt.oldIndex;
+                },
+            });
+        });
+    }
+
     let termChlidren = document.querySelectorAll('.term-children');
 
-    if(termChlidren .length){
-        termChlidren .forEach( (el, i) => {
+    if(termChlidren.length){
+        termChlidren.forEach( (el, i) => {
             Sortable.create(el, {
                 handle: '.tax-sort-handle',
                 easing: "cubic-bezier(1, 0, 0, 1)",
@@ -2057,6 +2095,25 @@ window.addEventListener('DOMContentLoaded', (e) => {
                 swapThreshold: 0.65,
                 onEnd: function (e) {
                     updateTaxSort('tax');
+                },
+                onAdd: function (e) {
+                },
+                onStart: function (evt) {
+                },
+            });
+        });
+    }
+
+    if(pageChildrenList.length){
+        pageChildrenList.forEach( (el, i) => {
+            Sortable.create(el, {
+                easing: "cubic-bezier(1, 0, 0, 1)",
+                animation: 150,
+                group: 'nested-'+i,
+                swapThreshold: 0.65,
+                onEnd: function (e) {
+                    updateTaxSort('tax');
+                    updatePageSort();
                 },
                 onAdd: function (e) {
                 },

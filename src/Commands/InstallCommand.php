@@ -54,7 +54,9 @@ class InstallCommand extends Command
 
         $this->call('vendor:publish', ['--provider' => NeutrinoServiceProvider::class]); // , '--tag' => $tags
 		$this->call('vendor:publish', ['--provider' => 'Newelement\LaravelCalendarEvent\ServiceProvider']);
+        $this->call('vendor:publish', ['--provider' => 'Intervention\Image\ImageServiceProviderLaravelRecent']);
         $this->call('vendor:publish', ['--provider' => 'Kyslik\ColumnSortable\ColumnSortableServiceProvider', '--tag' => 'config']);
+        $this->call('vendor:publish', ['--provider' => 'JamesMills\LaravelTimezone\LaravelTimezoneServiceProvider', '--tag' => 'migrations']);
 
 		$this->info('Migrating the database tables into your application');
         $this->call('migrate', ['--force' => $this->option('force')]);

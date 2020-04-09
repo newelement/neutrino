@@ -15,6 +15,8 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
         Route::group([ 'as' => 'pages.'], function () use ( $namespacePrefix ) {
 
     		Route::get('/pages', $namespacePrefix.'Admin\PageController@index')->name('all');
+            Route::get('/pages/sort', $namespacePrefix.'Admin\PageController@getsort')->name('sort');
+            Route::post('/pages/sort', $namespacePrefix.'Admin\PageController@updateSort')->name('sort');
     		Route::get('/page/{id}', $namespacePrefix.'Admin\PageController@get')->name('edit');
     		Route::get('/page', $namespacePrefix.'Admin\PageController@getCreate')->name('show');
     		Route::post('/pages', $namespacePrefix.'Admin\PageController@create')->name('create');

@@ -65,6 +65,24 @@ class PageController extends Controller
 		return view( 'neutrino::admin.pages.create', ['field_groups' => $fieldGroups, 'roles' => $roles]);
 	}
 
+    public function getSort()
+    {
+        $pages = Page::orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
+        return view( 'neutrino::admin.pages.sort', ['pages' => $pages]);
+    }
+
+    public function updateSort(Request $request)
+    {
+        $pages = $request->pages;
+        foreach( $pages as $key => $id ){
+            $id = (int) $id;
+            $tax = Page::find($id);
+            $tax->sort = $key;
+            $tax->save();
+        }
+        return response()->json(['success' => true]);
+    }
+
 	public function get($id)
 	{
 		$page = Page::find($id);

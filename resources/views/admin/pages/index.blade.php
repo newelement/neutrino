@@ -13,7 +13,8 @@
 				</div>
 			</div>
 
-			<div class="pages-options-row text-right">
+			<div class="pages-options-row">
+                <a href="/admin/pages/sort"><i class="fal fa-sort"></i> Sort pages</a>
 				<a class="trash-link" href="/admin/pages-trash"><i class="fal fa-trash-alt"></i> Trashed ({{ $trashed }})</a>
 			</div>
 

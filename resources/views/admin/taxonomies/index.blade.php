@@ -76,6 +76,8 @@
 						</div>
 					</div>
 
+                    @endif
+
                     <div class="form-row">
                         <label class="label-col">Social Image
                             <a class="lfm-social-image" data-input="social-image" data-preview="social-image-preview">
@@ -130,8 +132,6 @@
                             <input id="keywords" type="text" name="keywords" value="{{ old('keywords', $edit_taxonomy->keywords) }}">
                         </div>
                     </div>
-
-					@endif
 
 					@foreach( $field_groups as $group )
 					<h2 class="cf-group-title">{{ $group->title }}</h2>

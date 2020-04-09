@@ -705,17 +705,27 @@ h2, h3{
 }
 
 .pages-options-row{
+    display: flex;
+    justify-content: space-between;
 	margin-bottom: 12px;
+
+    a{
+        text-decoration: none;
+        transition: color .25s ease;
+
+        &:hover{
+            color: #999;
+            text-decoration: none;
+        }
+    }
 }
 
 .trash-link{
 	text-decoration: none;
-	&:hover{
-		text-decoration: underline;
-	}
 }
 
-.term-list{
+.term-list,
+.sort-pages-list{
     display: block;
     margin: 0;
     padding: 0;
@@ -747,7 +757,23 @@ h2, h3{
             ul li{
                 background-color: #BEE3F8;
                 border: 1px solid darken(#BEE3F8, 10%);
+
+                ul{
+                    li{
+                        background-color: lighten(#EDF2F7, 3%);
+                    }
+                }
             }
+        }
+    }
+}
+
+.sort-pages-list{
+    li{
+        cursor: ns-resize;
+        transition: opacity .25s ease;
+        &:hover{
+            opacity: .65;
         }
     }
 }
