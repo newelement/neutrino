@@ -1,5 +1,6 @@
 <div id="filemanager">
 	<div class="fm-inner">
+        <div id="fm-uploading" v-if="fmUploading" v-cloak><i class="fal fa-circle-notch fa-spin"></i> Uploading and processing</div>
 		<a class="close-file-manager" role="button" @click.prevent="closeFileManager" href="/">&times;</a>
 		<div class="filemanager">
 			<div class="fm-toolbar">
@@ -84,6 +85,8 @@
 			@vdropzone-file-added="dzFileAdded"
 			@vdropzone-sending-multiple="dzSendingFiles"
 			@vdropzone-sending="dzSending"
+            @vdropzone-queue-complete="dzQueueComplete"
+            @vdropzone-complete="dzComplete"
 			@vdropzone-success-multiple="dzSuccess"
             @vdropzone-error="dzError"
 			>

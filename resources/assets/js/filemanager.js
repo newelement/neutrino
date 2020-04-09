@@ -17,6 +17,7 @@ window.fm = new Vue({
         errors: [],
         saving: 0,
         loading: false,
+        fmUploading: false,
 		savingEdit: false,
         showOverlay: false,
 		paths: [{ name: 'uploads', path: 'uploads' }],
@@ -179,8 +180,18 @@ window.fm = new Vue({
 		dzUploadProgress(f, percent){
 			this.uploadPercent = percent;
 		},
+        dzSending(){
+            this.fmUploading = true;
+        },
 		dzSendingFiles(){
+            this.fmUploading = true;
 		},
+        dzQueueComplete(){
+
+        },
+        dzComplete(){
+            this.fmUploading = false;
+        },
 		dzSending(file, xhr, formData){
 			formData.append("path", this.path);
 		},
