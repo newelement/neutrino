@@ -43,6 +43,7 @@ class Page extends Model
 			'keywords',
 			'meta_description',
 			'social_image',
+            'sort',
 			'protected',
 			'created_by',
 			'updated_by'
@@ -102,7 +103,7 @@ class Page extends Model
 
     public function children()
     {
-        return $this->hasMany(self::class, 'parent_id', 'id')->orderBy('title', 'asc');
+        return $this->hasMany(self::class, 'parent_id', 'id');
     }
 
 	private function generateUrl($parent_id = 0)

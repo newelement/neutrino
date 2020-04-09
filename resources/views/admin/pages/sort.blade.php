@@ -6,7 +6,7 @@
             <div class="title-search">
                 <h2>Sort Pages <a class="headline-btn" href="/admin/pages" role="button">&larr; Back to pages</a></h2>
             </div>
-            <ul class="sort-pages-list">
+            <ul class="sort-pages-list page-list-0">
                 @each('neutrino::admin.partials.page-sort-row', $pages, 'page')
             </ul>
         </div>

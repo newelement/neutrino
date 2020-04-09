@@ -51,7 +51,7 @@ class PageController extends Controller
         $data = collect();
 
         foreach($pages as $page){
-            $page->sub_pages = $this->listPages($page->children);
+            $page->sub_pages = $this->listPages($page->children->sortBy('title'));
             $data->push($page);
         }
 
@@ -67,7 +67,7 @@ class PageController extends Controller
 
     public function getSort()
     {
-        $pages = Page::orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
+        $pages = Page::where('parent_id', 0)->orderBy('sort', 'asc')->orderBy('title', 'asc')->get();
         return view( 'neutrino::admin.pages.sort', ['pages' => $pages]);
     }
 

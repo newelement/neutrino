@@ -33,7 +33,7 @@
 @if( $page->children->count() )
 </tbody>
 <tbody class="table-row-children">
-    @each('neutrino::admin.partials.page-row', $page->children, 'page')
+    @each('neutrino::admin.partials.page-row', $page->children->sortBy('title'), 'page')
 </tbody>
 <tbody>
 @endif

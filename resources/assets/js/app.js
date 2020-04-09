@@ -2112,7 +2112,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
                 group: 'nested-'+i,
                 swapThreshold: 0.65,
                 onEnd: function (e) {
-                    updateTaxSort('tax');
                     updatePageSort();
                 },
                 onAdd: function (e) {

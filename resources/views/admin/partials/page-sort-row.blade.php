@@ -6,7 +6,7 @@
     @endif
     @if( $page->children->count() )
     <ul class="sort-pages-children-list">
-    @each('neutrino::admin.partials.page-sort-row', $page->children, 'page')
+    @each('neutrino::admin.partials.page-sort-row', $page->children->sortBy('sort'), 'page')
     </ul>
     @endif
 </li>
