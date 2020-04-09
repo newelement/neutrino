@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "intervention/image": "^2.5.*",
+        "intervention/image": "2.5.*",
 		"doctrine/dbal": "^2.5",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^6.3",
