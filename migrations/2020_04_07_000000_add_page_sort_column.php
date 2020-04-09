@@ -14,7 +14,7 @@ class AddPageSortColumn extends Migration
     public function up()
     {
         if (!Schema::hasColumn('pages', 'sort')) {
-            Schema::create('pages', function (Blueprint $table) {
+            Schema::table('pages', function (Blueprint $table) {
                 $table->integer('sort')->default(0);
                 $table->index('sort');
             });
@@ -29,7 +29,7 @@ class AddPageSortColumn extends Migration
     public function down()
     {
         if (Schema::hasColumn('sort')) {
-            Schema::create('pages', function (Blueprint $table) {
+            Schema::table('pages', function (Blueprint $table) {
                 $table->dropColumn('sort');
                 $table->dropIndex('sort_index');
             });

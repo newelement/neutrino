@@ -755,7 +755,7 @@ h2, h3{
             border: 1px solid darken(#EBF8FF, 10%);
 
             ul li{
-                background-color: #BEE3F8;
+                background-color: darken(#EBF8FF, 3%);
                 border: 1px solid darken(#BEE3F8, 10%);
 
                 ul{
@@ -771,9 +771,9 @@ h2, h3{
 .sort-pages-list{
     li{
         cursor: ns-resize;
-        transition: opacity .25s ease;
+        transition: background-color .25s ease;
         &:hover{
-            opacity: .65;
+            background-color: #f3f3f3;
         }
     }
 }
