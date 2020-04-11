@@ -157,7 +157,7 @@ class ContentController extends Controller
 				return EntryType::where('slug', $parent)->first();
 			});
 		} else {
-            if( !in_array( $parent, $hiddenTaxonomies ) ){
+            if( !in_array( $parent, $this->hiddenTaxonomies ) ){
 			    $entryType = EntryType::where('slug', $parent)->first();
             }
 		}

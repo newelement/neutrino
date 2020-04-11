@@ -28,6 +28,66 @@ class Taxonomy extends Model
 		return $this->hasMany(self::class, 'parent_id', 'id')->orderBy('sort', 'asc')->orderBy('title', 'asc');
     }
 
+    public function getProductCountAttribute()
+    {
+        $order = 'products.title';
+        $dir = 'asc';
+
+        $filters = $this->getFilters();
+
+        $where = [
+            'ot.taxonomy_id' => $this->id,
+            'products.status' => 'P',
+            'ot.object_type' => 'product'
+        ];
+
+        $count = \Newelement\Shoppe\Models\Product::query();
+        $count = $count->join('object_terms AS ot', 'ot.object_id', '=', 'products.id');
+        $i = 0;
+        foreach( $filters as $slug => $value ){
+            $i++;
+            $count = $count->join('object_terms AS ot'.$i, 'ot'.$i.'.object_id', '=', 'products.id');
+        }
+        $count = $count->join('taxonomies AS t', 't.id', '=', 'ot.taxonomy_id');
+        $count = $count->where($where);
+
+        $c = 0;
+        foreach( $filters as $slug => $value ){
+            $c++;
+            $taxonomy = \Newelement\Neutrino\Models\TaxonomyType::where('slug', $slug)->first();
+            $term = self::where('slug', $value)->first();
+            $count = $count->where([
+                'ot'.$c.'.taxonomy_type_id' => $taxonomy->id,
+                'ot'.$c.'.taxonomy_id' => $term->id,
+                'ot'.$c.'.object_type' => 'product'
+            ]);
+        }
+        $count = $count->orderBy($order, $dir);
+        $results = $count->count();
+
+        return $results;
+    }
+
+    private function getFilters()
+    {
+        $filters = [];
+        $currentQueries = request()->query();
+        if( !isset($currentQueries['filters']) ){
+            return $filters;
+        }
+        $filtersArr = $currentQueries['filters'];
+        foreach( $filtersArr as $name => $value ){
+            if( is_array($value)  ){
+                foreach( $value as $v ){
+                    $filters[$name][] = $v;
+                }
+            } else {
+                $filters[$name][] = $value;
+            }
+        }
+        return $filters;
+    }
+
     public function products()
     {
         return $this->hasMany('\Newelement\Neutrino\Models\ObjectTerm', 'taxonomy_id', 'id')

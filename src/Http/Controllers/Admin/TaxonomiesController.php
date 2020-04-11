@@ -112,7 +112,7 @@ class TaxonomiesController extends Controller
         $tax->social_image_2 = $request->social_image_2;
 		$tax->taxonomy_type_id = $id;
 		$tax->taxonomy_image = $request->taxonomy_image;
-		$tax->parent_id = $request->parent_id;
+		$tax->parent_id = $request->parent_id? : 0;
 		$tax->save();
 
 		if( $request->featured_image ){
