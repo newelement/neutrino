@@ -51,3 +51,9 @@
 
 	</div>
 @endsection
+
+@section('js')
+<script>
+window.object_type = 'page';
+</script>
+@endsection

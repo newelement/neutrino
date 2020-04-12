@@ -232,6 +232,7 @@
 
 @section('js')
 <script>
+window.object_user_edit = { object_type: 'page', id: <?php echo $page->id ?>, user_id: <?php echo auth()->user()->id; ?>, user_name: '<?php echo auth()->user()->name; ?>' };
 window.editorCss = '<?php echo getEditorCss(); ?>';
 window.blocks = <?php echo getBlocks() ?>;
 window.currentBlocks = <?php echo $page->block_content; ?>;

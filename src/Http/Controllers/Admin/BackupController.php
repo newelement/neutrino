@@ -73,9 +73,4 @@ class BackupController extends Controller
 		}
 		return response()->json(['backup' => $backup]);
 	}
-
-    public function heartbeat()
-    {
-        return response()->json(['success' => true]);
-    }
 }

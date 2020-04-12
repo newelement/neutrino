@@ -1393,6 +1393,45 @@ function enableConditionals(toggleSets){
     });
 }
 
+function expireEdit(){
+    if( typeof object_user_edit !== 'undefined' ){
+        let formData = new FormData;
+        formData.append('object_user_edit', JSON.stringify(object_user_edit) );
+
+        HTTP.post('/admin/heartbeat/expire-edit', formData)
+        .then(response => {
+
+        })
+        .catch(e => {
+        });
+    }
+}
+
+function showObjectEdits(edits){
+
+    let objs = document.querySelectorAll('.object-editing');
+
+    edits.forEach( (v) => {
+        objs.forEach( (el) => {
+            let attrId = el.getAttribute('data-editing-object-id')
+            let objectId = parseInt(attrId);
+            if( v.object_id === objectId ){
+                el.classList.remove('hide');
+                el.innerHTML = v.user.name+' is currently editing.';
+            } else {
+                el.classList.add('hide');
+            }
+        });
+
+    });
+
+    if( !edits.length ){
+        objs.forEach( (el) => {
+            el.classList.add('hide');
+        });
+    }
+}
+
 window.addEventListener('DOMContentLoaded', (e) => {
 
 	let dashboard = document.querySelector('.dashboard');
@@ -1512,8 +1551,17 @@ window.addEventListener('DOMContentLoaded', (e) => {
     setInterval(function(){
         let formData = new FormData;
         formData.append('beep', 'bop');
+        if( typeof object_user_edit !== 'undefined' ){
+            formData.append('object_user_edit', JSON.stringify(object_user_edit) );
+        }
+        if( typeof object_type !== 'undefined' ){
+            formData.append('object_type', object_type );
+        }
         HTTP.post('/admin/heartbeat', formData)
-            .then(response => {
+            .then( response => {
+                let edits = response.data.edits;
+
+                showObjectEdits(edits);
 
             })
             .catch(e => {
@@ -1523,7 +1571,14 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     $('.expired-csrf-modal').show();
                 }
             });
-    }, 15000);
+    }, 5000);
+
+    window.addEventListener('beforeunload', () => {
+        if( typeof object_user_edit !== 'undefined' ){
+            expireEdit();
+        }
+    });
+
 
     $('.close-csrf-modal-action').click(function(e){
         e.preventDefault();

@@ -166,7 +166,8 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::post('/object-backup', $namespacePrefix.'Admin\BackupController@backup');
 		Route::get('/object-backup/{id}', $namespacePrefix.'Admin\BackupController@getBackup');
 
-        Route::post('/heartbeat', $namespacePrefix.'Admin\BackupController@heartbeat');
+        Route::post('/heartbeat', $namespacePrefix.'Admin\HeartBeatController@heartbeat');
+        Route::post('/heartbeat/expire-edit', $namespacePrefix.'Admin\HeartBeatController@expireEdit');
     });
 
 });
