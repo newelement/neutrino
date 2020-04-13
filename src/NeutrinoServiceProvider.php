@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use TorMorten\Eventy\Facades\Events as Eventy;
 
 use Newelement\Neutrino\Facades\Neutrino as NeutrinoFacade;
+use Newelement\Neutrino\Bonds\BondController;
 use Newelement\Neutrino\Http\Middleware\NeutrinoAdminMiddleware;
 
 class NeutrinoServiceProvider extends ServiceProvider
@@ -25,12 +26,17 @@ class NeutrinoServiceProvider extends ServiceProvider
 
 		$loader = AliasLoader::getInstance();
         $loader->alias('Neutrino', NeutrinoFacade::class);
+
         $this->app->singleton('neutrino', function () {
             return new Neutrino();
         });
 
         $this->app->singleton('NeutrinoAuth', function () {
             return auth();
+        });
+
+        $this->app->singleton('NeutrinoBond', function () {
+            return new BondController;
         });
 
 		$this->loadHelpers();

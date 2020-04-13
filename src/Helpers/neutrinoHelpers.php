@@ -1699,15 +1699,8 @@ function pluralTitle($string){
 }
 
 function _getMenuSlot($num = 0){
-    $menuItems = config('neutrino.admin_menu_items', []);
-    $arrs = [];
-    foreach( $menuItems as $key => $menu ){
-        if( $menu['slot'] === $num ){
-            $arrs[] = $menuItems[$key];
-        }
-    }
-
-    return $arrs;
+    $slot = app('NeutrinoBond')->getMenuSlot($num);
+    return $slot;
 }
 
 function isRouteGroup($group){

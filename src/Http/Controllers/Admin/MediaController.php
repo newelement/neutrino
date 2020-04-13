@@ -413,19 +413,17 @@ class MediaController extends Controller
         foreach( $imageSizes as $key => $value ){
             $path = $justPath.'_'.$key.'/'.$basename;
 
-            $exists = Storage::disk(config('neutrino.storage.filesystem'))->exists($path);
-            if( $exists ){
-                $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
+            $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
+            if($url){
                 $sizes[$key] = $url;
             }
 
         }
 
         $ogPath = $justPath.'_original/'.$basename;
-        $ogExists = Storage::disk(config('neutrino.storage.filesystem'))->exists($ogPath);
 
-        if( $ogExists ){
-            $url = Storage::disk(config('neutrino.storage.filesystem'))->url($ogPath);
+        $url = Storage::disk(config('neutrino.storage.filesystem'))->url($ogPath);
+        if($url){
             $sizes['original'] = $url;
         }
 
