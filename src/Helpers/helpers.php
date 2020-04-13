@@ -261,35 +261,6 @@ function getContent($args = [], $content = false){
 }
 
 
-function trimWords($text, $num_words = 5, $more = '...', $args = [], $remove_breaks = false){
-    $text = getContent($args, $text);
-    $original_text = $text;
-
-    $text = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text );
-    $text = strip_tags( $text );
-
-    if ( $remove_breaks ) {
-        $text = preg_replace( '/[\r\n\t ]+/', ' ', $text );
-    }
-
-    $text = trim( $text );
-
-    $words_array = preg_split( "/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY );
-    $sep = ' ';
-
-    if ( count( $words_array ) > $num_words ) {
-        array_pop( $words_array );
-        $text = implode( $sep, $words_array );
-        $text = $text . $more;
-    } else {
-        $text = implode( $sep, $words_array );
-    }
-
-    $text = stripShortcodes($text);
-
-    return $text;
-}
-
 function stripShortcodes($text_to_search) {
     $pattern = '|[[\/\!]*?[^\[\]]*?]|si';
     $replace = '';
@@ -647,19 +618,17 @@ function getImageSizes($image){
     foreach( $imageSizes as $key => $value ){
         $path = $justPath.'_'.$key.'/'.$basename;
 
-        $exists = Storage::disk(config('neutrino.storage.filesystem'))->exists($path);
-        if( $exists ){
-            $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
+        $url = Storage::disk(config('neutrino.storage.filesystem'))->url($path);
+        if( $url ){
             $sizes[$key] = $url;
         }
 
     }
 
     $ogPath = $justPath.'_original/'.$basename;
-    $ogExists = Storage::disk(config('neutrino.storage.filesystem'))->exists($ogPath);
 
-    if( $ogExists ){
-        $url = Storage::disk(config('neutrino.storage.filesystem'))->url($ogPath);
+    $url = Storage::disk(config('neutrino.storage.filesystem'))->url($ogPath);
+    if( $url ){
         $sizes['original'] = $url;
     }
 
@@ -770,4 +739,33 @@ function getBlockField($block, $field = ''){
         }
     }
     return $value;
+}
+
+function trimWords($text, $num_words = 5, $more = '...', $args = [], $remove_breaks = false){
+    $text = getContent($args, $text);
+    $original_text = $text;
+
+    $text = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text );
+    $text = strip_tags( $text );
+
+    if ( $remove_breaks ) {
+        $text = preg_replace( '/[\r\n\t ]+/', ' ', $text );
+    }
+
+    $text = trim( $text );
+
+    $words_array = preg_split( "/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY );
+    $sep = ' ';
+
+    if ( count( $words_array ) > $num_words ) {
+        array_pop( $words_array );
+        $text = implode( $sep, $words_array );
+        $text = $text . $more;
+    } else {
+        $text = implode( $sep, $words_array );
+    }
+
+    $text = stripShortcodes($text);
+
+    return $text;
 }

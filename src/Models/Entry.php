@@ -79,4 +79,9 @@ class Entry extends Model
 		return '/'.$this->entry_type.'/'.$this->slug;
 	}
 
+    public function editing()
+    {
+        return $this->hasOne('Newelement\Neutrino\Models\ObjectEditing', 'object_id', 'id')->where('object_type', 'entry');
+    }
+
 }

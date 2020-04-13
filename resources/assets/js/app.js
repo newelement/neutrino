@@ -2039,9 +2039,11 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		}
 	});
 
-	$('form button[type="submit"]').click(function(e){
+	$('form').submit(function(e){
 		let requiredMissing = false;
-		let $required = document.querySelectorAll("[required]");
+
+        let $required = e.target.querySelectorAll("[required]");
+
 		$required.forEach(function(v){
 			if( v.value === '' ){
 				requiredMissing = true;

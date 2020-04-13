@@ -37,7 +37,14 @@
 				@foreach( $entries as $entry )
 					<tr>
 						<td data-label="Title">
-							<a href="/admin/entry/{{ $entry->id }}?entry_type={{ request('entry_type') }}">{{ $entry->title }}</a>
+                            <div class="object-edit-wrapper">
+    							<a href="/admin/entry/{{ $entry->id }}?entry_type={{ request('entry_type') }}">{{ $entry->title }}</a>
+                                <div class="object-editing {{ $entry->editing && $entry->editing->object_id === $entry->id? '' : 'hide' }}" data-editing-object-type="entry" data-editing-object-id="{{ $entry->id }}">
+                                    @if( $entry->editing && $entry->editing->object_id === $entry->id )
+                                    {{ $entry->editing->user->name }} is currently editing.
+                                    @endif
+                                </div>
+                            </div>
 						</td>
 						<td data-label="Status" class="text-center">
 							{{ $entry->publish_date <= now() ? _translateStatus($entry->status) : 'Scheduled' }}
@@ -74,4 +81,10 @@
         </div>
     </div>
 
+@endsection
+
+@section('js')
+<script>
+window.object_type = 'entry';
+</script>
 @endsection
