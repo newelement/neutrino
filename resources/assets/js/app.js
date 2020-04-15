@@ -3474,8 +3474,66 @@ if( typeof blocks !== 'undefined' ){
 
 }
 
+Vue2.component('block-options', {
+    props: [ 'block', 'blockIndex' ],
+    mixins: [ clickaway ],
+    data: () => ({
+
+    }),
+    methods: {
+        away(){
+            this.block.showBlockItemOptions = false;
+        }
+    },
+    mounted(){
+       console.log(this.block.options);
+    },
+    template: `<div>
+                <div class="block-options">
+                <div class="inner">
+                    <a href="#" class="block-item-options-toggle" @click.prevent="block.showBlockItemOptions = !block.showBlockItemOptions" role="button">
+                        {{ block.title }} Options
+                    </a>
+                </div>
+            </div>
+            <div v-if="block.showBlockItemOptions" v-on-clickaway="away" class="block-item-options-list" v-cloak>
+                        <div v-for="option in block.options">
+                            <div v-if="option.type === 'text' " class="bi-option-item">
+                                <label><span>{{ option.label }}</span>
+                                    <div class="block-item-option-value-col">
+                                        <input type="text" v-model="option.value">
+                                    </div>
+                                </label>
+                            </div>
+                            <div v-if="option.type === 'dropdown' " class="bi-option-item">
+                                <label><span>{{ option.label }}</span>
+                                    <div class="select-wrapper">
+                                        <select v-model="option.value">
+                                            <option value="">Choose ...</option>
+                                            <option v-for="opt in option.options" :value="opt.value">{{ opt.label }}</option>
+                                        </select>
+                                    </div>
+                                </label>
+                            </div>
+                            <div v-if="option.type === 'checkbox' " class="bi-option-item">
+                                <label><span>{{ option.label }}</span>
+                                    <input type="checkbox" v-model="option.value" value="1" >
+                                </label>
+                            </div>
+                            <div v-if="option.type === 'color' " class="bi-option-item">
+                                <label><span>{{ option.label }}</span>
+                                    <div class="block-item-option-value-col">
+                                        <input type="color" v-model="option.value">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+});
+
 Vue2.component('block-item-actions', {
-    props: [ 'blockItem', 'blockIndex' ],
+    props: [ 'block', 'blockItem', 'blockIndex' ],
     mixins: [ clickaway ],
     data: () => ({
 
@@ -3524,6 +3582,11 @@ Vue2.component('block-item-actions', {
                                     </div>
                                 </label>
                             </div>
+                            <div v-if="option.type === 'checkbox' " class="bi-option-item">
+                                <label><span>{{ option.label }}</span>
+                                    <input type="checkbox" v-model="option.value" value="1" >
+                                </label>
+                            </div>
                             <div v-if="option.type === 'color' " class="bi-option-item">
                                 <label><span>{{ option.label }}</span>
                                     <div class="block-item-option-value-col">
@@ -3532,7 +3595,7 @@ Vue2.component('block-item-actions', {
                                 </label>
                             </div>
                         </div>
-                        <div v-if="blockItem.group" class="bi-delete-item">
+                        <div v-if="block && block.group || blockItem.group" class="bi-delete-item">
                             <a href="#" class="delete-block-item" @click.prevent="removeBlockItem(blockItem)">Delete Block Item</a>
                         </div>
                     </div>

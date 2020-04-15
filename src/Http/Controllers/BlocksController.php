@@ -4,6 +4,7 @@ namespace Newelement\Neutrino\Http\Controllers;
 use Illuminate\Http\Request;
 use Newelement\Neutrino\Traits\Blocks;
 use Newelement\Neutrino\Models\Gallery;
+use Newelement\Neutrino\Models\Form;
 
 class BlocksController extends Controller
 {
@@ -78,6 +79,8 @@ class BlocksController extends Controller
 
     public function carouselCompiler($json)
     {
+        $json->options_assoc = $this->convertToAssoc($json->options);
+
         $html = view('neutrino::blocks.carousel.compiled', [ 'data' => $json ])->render();
         return  $html;
     }
@@ -105,5 +108,42 @@ class BlocksController extends Controller
     {
         $html = view('neutrino::blocks.gallery.compiled', [ 'data' => $json ])->render();
         return  $html;
+    }
+
+    public function formTemplate($blockData)
+    {
+        $forms = Form::orderBy('title', 'asc')->get();
+        $html = view('neutrino::blocks.form.template', [ 'data' => $blockData, 'forms' => $forms ])->render();
+        return  $html;
+    }
+
+    public function formCompiler($json)
+    {
+        $json->options_assoc = $this->convertToAssoc($json->options);
+        $html = view('neutrino::blocks.form.compiled', [ 'data' => $json ])->render();
+        return  $html;
+    }
+
+    public function mapTemplate($blockData)
+    {
+        $html = view('neutrino::blocks.map.template', [ 'data' => $blockData ])->render();
+        return  $html;
+    }
+
+    public function mapCompiler($json)
+    {
+        $json->options_assoc = $this->convertToAssoc($json->options);
+
+        $html = view('neutrino::blocks.map.compiled', [ 'data' => $json ])->render();
+        return  $html;
+    }
+
+    private function convertToAssoc($options)
+    {
+        $optionsAssoc = [];
+        foreach( $options as $option ){
+            $optionsAssoc[$option->name] = $option;
+        }
+        return $optionsAssoc;
     }
 }

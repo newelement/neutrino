@@ -138,6 +138,45 @@ return [
             'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@testimonialCompiler'
         ],
         [
+            'name' => 'carousel',
+            'title' => 'Carousel',
+            'icon' => 'presentation', // FontAwesome without the fa- prefix
+            'group' => true,
+            'options' => [
+                [ 'type' => 'text', 'name' => 'height', 'label' => 'Carousel Height', 'value' => '500px' ],
+                [ 'type' => 'text', 'name' => 'width', 'label' => 'Carousel Width', 'value' => '100%' ],
+            ],
+
+            'fields' => [
+                ['name' => 'link' , 'value' => '', 'placeholder' => 'Slide Link (optional)', 'allow_blocks' => false] ,
+                ['name' => 'content', 'value' => '', 'placeholder' => 'Slide content (optional)', 'allow_blocks' => false] ,
+                ['name' => 'image', 'value' => '', 'placeholder' => 'Slide Image', 'allow_blocks' => false ]
+            ],
+
+            'group_options' => [
+                [ 'type' => 'text', 'name' => 'background_size' , 'label' => 'Background Size', 'value' => 'cover', 'options' => [
+                        ['label' => 'Cover', 'value' => 'cover'],
+                        ['label' => 'Contain', 'value' => 'contain'],
+                        ['label' => '100%', 'value' => '100%'],
+                        ['label' => '80%', 'value' => '80%'],
+                        ['label' => '60%', 'value' => '60%'],
+                        ['label' => '50%', 'value' => '50%']
+                    ]
+                ],
+                [ 'type' => 'color', 'name' => 'content_background_color', 'label' => 'Content Background Color', 'value' => '' ],
+                [ 'type' => 'text', 'name' => 'content_background_opacity', 'label' => 'Content Background Opacity (0-1)', 'value' => '.45' ],
+                [ 'type' => 'dropdown', 'name' => 'text_alignment', 'label' => 'Text Alignment', 'value' => 'center', 'options' => [
+                        ['label' => 'Left', 'value' => 'left'],
+                        ['label' => 'Right', 'value' => 'right'],
+                        ['label' => 'Center', 'value' => 'center'],
+                    ]
+                ],
+            ],
+
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@carouselTemplate',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@carouselCompiler'
+        ],
+        [
             'name' => 'gallery',
             'title' => 'Gallery',
             'icon' => 'images',

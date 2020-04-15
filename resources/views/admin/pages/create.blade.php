@@ -50,7 +50,14 @@
                                             </div>
                                             <span class="block-drag-handle"><i class="far fa-sort"></i></span>
                                             <a href="#" class="delete-block-btn" @click.prevent="removeBlock(block)"><i class="fal fa-times"></i></a>
-                                            <h3 class="block-title">@{{ block.title }} <a v-if="block.group" href="#" class="append-block-group-btn" @click.prevent="addBlockGroup(block)" role="button"><i class="fal fa-plus"></i></a></h3>
+                                            <h3 class="block-title">@{{ block.title }}
+                                                <div class="b-title-inner">
+                                                    <a v-if="block.group" href="#" class="append-block-group-btn" @click.prevent="addBlockGroup(block)" role="button">
+                                                        <i class="fal fa-plus"></i>
+                                                    </a>
+                                                    <block-options v-if="block.group" :block="block" :block-index="blockIndex"></block-options>
+                                                </div>
+                                            </h3>
                                             <div class="block-template" :class="{ grouped: block.group }">
                                                 <keep-alive>
                                                     <tinymce-editor v-if="block.contentEditable && !block.template && block.tag" v-model="block.value" :init="tinyInitInlineParagraph" :tag-name="block.tag"></tinymce-editor>

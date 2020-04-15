@@ -49,6 +49,28 @@
         margin: 0;
         line-height: 1;
         padding: 4px 8px;
+
+        .b-title-inner{
+            position: relative;
+            display: inline;
+
+            > div{
+                width: 150px;
+                position: absolute;
+                top: 2px;
+                left: 32px;
+                text-decoration: none;
+                a{
+                    text-decoration: none;
+                }
+
+                .block-item-options-list{
+                    top: 24px;
+                    right: auto;
+                    left: 0;
+                }
+            }
+        }
     }
 
     .choose-block-btn{

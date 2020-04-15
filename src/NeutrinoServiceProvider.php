@@ -15,7 +15,7 @@ use Illuminate\Support\Arr;
 use TorMorten\Eventy\Facades\Events as Eventy;
 
 use Newelement\Neutrino\Facades\Neutrino as NeutrinoFacade;
-use Newelement\Neutrino\Bonds\BondController;
+use Newelement\Neutrino\Bonds\BondService;
 use Newelement\Neutrino\Http\Middleware\NeutrinoAdminMiddleware;
 
 class NeutrinoServiceProvider extends ServiceProvider
@@ -36,7 +36,7 @@ class NeutrinoServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('NeutrinoBond', function () {
-            return new BondController;
+            return new BondService;
         });
 
 		$this->loadHelpers();
