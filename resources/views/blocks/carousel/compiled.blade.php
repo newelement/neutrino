@@ -1,4 +1,3 @@
-@php dump($data) @endphp
 <div class="carousel" style="width: {{ $data->options_assoc['width']->value }}">
     <div class="carousel-slides" style="width: {{ $data->options_assoc['width']->value }}" >
         @foreach( $data->field_groups as $slide )
