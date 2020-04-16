@@ -1548,6 +1548,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
         });
     }
 
+    $('.view-pages-by-select').change( function(e) {
+        let val = $(this).val();
+        let year = new Date().getFullYear() + 20;
+        document.cookie = "view_pages_by="+val+"; expires=Thu, 18 Dec "+year+" 12:00:00 UTC; path=/";
+        location.reload();
+    });
+
     setInterval(function(){
         let formData = new FormData;
         formData.append('beep', 'bop');

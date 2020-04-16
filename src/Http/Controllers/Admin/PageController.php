@@ -33,11 +33,13 @@ class PageController extends Controller
 
         $page = $request->page? $request->page : 1;
 
+        $viewBy = isset($_COOKIE['view_pages_by']) && $_COOKIE['view_pages_by'] === 'sort'? 'sort' : 'title';
+
 		if( $request->s && strlen($request->s) ){
-			$pages = Page::search($request->s)->sortable('title')->paginate(30);
+			$pages = Page::search($request->s)->sortable($viewBy)->paginate(30);
             $pagesTotal = $pages;
 		} else {
-			$pagesTotal = Page::where('parent_id', 0)->sortable('title')->get();
+			$pagesTotal = Page::where('parent_id', 0)->sortable($viewBy)->get();
             $pages = $this->listPages($pagesTotal)->forPage( $page, 30)->values();
 		}
 

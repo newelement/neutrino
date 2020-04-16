@@ -15,6 +15,15 @@
 
 			<div class="pages-options-row">
                 <a href="/admin/pages/sort"><i class="fal fa-sort"></i> Sort pages</a>
+
+                <div class="view-by">
+                    <label>View by
+                        <select class="view-pages-by-select">
+                            <option value="alpha">Title alphabetically</option>
+                            <option value="sort" {{ isset($_COOKIE['view_pages_by']) && $_COOKIE['view_pages_by'] === 'sort'? 'selected="selected"' : '' }}>Sorted order</option>
+                        </select>
+                    </label>
+                </div>
 				<a class="trash-link" href="/admin/pages-trash"><i class="fal fa-trash-alt"></i> Trashed ({{ $trashed }})</a>
 			</div>
 
