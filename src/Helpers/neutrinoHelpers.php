@@ -84,6 +84,45 @@ function checkSlug($slug, $type, $count = 0)
 
 }
 
+function _getTemplates($type = 'page'){
+    $templates = [];
+    $path = resource_path("views/vendor/neutrino/templates");
+    if( is_dir($path) ){
+        $validFiles = [];
+        $fileslist = array_diff(scandir($path), array('.', '..'));
+        foreach( (array) $fileslist as $filename ){
+            if( strpos($filename, '.blade.php') !== false ){
+                $validFiles[] = $path.'/'.$filename;
+            }
+        }
+        foreach( $validFiles as $key => $vFile ){
+            $fileLines = array_slice(file($vFile), 0, 8);
+            foreach( $fileLines as $linenum => $line ){
+                if( stripos( $line, 'Template Name' ) !== false ){
+                    $arr = explode(':', $line);
+                    if( isset($arr[1]) ){
+                        $typeLine = $fileLines[$linenum+1];
+                        $split = explode(':', $typeLine);
+                        if( isset($split[1]) && $type === trim($split[1]) ){
+                            $templatetype = trim($split[1]);
+                            $templates[] =  ['name' => trim($arr[1]), 'type' => $templatetype, 'filename' => basename($vFile) ];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if( count($templates) > 0 ){
+            usort($templates, function ($item1, $item2) {
+                return $item1['name'] <=> $item2['name'];
+            });
+        }
+
+    }
+    return $templates;
+}
+
 function _parseCustomField($field, $repeater = 0)
 {
 	$html = '<li id="'.$field->field_id.'" data-row-id="'.$field->field_id.'">';

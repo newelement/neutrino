@@ -134,12 +134,19 @@ class ContentController extends Controller
 			$CFields = getCustomFields('page_'.$data->id);
             $data->custom_fields = $CFields;
 
+            $templateBlade = $page->template? $this->bladeVendor.'.templates.'.str_replace('.blade.php', '', $page->template) : false ;
+
+            $bladeSet = [ $blade.'-'.$targetSlug, $blade];
+            if( $templateBlade ){
+                array_unshift( $bladeSet, $templateBlade);
+            }
+
 			if($request->ajax()){
 	        	return response()->json(['data' => $data]);
 	        } else {
 				view()->share('customFields', $CFields);
                 view()->share('objectData', $data);
-				return view()->first( [$blade.'page-'.$targetSlug, $blade], ['data' => $data]);
+				return view()->first( $bladeSet, ['data' => $data]);
 			}
 		}
 
@@ -245,6 +252,13 @@ class ContentController extends Controller
 
     			$bladeType = $this->bladeVendor.$entryType->slug;
 
+                $templateBlade = $targetObject->template? $this->bladeVendor.'.templates.'.str_replace('.blade.php', '', $targetObject->template) : false ;
+
+                $bladeSet = [ $bladeType.'-'.$targetSlug, $blade.'-'.$targetSlug, $blade.'-'.$entryType->slug, $blade];
+                if( $templateBlade ){
+                    array_unshift( $bladeSet, $templateBlade);
+                }
+
     			if($request->ajax()){
     	        	return response()->json(['data' => $data]);
     	        } else {
@@ -252,7 +266,7 @@ class ContentController extends Controller
                     $data->custom_fields = $CFields;
                     view()->share('customFields', $CFields);
                     view()->share('objectData', $data);
-    				return view()->first([ $bladeType.'-'.$targetSlug, $blade.'-'.$targetSlug, $blade.'-'.$entryType->slug, $blade], ['data' => $data]);
+    				return view()->first($bladeSet, ['data' => $data]);
     			}
             }
 		}

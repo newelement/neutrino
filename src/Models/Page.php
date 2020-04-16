@@ -44,6 +44,7 @@ class Page extends Model
 			'meta_description',
 			'social_image',
             'sort',
+            'template',
 			'protected',
 			'created_by',
 			'updated_by'

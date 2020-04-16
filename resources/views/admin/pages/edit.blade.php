@@ -170,6 +170,25 @@
                         </label>
                     </div>
 
+                    @php
+                    $templates = _getTemplates();
+                    @endphp
+                    @if( count($templates) > 0 )
+                    <div class="form-row">
+                        <label class="label-col" for="template">Page Template</label>
+                        <div class="input-col">
+                            <div class="select-wrapper">
+                                <select id="template" name="template">
+                                    <option value=""></option>
+                                    @foreach( $templates as $template )
+                                    <option value="{{ $template['filename'] }}" {{ $page->template === $template['filename']? 'selected="selected"' : '' }}>{{$template['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
 					<div class="form-row">
 						<label class="label-col" for="protected">Protected</label>
 						<div class="input-col">

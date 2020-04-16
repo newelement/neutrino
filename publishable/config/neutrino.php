@@ -118,7 +118,8 @@ return [
             'icon' => 'quote-right', // FontAwesome without the fa- prefix
             'group' => true,
             'options' => [],
-
+            'show_align_options' => true,
+            'full_width' => true,
             'fields' => [
                 ['name' => 'quote' , 'value' => '', 'placeholder' => 'Quote', 'allow_blocks' => false] ,
                 ['name' => 'author', 'value' => '', 'placeholder' => 'Author, Position', 'allow_blocks' => false] ,
@@ -142,9 +143,24 @@ return [
             'title' => 'Carousel',
             'icon' => 'presentation', // FontAwesome without the fa- prefix
             'group' => true,
+            'show_align_options' => true,
+            'full_width' => true,
             'options' => [
+                [ 'type' => 'checkbox', 'name' => 'full_width', 'label' => 'Full width (outside container)', 'value' => '1' ],
                 [ 'type' => 'text', 'name' => 'height', 'label' => 'Carousel Height', 'value' => '500px' ],
                 [ 'type' => 'text', 'name' => 'width', 'label' => 'Carousel Width', 'value' => '100%' ],
+                [ 'type' => 'text', 'name' => 'show_slides', 'label' => 'Slides to show', 'value' => '1' ],
+                [ 'type' => 'text', 'name' => 'slides_scroll', 'label' => 'Slides to scroll', 'value' => '1' ],
+                [ 'type' => 'dropdown', 'name' => 'transition', 'label' => 'Transition', 'value' => 'scroll', 'options' => [
+                    ['label' => 'Scroll', 'value' => 'scroll'],
+                    ['label' => 'Fade', 'value' => 'fade']
+                ] ],
+                [ 'type' => 'text', 'name' => 'speed', 'label' => 'Speed (ms)', 'value' => '300' ],
+                [ 'type' => 'checkbox', 'name' => 'autoplay', 'label' => 'Autoplay', 'value' => '1' ],
+                [ 'type' => 'text', 'name' => 'autoplay_speed', 'label' => 'Autoplay speed (ms)', 'value' => '3000' ],
+                [ 'type' => 'checkbox', 'name' => 'show_arrows', 'label' => 'Show Arrows', 'value' => '1' ],
+                [ 'type' => 'checkbox', 'name' => 'show_dots', 'label' => 'Show paging (dots)', 'value' => '1' ]
+
             ],
 
             'fields' => [
@@ -154,7 +170,7 @@ return [
             ],
 
             'group_options' => [
-                [ 'type' => 'text', 'name' => 'background_size' , 'label' => 'Background Size', 'value' => 'cover', 'options' => [
+                [ 'type' => 'dropdown', 'name' => 'background_size' , 'label' => 'Background Size', 'value' => 'cover', 'options' => [
                         ['label' => 'Cover', 'value' => 'cover'],
                         ['label' => 'Contain', 'value' => 'contain'],
                         ['label' => '100%', 'value' => '100%'],
@@ -163,14 +179,20 @@ return [
                         ['label' => '50%', 'value' => '50%']
                     ]
                 ],
-                [ 'type' => 'color', 'name' => 'content_background_color', 'label' => 'Content Background Color', 'value' => '' ],
-                [ 'type' => 'text', 'name' => 'content_background_opacity', 'label' => 'Content Background Opacity (0-1)', 'value' => '.45' ],
-                [ 'type' => 'dropdown', 'name' => 'text_alignment', 'label' => 'Text Alignment', 'value' => 'center', 'options' => [
-                        ['label' => 'Left', 'value' => 'left'],
-                        ['label' => 'Right', 'value' => 'right'],
-                        ['label' => 'Center', 'value' => 'center'],
+                [ 'type' => 'dropdown', 'name' => 'background_position' , 'label' => 'Background Position', 'value' => 'center center', 'options' => [
+                        ['label' => 'center center', 'value' => 'center center'],
+                        ['label' => 'center right', 'value' => 'center right'],
+                        ['label' => 'center left', 'value' => 'center left'],
+                        ['label' => 'top center', 'value' => 'top center'],
+                        ['label' => 'top right', 'value' => 'top right'],
+                        ['label' => 'top left', 'value' => 'top left'],
+                        ['label' => 'bottom center', 'value' => 'bottom center'],
+                        ['label' => 'bottom right', 'value' => 'bottom right'],
+                        ['label' => 'bottom left', 'value' => 'bottom left']
                     ]
                 ],
+                [ 'type' => 'color', 'name' => 'content_background_color', 'label' => 'Content Background Color', 'value' => '' ],
+                [ 'type' => 'text', 'name' => 'content_background_opacity', 'label' => 'Content Background Opacity (0-1)', 'value' => '.45' ],
             ],
 
             'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@carouselTemplate',
@@ -190,12 +212,59 @@ return [
             'value' => '',
             'blocks' => [],
             'group' => false,
+            'show_align_options' => true,
+            'full_width' => true,
             'options' => [
                     ['type' => 'dropdown', 'name' => 'theme', 'label' => 'Theme', 'value' => '', 'options' => [
                         ['label' => 'Grid', 'value' => 'grid'],
                         ['label' => 'Carousel', 'value' => 'carousel'],
                     ]
                 ]
+            ]
+        ],
+        [
+            'name' => 'forms',
+            'title' => 'Forms',
+            'icon' => 'clipboard-list-check',
+            'tag' => false,
+            'contentEditable' => false,
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@formTemplate',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@formCompiler',
+            'fields' => [
+                ['name' => 'form' , 'value' => '', 'allow_blocks' => false]
+            ],
+            'value' => '',
+            'blocks' => [],
+            'group' => false,
+            'options' => [
+                [ 'type' => 'checkbox', 'name' => 'show_title', 'label' => 'Show title', 'value' => '1' ],
+                ['type' => 'dropdown', 'name' => 'layout', 'label' => 'Lable layout', 'value' => 'horizontal', 'options' => [
+                        ['label' => 'Horizonal', 'value' => 'horizontal'],
+                        ['label' => 'Stacked', 'value' => 'stacked'],
+                    ]
+                ]
+            ]
+        ],
+        [
+            'name' => 'map_embed',
+            'title' => 'Map Embed (basic)',
+            'icon' => 'map-marker-alt',
+            'tag' => false,
+            'contentEditable' => false,
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@mapTemplate',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@mapCompiler',
+            'fields' => [
+                ['name' => 'address', 'value' => '', 'allow_blocks' => false]
+            ],
+            'value' => '',
+            'blocks' => [],
+            'group' => false,
+            'show_align_options' => true,
+            'full_width' => true,
+            'options' => [
+                [ 'type' => 'text', 'name' => 'width', 'label' => 'Width', 'value' => '100%' ],
+                [ 'type' => 'text', 'name' => 'height', 'label' => 'Height', 'value' => '200' ],
+                [ 'type' => 'text', 'name' => 'zoom', 'label' => 'Zoom (0-20)', 'value' => '12' ],
             ]
         ],
     ],

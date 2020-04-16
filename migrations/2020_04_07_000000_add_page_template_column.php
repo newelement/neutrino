@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPageSortColumn extends Migration
+class AddPageTemplateColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class AddPageSortColumn extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('pages', 'sort')) {
+        if (!Schema::hasColumn('pages', 'template')) {
             Schema::table('pages', function (Blueprint $table) {
-                $table->integer('sort')->default(0);
-                $table->index('sort');
+                $table->string('template', 300)->nullable();
             });
         }
     }
@@ -28,10 +27,9 @@ class AddPageSortColumn extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('pages','sort')) {
+        if (Schema::hasColumn('pages','template')) {
             Schema::table('pages', function (Blueprint $table) {
-                $table->dropColumn('sort');
-                $table->dropIndex('sort_index');
+                $table->dropColumn('template');
             });
         }
     }

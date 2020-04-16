@@ -119,6 +119,7 @@ class EntryController extends Controller
 		$entry->keywords = $request->keywords ;
 		$entry->meta_description = $request->meta_description ;
 		$entry->entry_type = $request->entry_type? $request->entry_type : 'entry';
+        $entry->template = $request->template? $request->template : null;
 		$entry->allow_comments = $request->allow_comments? 1 : 0 ;
 		$entry->social_image = $request->social_image;
 		$entry->protected = $request->protected? implode(',',$request->protected) : '';
@@ -287,6 +288,7 @@ class EntryController extends Controller
 		$entry->keywords = $request->keywords ;
 		$entry->meta_description = $request->meta_description ;
 		$entry->entry_type = $request->entry_type;
+        $entry->template = $request->template? $request->template : null;
 		$entry->allow_comments = $request->allow_comments? 1 : 0 ;
 		$entry->social_image = $request->social_image;
 		$entry->protected = $request->protected? implode(',',$request->protected) : '';
