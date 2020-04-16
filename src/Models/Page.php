@@ -22,6 +22,7 @@ class Page extends Model
     public $sortable = [
         'title',
         'status',
+        'sort',
         'created_by',
         'updated_by',
         'created_at',

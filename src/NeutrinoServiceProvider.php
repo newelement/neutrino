@@ -112,6 +112,7 @@ class NeutrinoServiceProvider extends ServiceProvider
         $this->commands(Commands\InstallCommand::class);
         $this->commands(Commands\AdminCommand::class);
         $this->commands(Commands\UpdateCommand::class);
+        $this->commands(Commands\SitemapCommand::class);
     }
 
     private function initActions()
