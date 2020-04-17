@@ -23,7 +23,7 @@ class CreatePagesTable extends Migration
 			$table->text('keywords')->nullable();
 			$table->text('meta_description')->nullable();
 			$table->text('social_image')->nullable();
-			$table->text('protected')->nullable();
+			$table->string('protected', 255)->nullable();
 			$table->char('status', 1)->default('P');
             $table->char('editor_type', 1)->default('B');
             $table->tinyInteger('system_page')->default(0);

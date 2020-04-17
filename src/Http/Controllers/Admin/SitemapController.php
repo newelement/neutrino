@@ -90,10 +90,10 @@ class SitemapController extends Controller
 
         } else {
 
-            $pages = Page::orderBy('title')->get();
+            $pages = Page::where('status', 'P')->where('protected', '')->orWhereNull('protected')->orderBy('title')->get();
             $objectTypes['page'] = $pages;
 
-            $entries = Entry::orderBy('title')->get();
+            $entries = Entry::where('status', 'P')->where('protected', '')->whereNull('protected')->orderBy('title')->get();
             $objectTypes['entry'] = $entries;
 
             $entryTypes = EntryType::orderBy('entry_type')->get();
