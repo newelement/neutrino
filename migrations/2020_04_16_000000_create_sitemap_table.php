@@ -35,6 +35,27 @@ class CreateSitemapTable extends Migration
             $table->json('options')->nullable();
 			$table->bigInteger('updated_by')->nullable();
         });
+
+        \DB::table('sitemap')->insert(
+        [
+            'page_default_change' => 'monthly',
+            'entry_default_change' => 'monthly',
+            'entry_type_default_change' => 'monthly',
+            'taxonomy_default_change' => 'monthly',
+            'term_default_change' => 'monthly',
+            'event_default_change' => 'monthly',
+            'product_default_change' => 'monthly',
+
+            'page_default_priority' => 0.5,
+            'entry_default_priority' => 0.5,
+            'entry_type_default_priority' => 0.5,
+            'taxonomy_default_priority' => 0.5,
+            'term_default_priority' => 0.5,
+            'event_default_priority' => 0.5,
+            'product_default_priority' => 0.5
+        ]
+        );
+
     }
 
     /**
