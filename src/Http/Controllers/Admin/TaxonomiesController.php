@@ -34,6 +34,8 @@ class TaxonomiesController extends Controller
 		$edit_taxonomy->hierarchical = 1;
 		$edit_taxonomy->taxonomy_image = '';
         $edit_taxonomy->featuredImage = false;
+        $edit_taxonomy->sitemap_change = '';
+        $edit_taxonomy->sitemap_priority = 0.5;
 		$edit_taxonomy->show_on = collect([]);
 
 		$entryTypes = EntryType::orderBy('entry_type', 'asc')->get();
@@ -60,6 +62,8 @@ class TaxonomiesController extends Controller
         $edit_taxonomy->social_image_1 = '';
         $edit_taxonomy->social_image_2 = '';
 		$edit_taxonomy->taxonomy_image = '';
+        $edit_taxonomy->sitemap_change = '';
+        $edit_taxonomy->sitemap_priority = 0.5;
 		$edit_taxonomy->featuredImage = false;
 
 		$fieldGroups = $this->getFieldGroups('taxonomy', $taxonomy->slug);
@@ -113,6 +117,8 @@ class TaxonomiesController extends Controller
 		$tax->taxonomy_type_id = $id;
 		$tax->taxonomy_image = $request->taxonomy_image;
 		$tax->parent_id = $request->parent_id? : 0;
+        $tax->sitemap_change = $request->sitemap_change;
+        $tax->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$tax->save();
 
 		if( $request->featured_image ){
@@ -165,6 +171,8 @@ class TaxonomiesController extends Controller
         $tax->social_image_1 = $request->social_image_1;
         $tax->social_image_2 = $request->social_image_2;
 		$tax->hierarchical = $request->hierarchical? $request->hierarchical : 0;
+        $tax->sitemap_change = $request->sitemap_change;
+        $tax->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$tax->show_on = implode(',',$request->show_on);
 		$tax->save();
 
@@ -231,6 +239,8 @@ class TaxonomiesController extends Controller
         $tax->social_image_1 = $request->social_image_1;
         $tax->social_image_2 = $request->social_image_2;
 		$tax->hierarchical = $request->hierarchical? $request->hierarchical : 0;
+        $tax->sitemap_change = $request->sitemap_change;
+        $tax->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$tax->show_on = is_array($request->show_on)? implode(',', $request->show_on) : '';
 		$tax->save();
 
@@ -285,6 +295,8 @@ class TaxonomiesController extends Controller
         $tax->social_image_2 = $request->social_image_2;
 		$tax->taxonomy_type_id = $type;
 		$tax->parent_id = $request->parent_id? $request->parent_id : 0;
+        $tax->sitemap_change = $request->sitemap_change;
+        $tax->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$tax->save();
 
 		if( $request->featured_image ){

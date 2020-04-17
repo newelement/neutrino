@@ -99,6 +99,8 @@
 						@endforeach
 					@endforeach
 
+                    <h3 class="cf-group-title">SEO</h3>
+
 					<div class="form-row">
 						<label class="label-col" for="keywords">Keywords</label>
 						<div class="input-col">
@@ -112,6 +114,31 @@
 							<input id="meta-desc" type="text" name="meta_desc" value="{{ old('meta_desc') }}">
 						</div>
 					</div>
+
+                    <div class="form-row">
+                        <div class="label-col full-width">Sitemap</div>
+                        <div class="input-cols">
+                            <div class="input-col">
+                                <label for="sitemap-change">Change Frequency</label>
+                                <div class="select-wrapper">
+                                    <select id="sitemap-change" name="sitemap_change">
+                                        <option value=""></option>
+                                        <option value="always" {{ old('sitemap_priority') === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ old('sitemap_priority') === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ old('sitemap_priority') === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ old('sitemap_priority', 'weekly') === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ old('sitemap_priority') === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ old('sitemap_priority') === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ old('sitemap_priority') === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-col">
+                                <label for="sitemap-priority">Priority (0.1 - 1.0)</label>
+                                <input id="sitemap-priority" type="number" name="sitemap_priority" value="{{ old('sitemap_priority', '0.5') }}">
+                            </div>
+                        </div>
+                    </div>
 
 			</div>
 

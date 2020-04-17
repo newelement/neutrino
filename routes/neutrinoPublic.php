@@ -15,6 +15,8 @@ Route::post('reset-password', $namespacePrefix.'NeutrinoAuthController@resetPass
 Route::get('register', $namespacePrefix.'NeutrinoAuthController@getRegister')->name('register');
 Route::post('register', $namespacePrefix.'NeutrinoRegisterController@create')->name('register');
 
+Route::get('sitemap', $namespacePrefix.'Admin\SitemapController@generate')->name('sitemap');
+
 Route::get('/{any}', $namespacePrefix.'ContentController@guessContent')->where('any', '.*'); // Yeah seriously
 Route::group(['prefix' => 'api', 'middleware' => ['api']], function () use ( $namespacePrefix ) {
 	Route::get('/{any}', $namespacePrefix.'ContentController@guessContent')->where('any', '.*');

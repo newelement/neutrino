@@ -18,6 +18,8 @@ class TaxonomyType extends Model
 			'status',
 			'show_on',
 			'sort',
+            'sitemap_change',
+            'sitemap_priority',
 			'created_at',
 			'updated_at'
 		];

@@ -52,8 +52,6 @@ class UpdateCommand extends Command
     {
         $this->info('Updating Neutrino assets, database, views and config files...');
 
-        $this->call('vendor:publish', ['--provider' => 'JamesMills\LaravelTimezone\LaravelTimezoneServiceProvider', '--tag' => 'migrations']);
-
 		$this->info('Migrating any database changes...');
         $this->call('migrate', ['--force' => $this->option('force')]);
 

@@ -133,6 +133,31 @@
                         </div>
                     </div>
 
+                    <div class="form-row">
+                        <label class="label-col" for="sitemap-change">Sitemap Change Frequency</label>
+                        <div class="input-col">
+                            <div class="select-wrapper">
+                                    <select id="sitemap-change" name="sitemap_change">
+                                        <option value=""></option>
+                                        <option value="always" {{ $edit_taxonomy->sitemap_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $edit_taxonomy->sitemap_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $edit_taxonomy->sitemap_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $edit_taxonomy->sitemap_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $edit_taxonomy->sitemap_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $edit_taxonomy->sitemap_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $edit_taxonomy->sitemap_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="label-col" for="site-priority">Sitemap Priority ( 0.1 - 1.0 )</label>
+                        <div class="input-col">
+                            <input id="sitemap-priority" type="number" name="sitemap_priority" style="text-align: right" value="{{ old('sitemap_priority', $edit_taxonomy->sitemap_priority ) }}">
+                        </div>
+                    </div>
+
 					@foreach( $field_groups as $group )
 					<h2 class="cf-group-title">{{ $group->title }}</h2>
 						@if( $group->description )

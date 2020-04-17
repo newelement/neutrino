@@ -106,6 +106,8 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::delete('/settings/{id}',  $namespacePrefix.'Admin\SettingsController@delete');
         Route::get('/settings/activity/log',  $namespacePrefix.'Admin\SettingsController@getActivityLog');
 
+        Route::post('/settings/sitemap',  $namespacePrefix.'Admin\SitemapController@update');
+
 		Route::get('/roles',  $namespacePrefix.'Admin\RolesController@index')->name('users');
 		Route::post('/roles',  $namespacePrefix.'Admin\RolesController@create');
 		Route::get('/roles/{id}',  $namespacePrefix.'Admin\RolesController@get')->name('users');

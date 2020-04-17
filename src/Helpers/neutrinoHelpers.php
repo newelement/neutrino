@@ -84,6 +84,47 @@ function checkSlug($slug, $type, $count = 0)
 
 }
 
+function _getObjectSitemapData($type, $object, $settings){
+
+    $data = ['change' => 'weekly', 'priority' => 0.5, 'url' => ''];
+
+    switch($type){
+        case 'page':
+            $data['url'] = $object->slug === 'home'? '' : $object->url();
+            $data['change'] = $settings->page_default_change;
+            $data['priority'] = $settings->page_default_priority;
+        break;
+        case 'entry':
+            $data['url'] = $object->url();
+            $data['change'] = $settings->entry_default_change;
+            $data['priority'] = $settings->entry_default_priority;
+        break;
+        case 'entry_type':
+            $data['url'] = '/'.$object->slug;
+            $data['change'] = $settings->entry_type_default_change;
+            $data['priority'] = $settings->entry_type_default_priority;
+        break;
+        case 'term':
+            $data['url'] = $object->url();
+            $data['change'] = $settings->term_default_change;
+            $data['priority'] = $settings->term_default_priority;
+        break;
+        case 'taxonomy':
+            $data['url'] = '/'.$object->slug;
+            $data['change'] = $settings->taxonomy_default_change;
+            $data['priority'] = $settings->taxonomy_default_priority;
+        break;
+        case 'event':
+            $data['url'] = '/'.$object->slug;
+            $data['change'] = $settings->event_default_change;
+            $data['priority'] = $settings->event_default_priority;
+        break;
+
+    }
+
+    return $data;
+}
+
 function _getTemplates($type = 'page'){
     $templates = [];
     $path = resource_path("views/vendor/neutrino/templates");

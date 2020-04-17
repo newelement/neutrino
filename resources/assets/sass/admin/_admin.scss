@@ -1175,6 +1175,30 @@ a.btn{
 		}
 	}
 
+    .input-cols{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        label{
+            font-weight: 700;
+        }
+
+        .input-col{
+            width: 48%;
+            align-items: flex-start;
+
+            label{
+                padding: 6px 10px;
+            }
+
+            input[type="number"]{
+                text-align: right;
+            }
+        }
+    }
+
 	.input-col{
 		width: 70%;
 		display: flex;

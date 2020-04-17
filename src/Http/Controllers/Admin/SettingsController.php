@@ -17,6 +17,10 @@ class SettingsController extends Controller
 	{
 		$settings = Setting::where('protected', 1)->orderBy('key', 'asc')->get();
 		$csettings = Setting::where('protected', 0)->orderBy('key', 'asc')->get();
+
+        $sitemapSettings = \DB::table('sitemap')->get();
+        $sitemap_settings = $sitemapSettings[0];
+
 		$setting = new \stdClass();
 		$setting->key = '';
 		$setting->value = '';
@@ -25,7 +29,12 @@ class SettingsController extends Controller
 		$setting->label = '';
 		$setting->id = '';
 		$setting->protected = 0;
-		return view( 'neutrino::admin.settings.index', ['settings' => $settings, 'custom_settings' => $csettings, 'edit_setting' => $setting, 'edit' => false]);
+		return view( 'neutrino::admin.settings.index', [
+            'settings' => $settings,
+            'custom_settings' => $csettings,
+            'edit_setting' => $setting,
+            'sitemap_settings' => $sitemap_settings,
+            'edit' => false]);
 	}
 
 	public function get($id)
@@ -157,8 +166,6 @@ class SettingsController extends Controller
             'activity_package' => 'neutrino',
             'activity_group' => 'setting.cache.clear',
             'object_type' => 'setting',
-            //'object_id' => $id,
-            //'content' => 'Setting deleted',
             'log_level' => 1,
             'created_by' => auth()->user()->id,
             'created_at' => now()

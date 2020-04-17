@@ -107,6 +107,18 @@
                         </div>
                     </div>
 
+                    @foreach( $field_groups as $group )
+                    <h2 class="cf-group-title">{{ $group->title }}</h2>
+                        @if( $group->description )
+                            <p>{{ $group->description }}</p>
+                        @endif
+                        @foreach( $group->fields as $field )
+                        {!! _generateField($field, 'page', $page->id) !!}
+                        @endforeach
+                    @endforeach
+
+                    <h3 class="cf-group-title">SEO</h3>
+
 					<div class="form-row">
 						<label class="label-col" for="keywords">Keywords</label>
 						<div class="input-col">
@@ -121,15 +133,30 @@
 						</div>
 					</div>
 
-					@foreach( $field_groups as $group )
-					<h2 class="cf-group-title">{{ $group->title }}</h2>
-						@if( $group->description )
-							<p>{{ $group->description }}</p>
-						@endif
-						@foreach( $group->fields as $field )
-						{!! _generateField($field, 'page', $page->id) !!}
-						@endforeach
-					@endforeach
+                    <div class="form-row">
+                        <div class="label-col full-width">Sitemap</div>
+                        <div class="input-cols">
+                            <div class="input-col">
+                                <label for="sitemap-change">Change Frequency</label>
+                                <div class="select-wrapper">
+                                    <select id="sitemap-change" name="sitemap_change">
+                                        <option value=""></option>
+                                        <option value="always" {{ $page->sitemap_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $page->sitemap_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $page->sitemap_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $page->sitemap_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $page->sitemap_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $page->sitemap_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $page->sitemap_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-col">
+                                <label for="sitemap-priority">Priority (0.1 - 1.0)</label>
+                                <input id="sitemap-priority" type="number" name="sitemap_priority" value="{{ $page->sitemap_priority }}">
+                            </div>
+                        </div>
+                    </div>
 
 			</div>
 

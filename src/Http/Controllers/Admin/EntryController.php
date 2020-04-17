@@ -122,6 +122,8 @@ class EntryController extends Controller
         $entry->template = $request->template? $request->template : null;
 		$entry->allow_comments = $request->allow_comments? 1 : 0 ;
 		$entry->social_image = $request->social_image;
+        $entry->sitemap_change = $request->sitemap_change;
+        $entry->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$entry->protected = $request->protected? implode(',',$request->protected) : '';
 		$entry->save();
 
@@ -291,6 +293,8 @@ class EntryController extends Controller
         $entry->template = $request->template? $request->template : null;
 		$entry->allow_comments = $request->allow_comments? 1 : 0 ;
 		$entry->social_image = $request->social_image;
+        $entry->sitemap_change = $request->sitemap_change;
+        $entry->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$entry->protected = $request->protected? implode(',',$request->protected) : '';
 		$entry->save();
 
@@ -388,6 +392,14 @@ class EntryController extends Controller
 		$edit_entry_type->slug = '';
 		$edit_entry_type->label_plural = '';
 		$edit_entry_type->searchable = 1;
+        $edit_entry_type->featured_image = false;
+        $edit_entry_type->social_image_1 = false;
+        $edit_entry_type->social_image_2 = false;
+        $edit_entry_type->social_description = '';
+        $edit_entry_type->meta_description = '';
+        $edit_entry_type->keywords = '';
+        $edit_entry_type->sitemap_change = '';
+        $edit_entry_type->sitemap_priority = 0.5;
 
 		return view('neutrino::admin.entry-types.index', ['entry_types' => $entryTypes, 'edit_entry_type' => $edit_entry_type, 'edit' => false]);
 	}
@@ -403,6 +415,14 @@ class EntryController extends Controller
 		$entryType->slug = toSlug($request->entry_type, 'entry_type');
 		$entryType->label_plural = $request->label_plural;
 		$entryType->searchable = $request->searchable? $request->searchable : 0;
+        $entryType->featured_image = $request->featured_image;
+        $entryType->social_image_1 = $request->social_image_1;
+        $entryType->social_image_2 = $request->social_image_2;
+        $entryType->social_description = $request->social_description;
+        $entryType->meta_description = $request->meta_description;
+        $entryType->keywords = $request->keywords;
+        $entryType->sitemap_change = $request->sitemap_change;
+        $entryType->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$entryType->save();
 
         ActivityLog::insert([
@@ -437,6 +457,14 @@ class EntryController extends Controller
 		$entryType->entry_type = $request->entry_type;
 		$entryType->label_plural = $request->label_plural;
 		$entryType->searchable = $request->searchable? $request->searchable : 0;
+        $entryType->featured_image = $request->featured_image;
+        $entryType->social_image_1 = $request->social_image_1;
+        $entryType->social_image_2 = $request->social_image_2;
+        $entryType->social_description = $request->social_description;
+        $entryType->meta_description = $request->meta_description;
+        $entryType->keywords = $request->keywords;
+        $entryType->sitemap_change = $request->sitemap_change;
+        $entryType->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$entryType->save();
 
         ActivityLog::insert([

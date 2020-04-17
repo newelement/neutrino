@@ -13,6 +13,9 @@
 					<a  href="#custom-settings">Custom Settings</a>
 				</li>
                 <li>
+                    <a href="#sitemap">Sitemap</a>
+                </li>
+                <li>
                     <a id="activity-log-tab"  href="#activity-log">Activity Log</a>
                 </li>
 				<li>
@@ -126,6 +129,162 @@
                     </p>
 
 				</div>
+
+
+                <div id="sitemap" class="tab-content" style="padding-top: 24px;">
+
+                    <form action="/admin/settings/sitemap" method="post">
+                    @csrf
+
+                        <div class="form-row">
+                            <label class="label-col" for="page-default-change">Page Default Change Feq.</label>
+                            <div class="input-col">
+                                <div class="select-wrapper">
+                                    <select id="page-default-change" name="page_default_change">
+                                        <option value="always" {{ $sitemap_settings->page_default_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $sitemap_settings->page_default_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $sitemap_settings->page_default_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $sitemap_settings->page_default_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $sitemap_settings->page_default_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $sitemap_settings->page_default_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $sitemap_settings->page_default_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="page-default-priority">Page Default Priority</label>
+                            <div class="input-col">
+                                <input id="page-default-priority" type="number" name="page_default_priority" style="text-align: right" value="{{ $sitemap_settings->page_default_priority }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="entry-default-change">Entry Default Change Feq.</label>
+                            <div class="input-col">
+                                <div class="select-wrapper">
+                                    <select id="entry-default-change" name="entry_default_change">
+                                        <option value="always" {{ $sitemap_settings->entry_default_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $sitemap_settings->entry_default_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $sitemap_settings->entry_default_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $sitemap_settings->entry_default_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $sitemap_settings->entry_default_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $sitemap_settings->entry_default_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $sitemap_settings->entry_default_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="entry-default-priority">Entry Default Priority</label>
+                            <div class="input-col">
+                                <input id="entry-default-priority" type="number" name="entry_default_priority" style="text-align: right" value="{{ $sitemap_settings->entry_default_priority }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="entrytype-default-change">Entry Type Default Change Feq.</label>
+                            <div class="input-col">
+                                <div class="select-wrapper">
+                                    <select id="entrytype-default-change" name="entry_type_default_change">
+                                        <option value="always" {{ $sitemap_settings->entry_type_default_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $sitemap_settings->entry_type_default_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $sitemap_settings->entry_type_default_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $sitemap_settings->entry_type_default_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $sitemap_settings->entry_type_default_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $sitemap_settings->entry_type_default_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $sitemap_settings->entry_type_default_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="entrytype-default-priority">Entry Type Default Priority</label>
+                            <div class="input-col">
+                                <input id="entrytype-default-priority" type="number" name="entry_type_default_priority" style="text-align: right" value="{{ $sitemap_settings->entry_type_default_priority }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="taxonomy-default-change">Taxonomy Default Change Feq.</label>
+                            <div class="input-col">
+                                <div class="select-wrapper">
+                                    <select id="taxonomy-default-change" name="taxonomy_default_change">
+                                        <option value="always" {{ $sitemap_settings->taxonomy_default_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $sitemap_settings->taxonomy_default_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $sitemap_settings->taxonomy_default_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $sitemap_settings->taxonomy_default_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $sitemap_settings->taxonomy_default_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $sitemap_settings->taxonomy_default_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $sitemap_settings->taxonomy_default_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="taxonomy-default-priority">Taxonomy Default Priority</label>
+                            <div class="input-col">
+                                <input id="taxonomy-default-priority" type="number" name="taxonomy_default_priority" style="text-align: right" value="{{ $sitemap_settings->taxonomy_default_priority }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="term-default-change">Taxonomy Term Default Change Feq.</label>
+                            <div class="input-col">
+                                <div class="select-wrapper">
+                                    <select id="term-default-change" name="term_default_change">
+                                        <option value="always" {{ $sitemap_settings->term_default_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $sitemap_settings->term_default_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $sitemap_settings->term_default_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $sitemap_settings->term_default_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $sitemap_settings->term_default_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $sitemap_settings->term_default_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $sitemap_settings->term_default_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="term-default-priority">Term Default Priority</label>
+                            <div class="input-col">
+                                <input id="term-default-priority" type="number" name="term_default_priority" style="text-align: right" value="{{ $sitemap_settings->term_default_priority }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="event-default-change">Event Default Change Feq.</label>
+                            <div class="input-col">
+                                <div class="select-wrapper">
+                                    <select id="event-default-change" name="event_default_change">
+                                        <option value="always" {{ $sitemap_settings->event_default_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $sitemap_settings->event_default_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $sitemap_settings->event_default_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $sitemap_settings->event_default_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $sitemap_settings->event_default_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $sitemap_settings->event_default_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $sitemap_settings->event_default_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="label-col" for="event-default-priority">Event Default Priority</label>
+                            <div class="input-col">
+                                <input id="event-default-priority" type="number" name="event_default_priority" style="text-align: right" value="{{ $sitemap_settings->event_default_priority }}">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn">Update Sitemap Settings</button>
+                    </form>
+
+                </div>
+
                 <div id="activity-log" class="tab-content" style="padding-top: 24px;">
                     <table id="activity-log-table" class="table" cellpadding="0" cellspacing="0" border="0">
                         <thead>

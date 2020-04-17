@@ -46,6 +46,8 @@ class Page extends Model
 			'social_image',
             'sort',
             'template',
+            'sitemap_change',
+            'sitemap_priority',
 			'protected',
 			'created_by',
 			'updated_by'

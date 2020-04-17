@@ -25,7 +25,6 @@
 		"arrilot/laravel-widgets": "^3.13.0",
 		"tormjens/eventy": "^0.5.7",
         "kyslik/column-sortable": "^6.2",
-        "spatie/laravel-sitemap": "^5.7",
         "jamesmills/laravel-timezone": "*"
     },
     "require-dev": {

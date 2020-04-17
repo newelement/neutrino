@@ -112,6 +112,8 @@
 						@endforeach
 					@endforeach
 
+                    <h3 class="cf-group-title">SEO</h3>
+
 					<div class="form-row">
 						<label class="label-col" for="keywords">Keywords</label>
 						<div class="input-col">
@@ -125,6 +127,31 @@
 							<input id="meta-desc" type="text" name="meta_desc" value="{{ old('meta_desc', $entry->meta_description) }}">
 						</div>
 					</div>
+
+                    <div class="form-row">
+                        <div class="label-col full-width">Sitemap</div>
+                        <div class="input-cols">
+                            <div class="input-col">
+                                <label for="sitemap-change">Change Frequency</label>
+                                <div class="select-wrapper">
+                                    <select id="sitemap-change" name="sitemap_change">
+                                        <option value=""></option>
+                                        <option value="always" {{ $entry->sitemap_change === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ $entry->sitemap_change === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ $entry->sitemap_change === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ $entry->sitemap_change === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ $entry->sitemap_change === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ $entry->sitemap_change === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ $entry->sitemap_change === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-col">
+                                <label for="sitemap-priority">Priority (0.1 - 1.0)</label>
+                                <input id="sitemap-priority" type="number" name="sitemap_priority" value="{{ $entry->sitemap_priority }}">
+                            </div>
+                        </div>
+                    </div>
 
 			</div>
 

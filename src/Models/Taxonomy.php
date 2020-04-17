@@ -104,6 +104,9 @@ class Taxonomy extends Model
 	{
 		$url = $this->generateUrl();
 		$tax = DB::table('taxonomy_types')->where('id', $this->taxonomy_type_id)->first();
+
+        $fullUrl = '/'.$url;
+
         if( count(\Request::segments()) > 1 && $tax->slug !== 'product-category' ){
             $fullUrl = '/'.$tax->slug.'/'.$url;
         }

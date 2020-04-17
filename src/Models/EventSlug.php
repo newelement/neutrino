@@ -10,5 +10,7 @@ class EventSlug extends Model
     protected $fillable = [
         'event_id',
         'slug'
+        'sitemap_change',
+        'sitemap_priority'
     ];
 }

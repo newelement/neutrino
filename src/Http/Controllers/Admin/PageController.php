@@ -146,6 +146,8 @@ class PageController extends Controller
             'editor_type' => $request->editor_type? $request->editor_type : 'B',
             'template' => $request->template? $request->template : null,
 			'social_image' => $request->social_image,
+            'sitemap_change' => $request->sitemap_change? $request->sitemap_change : 'weekly',
+            'sitemap_priority' => $request->sitemap_priority? $request->sitemap_priority : 0.5 ,
 			'protected' => $request->protected ? implode(',',$request->protected) : ''
 		]);
 
@@ -267,6 +269,8 @@ class PageController extends Controller
 		$page->status = $request->status? $request->status : 'P' ;
         $page->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$page->social_image = $request->social_image;
+        $page->sitemap_change = $request->sitemap_change? $request->sitemap_change : 'weekly';
+        $page->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
         $page->template = $request->template? $request->template : null;
 		$page->protected = $request->protected ? implode(',',$request->protected) : '';
 		$page->save();
