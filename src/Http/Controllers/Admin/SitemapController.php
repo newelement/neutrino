@@ -37,7 +37,24 @@ class SitemapController extends Controller
 
     public function update(Request $request)
     {
+        $validatedData = $request->validate([
+            'cache_houra' => 'required',
+            'page_default_change' => 'required',
+            'page_default_priority' => 'required',
+            'entry_default_change' => 'required',
+            'entry_default_priority' => 'required',
+            'entry_type_default_change' => 'required',
+            'entry_type_default_priority' => 'required',
+            'taxonomy_default_change' => 'required',
+            'taxonomy_default_priority' => 'required',
+            'term_default_change' => 'required',
+            'term_default_priority' => 'required',
+            'event_default_change' => 'required',
+            'event_default_priority' => 'required'
+        ]);
+
         \DB::table('sitemap')->update([
+            'cache_hours' => $request->cache_hours,
             'page_default_change' => $request->page_default_change,
             'page_default_priority' => $request->page_default_priority,
             'entry_default_change' => $request->entry_default_change,

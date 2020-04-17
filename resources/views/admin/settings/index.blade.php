@@ -137,6 +137,13 @@
                     @csrf
 
                         <div class="form-row">
+                            <label class="label-col" for="cache-houra">Cache Time (hours)</label>
+                            <div class="input-col">
+                                <input id="cache-houra" type="number" name="cache_hours" style="text-align: right" value="{{ $sitemap_settings->cache_hours }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
                             <label class="label-col" for="page-default-change">Page Default Change Feq.</label>
                             <div class="input-col">
                                 <div class="select-wrapper">
