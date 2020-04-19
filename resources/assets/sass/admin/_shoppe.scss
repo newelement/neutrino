@@ -526,3 +526,102 @@ a.view-shipping-label-link{
         }
     }
 }
+
+a.delete-shipping-class{
+    color: darken(red, 15%) !important;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.shipping-method-group{
+    margin-bottom: 24px;
+}
+
+.shipping-method-rows{
+    background-color: #D6FFE9;
+    border-top: 1px solid #333;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+}
+
+.shipping-classes-explain{
+    background-color: #f3f3f3;
+    padding: 12px 8px;
+}
+
+.shipping-method-classes-group{
+    background-color: lighten(#DADBFF, 5%);
+    padding: 6px 24px;
+    border-top: 1px solid #DADBFF;
+    border-bottom: 1px solid #DADBFF;
+}
+
+.shipping-method-class-title{
+    width: 40%;
+}
+
+.shipping-method-classes-row{
+    padding: 6px 0;
+    display: flex;
+}
+
+.calc-class-rows{
+    background-color: #f3f3f3;
+    padding: 12px 14px;
+    display: flex;
+    label{
+        width: 40%;
+    }
+}
+
+.shipping-class-actions-row{
+    background-color: #f3f3f3;
+    padding: 12px 14px;
+}
+
+.sm-title{
+    width: 27%;
+    font-weight: 700;
+    padding: 0 8px;
+    a{
+        text-decoration: none;
+        transition: color .25s ease;
+        &:hover{
+            color: #999;
+        }
+    }
+}
+
+.sm-type{
+    padding: 0 8px;
+    width: 20%;
+
+}
+
+.sm-amount{
+    padding: 0 8px;
+    width: 14%;
+}
+
+.sm-level{
+    padding: 0 8px;
+    width: 28%;
+}
+
+.sm-edit{
+    padding: 0 8px;
+    font-weight: 700;
+    margin-left: auto;
+    a{
+        text-decoration: none;
+        transition: color .25s ease;
+        &:hover{
+            color: #999;
+        }
+    }
+}
+
+.sm-delete{
+    padding: 0 8px 0 12px;
+}

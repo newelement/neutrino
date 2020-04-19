@@ -836,6 +836,7 @@ p.setttings-section-links{
 .setting-sidebar{
     width: 40%;
     padding-left: 24px;
+
 }
 
 .form-row-groups{
@@ -1596,7 +1597,7 @@ select::-ms-expand {
 	overflow: auto;
 
 	input{
-		vertical-align: baseline;
+		vertical-align: middle;
 	}
 
 	label{
@@ -1616,7 +1617,8 @@ select::-ms-expand {
 	}
 }
 
-.sidebar .form-row{
+.sidebar .form-row,
+.setting-sidebar .form-row{
 	flex-wrap: wrap;
 	.label-col{
 		width: 100%;

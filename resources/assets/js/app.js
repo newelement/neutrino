@@ -104,7 +104,8 @@ if( smallEditor ){
         ],
         menubar:false,
         statusbar: false,
-        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link",
+        toolbar: "undo redo | styleselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link",
+        fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
         relative_urls: false,
         mobile: {
             theme: 'mobile',
@@ -134,8 +135,9 @@ if( editor ){
 	    ],
         //menubar:false,
         menubar: 'insert view format tools',
-	    toolbar: "insertfile undo redo | styleselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
-		relative_urls: false,
+	    toolbar: "insertfile undo redo | styleselect | fontsizeselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
+		fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
+        relative_urls: false,
 		mobile: {
 		    theme: 'mobile',
 		    plugins: [ 'lists', 'autolink', 'image', 'link' ],
@@ -177,8 +179,9 @@ if( typeof editorCss !== 'undefined' && cfeditor ){
           "template paste textpattern"
         ],
         //menubar:false,
-        menubar: 'insert view format tools',
-        toolbar: "insertfile undo redo | styleselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
+        menubar: 'view format tools',
+        toolbar: "undo redo | styleselect | fontsizeselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
+        fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
         relative_urls: false,
         mobile: {
             theme: 'mobile',
@@ -1008,7 +1011,7 @@ function updateGroupSort(){
 
 	})
 	.catch(e => {
-		console.log('sort error');
+		//console.log('sort error');
 	});
 }
 
@@ -1023,7 +1026,7 @@ function updateFieldSort(){
 
 	})
 	.catch(e => {
-		console.log('sort error');
+		//console.log('sort error');
 	});
 }
 
@@ -1124,6 +1127,23 @@ function updateGalleryImageSort(){
     });
 
     let url = '/admin/sort/gallery';
+    HTTP.post(url, formData)
+        .then(response => {
+        })
+    .catch(e => {
+        console.log('sort error');
+    });
+}
+
+function updateShippingMethodsSort(){
+    let items = document.querySelectorAll('.shipping-method-group');
+    let formData = new FormData;
+    items.forEach((v) => {
+        let id = v.getAttribute('data-id');
+        formData.append('items[]', id);
+    });
+
+    let url = '/admin/shoppe-settings/sort/shipping-methods';
     HTTP.post(url, formData)
         .then(response => {
         })
@@ -1472,7 +1492,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		let multiple = false ;
 		let inputId = $(this).attr('data-input');
         let previewId = $(this).attr('data-preview');
-        console.log(inputId, previewId);
+        //console.log(inputId, previewId);
 		showFMinput(inputId, previewId, 'image', multiple);
 	});
 
@@ -1586,6 +1606,22 @@ window.addEventListener('DOMContentLoaded', (e) => {
         }
     });
 
+    $('.shipping-method-type').change(function(){
+        let checked = $('.shipping-method-type:checked').val();
+        if( checked === 'flat' ){
+            $('.flat-rate-shipping-fields').removeClass('hide');
+            $('.estimated-rate-shipping-fields').addClass('hide');
+            $('.free-shipping-fields').addClass('hide');
+        } else if ( checked === 'estimated' ) {
+            $('.flat-rate-shipping-fields').addClass('hide');
+            $('.estimated-rate-shipping-fields').removeClass('hide');
+            $('.free-shipping-fields').addClass('hide');
+        } else if ( checked === 'free' ){
+            $('.flat-rate-shipping-fields').addClass('hide');
+            $('.estimated-rate-shipping-fields').addClass('hide');
+            $('.free-shipping-fields').removeClass('hide');
+        }
+    });
 
     $('.close-csrf-modal-action').click(function(e){
         e.preventDefault();
@@ -2223,6 +2259,24 @@ window.addEventListener('DOMContentLoaded', (e) => {
         });
     }
 
+    let $shippingMethodsGrouplist = document.querySelector('.shipping-methods-group-list');
+    if( $shippingMethodsGrouplist ){
+        Sortable.create($shippingMethodsGrouplist, {
+            handle: '.shipping-method-rows',
+            easing: "cubic-bezier(1, 0, 0, 1)",
+            animation: 150,
+            swapThreshold: 0.65,
+            onEnd: function (e) {
+                updateShippingMethodsSort();
+            },
+            onAdd: function (e) {
+            },
+            onStart: function (evt) {
+                evt.oldIndex;
+            },
+        });
+    }
+
 	$('.repeater-fields-group').on('click', '.repeater-group-toggle', function(e){
 		e.preventDefault();
 		$(this).toggleClass('open');
@@ -2823,7 +2877,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         let toggleSets = [];
         $toggleTos.forEach( (el) => {
             let type = el.type;
-            console.log(el);
+            //console.log(el);
             let toggleTo = el.getAttribute('data-toggle-to');
             let toggles = document.querySelectorAll('[data-'+toggleTo+']');
 
@@ -2976,6 +3030,26 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		});
 	});
 
+    $('.delete-shipping-class').click(function(e){
+        //let conf = confirm('Are you sure you want to delete this?');
+        //return conf;
+        e.preventDefault();
+        let $this = $(this);
+        Swal.fire({
+              title: 'Delete',
+              text: "Are you sure you want to delete this?",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#333',
+              cancelButtonColor: '#ccc',
+              confirmButtonText: 'Yes, delete!'
+        }).then(function (isConfirm) {
+            if(isConfirm.dismiss !== 'cancel'){
+                document.getElementById('shipping-classes-form').submit();
+            }
+        });
+    });
+
 	$('.delete-btn-taxonomy').click(function(e){
 		//let conf = confirm('Are you sure you want to delete this?');
 		//return conf;
@@ -2999,9 +3073,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
     $('.gallery-images-list').on('click', '.remove-gallery-item-btn', function(e){
         e.preventDefault();
         let $this = $(this);
-        console.log(e);
+        //console.log(e);
         let id = e.target.getAttribute('data-id');
-        console.log(id);
+        //console.log(id);
         Swal.fire({
               title: 'Remove',
               text: "Are you sure you want to remove this image from the gallery?.",
@@ -3493,7 +3567,7 @@ Vue2.component('block-options', {
         }
     },
     mounted(){
-       console.log(this.block.options);
+       //console.log(this.block.options);
     },
     template: `<div>
                 <div class="block-options">
@@ -3559,7 +3633,7 @@ Vue2.component('block-item-actions', {
         }
     },
     mounted(){
-       console.log(this.blockItem.options);
+       //console.log(this.blockItem.options);
     },
     template: `<div>
                 <div class="block-item-options">
@@ -3618,7 +3692,7 @@ Vue2.component('child-block-chooser', {
     }),
     methods: {
         addChildBlock(newBlock){
-            console.log('Add child block');
+            //console.log('Add child block');
             this.showBlockPicker = false;
             if( typeof this.field.blocks === 'undefined' ){
                 this.field['blocks'] = [];
@@ -3628,7 +3702,7 @@ Vue2.component('child-block-chooser', {
         },
     },
     mounted(){
-        console.log('mounted child block chooser');
+        //console.log('mounted child block chooser');
     },
     template: `<div>
                 <a href="#" class="child-block-chooser-toggle" @click.prevent="showBlockPicker = !showBlockPicker" role="button"><i class="fal fa-plus"></i></a>
@@ -3656,7 +3730,7 @@ Vue2.component('child-blocks', {
         }
     },
     mounted(){
-        console.log('mounted child blocks', this.field);
+        //console.log('mounted child blocks', this.field);
     },
     template: `<div class="child-blocks">
                 <div v-for="(block, blockIndex) in field.blocks" class="child-block">
@@ -3698,13 +3772,15 @@ const blockEditor = new Vue2({
             menubar: false,
             toolbar: false,
             plugins: [ 'quickbars', 'anchor', 'link', 'table', 'lists', 'hr', 'image', 'imagetools', 'paste' ],
-            quickbars_insert_toolbar: 'formatselect | bullist numlist | image table tabledelete hr',
+            quickbars_insert_toolbar: 'formatselect fontsizeselect | forecolor backcolor | bullist numlist | blockquote | image table tabledelete hr',
+            quickbars_selection_toolbar: 'fontsizeselect forecolor backcolor bold italic alignleft aligncenter alignright blockquote link anchor',
+            fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
             hidden_input: false,
             inline: false,
             contextmenu: "link imagetools table",
             branding: false,
             paste_as_text: true,
-            body_id: 'block-editor',
+            body_id: 'block-editor-tiny',
             content_css : editorCss,
             file_picker_callback: function(callback, value, meta) {
                 //console.log(meta, value);
