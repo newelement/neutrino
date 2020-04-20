@@ -50,7 +50,13 @@ return [
     'enqueue_admin_js' => [
 
     ],
+
     'enqueue_admin_css' => [
+        '/vendor/newelement/neutrino/css/blocks.css',
+    ],
+
+    'equeue_editor_css' => [
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
         '/vendor/newelement/neutrino/css/blocks.css',
     ],
 
@@ -110,6 +116,46 @@ return [
 
     'default_register_role' => 'guest',
     'default_register_redirect' => '/',
+
+    'editor_styles' => [
+        [ "title" => "Bootstrap Buttons", "items" => [
+                      [ "title"=> "Button Primary", "selector"=> "a,button", "classes"=> "btn btn-primary" ],
+                    [ "title"=> "Button Secondary", "selector"=> "a,button", "classes"=> "btn btn-secondary" ],
+                    [ "title"=> "Button Success", "selector"=> "a,button", "classes"=> "btn btn-success" ],
+                    [ "title"=> "Button Danger", "selector"=> "a,button", "classes"=> "btn btn-danger" ],
+                    [ "title"=> "Button Warning", "selector"=> "a,button", "classes"=> "btn btn-warning" ],
+                    [ "title"=> "Button Info", "selector"=> "a,button", "classes"=> "btn btn-info" ],
+                    [ "title"=> "Button Light", "selector"=> "a,button", "classes"=> "btn btn-light" ],
+                    [ "title"=> "Button Dark", "selector"=> "a,button", "classes"=> "btn btn-dark" ],
+
+                    [ "title"=> "Button Primary Small", "selector"=> "a,button", "classes"=> "btn btn-primary btn-sm" ],
+                    [ "title"=> "Button Secondary Small", "selector"=> "a,button", "classes"=> "btn btn-secondary btn-sm" ],
+                    [ "title"=> "Button Success Small", "selector"=> "a,button", "classes"=> "btn btn-success btn-sm" ],
+                    [ "title"=> "Button Danger Small", "selector"=> "a,button", "classes"=> "btn btn-danger btn-sm" ],
+                    [ "title"=> "Button Warning Small", "selector"=> "a,button", "classes"=> "btn btn-warning btn-sm" ],
+                    [ "title"=> "Button Info Small", "selector"=> "a,button", "classes"=> "btn btn-info btn-sm" ],
+                    [ "title"=> "Button Light Small", "selector"=> "a,button", "classes"=> "btn btn-light btn-sm" ],
+                    [ "title"=> "Button Dark Small", "selector"=> "a,button", "classes"=> "btn btn-dark btn-sm" ],
+
+                    [ "title"=> "Button Primary Large", "selector"=> "a,button", "classes"=> "btn btn-primary btn-lg" ],
+                    [ "title"=> "Button Secondary Large", "selector"=> "a,button", "classes"=> "btn btn-secondary btn-lg" ],
+                    [ "title"=> "Button Success Large", "selector"=> "a,button", "classes"=> "btn btn-success btn-lg" ],
+                    [ "title"=> "Button Danger Large", "selector"=> "a,button", "classes"=> "btn btn-danger btn-lg" ],
+                    [ "title"=> "Button Warning Large", "selector"=> "a,button", "classes"=> "btn btn-warning btn-lg" ],
+                    [ "title"=> "Button Info Large", "selector"=> "a,button", "classes"=> "btn btn-info btn-lg" ],
+                    [ "title"=> "Button Light Large", "selector"=> "a,button", "classes"=> "btn btn-light btn-lg" ],
+                    [ "title"=> "Button Dark Large", "selector"=> "a,button", "classes"=> "btn btn-dark btn-lg" ],
+
+                    [ "title"=> "Button Primary Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-primary" ],
+                    [ "title"=> "Button Secondary Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-secondary" ],
+                    [ "title"=> "Button Success Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-success" ],
+                    [ "title"=> "Button Danger Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-danger" ],
+                    [ "title"=> "Button Warning Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-warning" ],
+                    [ "title"=> "Button Info Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-info" ],
+                    [ "title"=> "Button Light Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-light" ],
+                    [ "title"=> "Button Dark Outline", "selector"=> "a,button", "classes"=> "btn btn-outline-dark" ],
+                ]]
+    ],
 
     'blocks' => [
         [

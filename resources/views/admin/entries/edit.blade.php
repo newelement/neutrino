@@ -299,6 +299,7 @@
 @section('js')
 <script>
 window.object_user_edit = { object_type: 'entry', id: <?php echo $entry->id ?>, user_id: <?php echo auth()->user()->id; ?>, user_name: '<?php echo auth()->user()->name; ?>' };
+window.editorStyles = <?php echo json_encode(config('neutrino.editor_styles')) ?>;
 window.editorCss = '<?php echo getEditorCss(); ?>';
 window.blocks = <?php echo getBlocks() ?>;
 window.currentBlocks = <?php echo $entry->block_content; ?>;

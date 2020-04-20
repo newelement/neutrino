@@ -263,6 +263,7 @@
 @section('js')
 <script>
 window.editorCss = '<?php echo getEditorCss(); ?>';
+window.editorStyles = <?php echo json_encode(config('neutrino.editor_styles')) ?>;
 window.blocks = <?php echo getBlocks() ?>;
 window.currentBlocks = [];
 </script>

@@ -92,7 +92,7 @@ let cfeditor = document.querySelector('.cf-editor');
 if( smallEditor ){
     var editor_config_small = {
         path_absolute : "/",
-        selector: ".small-editor",
+        "selector": ".small-editor",
         height: 230,
         width: '100%',
         skin: "oxide-dark",
@@ -104,7 +104,7 @@ if( smallEditor ){
         ],
         menubar:false,
         statusbar: false,
-        toolbar: "undo redo | styleselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link",
+        toolbar: "undo redo | formatselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link",
         fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
         relative_urls: false,
         mobile: {
@@ -112,7 +112,7 @@ if( smallEditor ){
             plugins: [ 'lists', 'autolink', 'link' ],
             toolbar: [ 'undo', 'bold', 'billist', 'link', 'italic', 'styleselect' ]
         },
-        content_css : editorCss
+        content_css : editorCss,
     };
 
     tinymce.init(
@@ -123,7 +123,7 @@ if( smallEditor ){
 if( editor ){
 	var editor_config = {
 	    path_absolute : "/",
-	    selector: ".editor",
+	    "selector": ".editor",
 		height: 600,
 		width: '100%',
         skin: "oxide-dark",
@@ -135,7 +135,7 @@ if( editor ){
 	    ],
         //menubar:false,
         menubar: 'insert view format tools',
-	    toolbar: "insertfile undo redo | styleselect | fontsizeselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
+	    toolbar: "insertfile undo redo | styleselect fontsizeselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | link image | bullist numlist | table | outdent indent | media",
 		fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
         relative_urls: false,
 		mobile: {
@@ -156,7 +156,11 @@ if( editor ){
 			});
 		},
         body_id: 'block-editor',
-        content_css : editorCss
+        style_formats: editorStyles,
+        content_css : editorCss,
+        style_formats_merge: true,
+        content_css_cors: true,
+        style_formats_autohide: true
 	};
 
 	tinymce.init(
@@ -168,7 +172,7 @@ if( typeof editorCss !== 'undefined' && cfeditor ){
 
     cf_config = {
         path_absolute : "/",
-        selector: ".cf-editor",
+        "selector": ".cf-editor",
         height: 600,
         width: '100%',
         skin: "oxide-dark",
@@ -179,8 +183,8 @@ if( typeof editorCss !== 'undefined' && cfeditor ){
           "template paste textpattern"
         ],
         //menubar:false,
-        menubar: 'view format tools',
-        toolbar: "undo redo | styleselect | fontsizeselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image media",
+        menubar: 'insert view format tools',
+	    toolbar: "insertfile undo redo | styleselect fontsizeselect | pastetext | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | link image | bullist numlist | table | outdent indent | media",
         fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
         relative_urls: false,
         mobile: {
@@ -201,7 +205,11 @@ if( typeof editorCss !== 'undefined' && cfeditor ){
             });
         },
         body_id: 'block-editor',
-        content_css : editorCss
+        style_formats: editorStyles,
+        style_formats_merge: true,
+        content_css : editorCss,
+        content_css_cors: true,
+        style_formats_autohide: true
     };
 
     tinymce.init(cf_config);
@@ -1549,12 +1557,12 @@ window.addEventListener('DOMContentLoaded', (e) => {
             layout:"fitColumns",
 
             columns:[
-                {title:"Package", field:"package"},
-                {title:"Group", field:"group"},
-                {title:"Activity", field:"activity"},
-                {title:"User", field:"user", align:"center"},
-                {title:"Level", field:"level", align: 'center', sorter: 'number'},
-                {title:"Created On", field:"created_on",
+                {"title":"Package", field:"package"},
+                {"title":"Group", field:"group"},
+                {"title":"Activity", field:"activity"},
+                {"title":"User", field:"user", align:"center"},
+                {"title":"Level", field:"level", align: 'center', sorter: 'number'},
+                {"title":"Created On", field:"created_on",
                     sorter: 'datetime'
                     , sorterParams:{
                         format: 'MM-DD-YY h:mm a'
@@ -1854,6 +1862,20 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     html += '</div>';
                 html += '</div>';
 
+                html += '<div class="form-row">';
+                    html += '<label class="label-col" for="shipping-class'+id+'">Shipping Class</label>';
+                    html += '<div class="input-col">';
+                        html += '<div class="select-wrapper">';
+                            html += '<select name="variations['+id+'][shipping_class_id]" id="shipping-class'+id+'">';
+                                html += '<option value="same_as_parent">Same as Parent</option>';
+                                shipping_classes.forEach( (v) => {
+                                    html += '<option value="'+v.id+'">'+v.title+'</option>';
+                                });
+                            html += '</select>';
+                        html += '</div>';
+                    html += '</div>';
+                html += '</div>';
+
             html += '</div>'; // Variation fields
 
         html += '</div>';
@@ -1879,7 +1901,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         let id = $(this).attr('data-id');
 
         Swal.fire({
-              title: 'Delete',
+              "title": 'Delete',
               text: "Are you sure you want to delete this?",
               type: 'warning',
               showCancelButton: true,
@@ -3016,7 +3038,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		e.preventDefault();
 		let $this = $(this);
 		Swal.fire({
-			  title: 'Delete',
+			  "title": 'Delete',
 			  text: "Are you sure you want to delete this?",
 			  type: 'warning',
 			  showCancelButton: true,
@@ -3036,7 +3058,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         e.preventDefault();
         let $this = $(this);
         Swal.fire({
-              title: 'Delete',
+              "title": 'Delete',
               text: "Are you sure you want to delete this?",
               type: 'warning',
               showCancelButton: true,
@@ -3056,7 +3078,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		e.preventDefault();
 		let $this = $(this);
 		Swal.fire({
-			  title: 'Delete',
+			  "title": 'Delete',
 			  text: "Are you sure you want to delete this? Deleting this will orphan anything currently attached to it.",
 			  type: 'warning',
 			  showCancelButton: true,
@@ -3077,7 +3099,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         let id = e.target.getAttribute('data-id');
         //console.log(id);
         Swal.fire({
-              title: 'Remove',
+              "title": 'Remove',
               text: "Are you sure you want to remove this image from the gallery?.",
               type: 'warning',
               showCancelButton: true,
@@ -3100,7 +3122,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		let url = $(this).attr('href');
 		e.preventDefault();
 		Swal.fire({
-			  title: 'Destroy',
+			  "title": 'Destroy',
 			  text: "Are you sure you want to permently delete this?",
 			  type: 'warning',
 			  showCancelButton: true,
@@ -3204,7 +3226,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         let $radios = $('input:radio[name=editor_type]');
 
         Swal.fire({
-              title: 'Change Content Editor',
+              "title": 'Change Content Editor',
               text: "Please save your changes before changing the content editor. Formatting issues could occur when changing editor types. When going from legacy editor to block editor, blocks cannot be resolved.",
               type: 'warning',
               showCancelButton: true,
@@ -3770,18 +3792,20 @@ const blockEditor = new Vue2({
         tinyInitInlineFreeText: {
             skin: "oxide-dark",
             menubar: false,
-            toolbar: false,
-            plugins: [ 'quickbars', 'anchor', 'link', 'table', 'lists', 'hr', 'image', 'imagetools', 'paste' ],
-            quickbars_insert_toolbar: 'formatselect fontsizeselect | forecolor backcolor | bullist numlist | blockquote | image table tabledelete hr',
-            quickbars_selection_toolbar: 'fontsizeselect forecolor backcolor bold italic alignleft aligncenter alignright blockquote link anchor',
+            toolbar: 'styleselect fontsizeselect | forecolor backcolor | bullist numlist | link | bold italic alignleft aligncenter alignright alignjustify | image | table tabledelete | hr | blockquote | anchor | pastetext',
+            plugins: [ 'anchor', 'link', 'table', 'lists', 'hr', 'image', 'imagetools', 'paste' ],
             fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
             hidden_input: false,
+            style_formats: editorStyles,
             inline: false,
-            contextmenu: "link imagetools table",
+            contextmenu: "link imagetools styleselect table",
             branding: false,
             paste_as_text: true,
             body_id: 'block-editor-tiny',
             content_css : editorCss,
+            content_css_cors: true,
+            style_formats_merge: true,
+            style_formats_autohide: true,
             file_picker_callback: function(callback, value, meta) {
                 //console.log(meta, value);
                 var type = 'image' === meta.filetype ? 'image' : 'file';

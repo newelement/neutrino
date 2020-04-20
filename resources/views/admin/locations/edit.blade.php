@@ -130,6 +130,7 @@
 
 @section('js')
 <script>
+window.editorStyles = <?php echo json_encode(config('neutrino.editor_styles')) ?>;
 window.editorCss = '<?php echo getEditorCss(); ?>';
 </script>
 @endsection

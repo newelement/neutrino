@@ -727,7 +727,7 @@ function getAdminStyles(){
 }
 
 function getEditorCss(){
-    $styles = config('neutrino.enqueue_admin_css', []);
+    $styles = config('neutrino.equeue_editor_css', []);
     echo implode(',', $styles);
 }
 
