@@ -159,8 +159,7 @@ if( editor ){
         style_formats: editorStyles,
         content_css : editorCss,
         style_formats_merge: true,
-        content_css_cors: true,
-        style_formats_autohide: true
+        content_css_cors: true
 	};
 
 	tinymce.init(
@@ -208,8 +207,7 @@ if( typeof editorCss !== 'undefined' && cfeditor ){
         style_formats: editorStyles,
         style_formats_merge: true,
         content_css : editorCss,
-        content_css_cors: true,
-        style_formats_autohide: true
+        content_css_cors: true
     };
 
     tinymce.init(cf_config);
@@ -1460,12 +1458,60 @@ function showObjectEdits(edits){
     }
 }
 
+window.showMediaDialog = function(type){
+    document.querySelector('.media-dialog-overlay').classList.remove('hide');
+    if( type === 'image' ){
+        document.querySelector('.media-dialog.image').classList.remove('hide');
+    }
+}
+
+window.closeMediaDialog = function(){
+
+    document.querySelector('.media-dialog-overlay').classList.add('hide');
+    document.querySelector('.media-dialog').classList.add('hide');
+
+    document.getElementById('media-image-dialog-url').value = '';
+    document.getElementById('media-image-dialog-alt-text').value = '';
+    document.getElementById('image-dialog-preview').innerHTML = '';
+
+}
+
 window.addEventListener('DOMContentLoaded', (e) => {
 
 	let dashboard = document.querySelector('.dashboard');
 	if(dashboard){
 
 	}
+
+    let $closeMediaDialog = document.querySelectorAll('.close-media-dialog');
+    if( $closeMediaDialog.length ){
+        $closeMediaDialog.forEach( (el) =>  {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('close dialog');
+                closeMediaDialog();
+            });
+        });
+    }
+
+    let $openMediaManager = document.querySelector('.open-fm-button');
+    if( $openMediaManager ){
+        $openMediaManager.addEventListener('click', (e) => {
+            e.preventDefault();
+            let inputId = e.target.getAttribute('data-input-id');
+            let previewId = e.target.getAttribute('data-preview-id');
+            console.log(inputId, previewId);
+            showFMinput(inputId, previewId, 'image', false);
+        });
+    }
+
+    let $mediaDialogUseImageButton = document.querySelector('.media-dialog-use-image-button');
+    if($mediaDialogUseImageButton){
+        $mediaDialogUseImageButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            blockEditor.useMediaImage();
+        });
+    }
 
     const choiceElements = document.querySelectorAll('.js-choice');
     if( choiceElements.length ){
@@ -3498,6 +3544,7 @@ import lists from 'tinymce/plugins/lists/plugin.js';
 import placeholder from './plugins/placeholder/plugin.js';
 import { mixin as clickaway } from 'vue-clickaway';
 
+
 let BlockEditor = document.querySelector('#block-editor');
 
 let tags = {
@@ -3766,13 +3813,14 @@ Vue2.component('child-blocks', {
             </div>`
 });
 
-const blockEditor = new Vue2({
+window.blockEditor = new Vue2({
     el: '#block-editor',
     mixins: [ clickaway ],
     data: () => ({
         errors: [],
         saving: false,
         loading: false,
+        active: true,
         blocks: [],
         showBlockPicker: false,
         currentBlocks: [],
@@ -3805,7 +3853,6 @@ const blockEditor = new Vue2({
             content_css : editorCss,
             content_css_cors: true,
             style_formats_merge: true,
-            style_formats_autohide: true,
             file_picker_callback: function(callback, value, meta) {
                 //console.log(meta, value);
                 var type = 'image' === meta.filetype ? 'image' : 'file';
@@ -3852,6 +3899,41 @@ const blockEditor = new Vue2({
         }
     },
     methods: {
+        dragStart(){
+            console.log('drag.start');
+            /*console.log(this.$root.$refs.editor);
+            this.$root.$refs.editor.forEach( (obj) => {
+                console.log('de-activating', obj);
+                console.log(obj.editor.id);
+                console.log(obj.elementId);
+                obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.elementId);
+            });*/
+        },
+        dragEnd(){
+            console.log('drag.end');
+            /*setTimeout( () => {
+                this.$root.$refs.editor.forEach( (obj) => {
+                    console.log('de-activating', obj);
+                    //obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.elementId);
+                    console.log('re-activating', obj);
+                    console.log(obj.editor.id);
+                    console.log(obj.elementId);
+                    let id = ( obj.editor.id === obj.elementId )? obj.editor.id : obj.elementId;
+                    obj.editor.editorManager.EditorManager.execCommand('mceAddEditor', false, id);
+                });
+            }, 100 );*/
+
+        },
+        dragUpdate(){
+            console.log('drag.updated');
+        },
+        openImageMediaDialog(){
+            showMediaDialog('image');
+        },
+        useMediaImage(){
+            let imageUrl = document.getElementById('media-image-dialog-url').value;
+            let imageAltText = document.getElementById('media-image-dialog-alt-text').value;
+        },
         appendBlock(block, index){
             this.showBlockPicker = false;
             let id = this.synthId();

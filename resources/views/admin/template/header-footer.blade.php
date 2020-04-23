@@ -81,6 +81,11 @@
                 <a href="#" role="button" class="close-csrf-modal-action"><strong>Close</strong></a>
             </div>
         </div>
+
+        @include('neutrino::admin.partials.image-media-dialog')
+        @include('neutrino::admin.partials.media-dialog')
+        <div class="media-dialog-overlay hide"></div>
+
 		<div id="snackbar"></div>
 		@include('neutrino::admin.partials.filemanager')
         @yield('js')

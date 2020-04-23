@@ -34,8 +34,8 @@
                                     </a>
                                 </div>
                                 <div v-if="currentBlocks.length > 0" style="width: 100%" v-cloak>
-                                    <draggable v-model="currentBlocks" class="blocks-list" group="blocks" handle=".block-drag-handle">
-                                        <div v-if="currentBlocks.length > 0" v-for="(block, blockIndex) in currentBlocks" :key="block.id" class="block-item" v-cloak>
+                                    <draggable v-model="currentBlocks" class="blocks-list" ref="dragItem" @end="dragEnd()" @update="dragUpdate()" @start="dragStart()" group="blocks" handle=".block-drag-handle">
+                                        <div v-if="currentBlocks.length > 0" v-for="(block, blockIndex) in currentBlocks" :key="block.id" class="block-item">
                                             <div class="block-chooser-block">
                                                 <div class="inner">
                                                     <a class="choose-block-btn" href="#" @click.prevent="showBlockPicker = !showBlockPicker" role="button">
@@ -63,8 +63,7 @@
                                                     <tinymce-editor v-if="block.contentEditable && !block.template && block.tag" v-model="block.value" :init="tinyInitInlineParagraph" :tag-name="block.tag"></tinymce-editor>
                                                 </keep-alive>
                                                 <keep-alive>
-                                                    <tinymce-editor v-if="block.contentEditable && !block.template && !block.tag" v-model="block.value" :init="tinyInitInlineFreeText"></tinymce-editor>
-                                                </keep-alive>
+                                                    <tinymce-editor v-if="block.contentEditable && !block.template && !block.tag && active" v-model="block.value" ref="editor" :init="tinyInitInlineFreeText"></tinymce-editor>                                                </keep-alive>
                                                 <keep-alive>
                                                     <component v-if="!block.contentEditable" :block="block" :block-index="blockIndex" v-bind:is="block.name" />
                                                 </keep-alive>
