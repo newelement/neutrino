@@ -1217,7 +1217,7 @@ function showFMinput(inputId, previewId, type, multiple){
 	fm.showFileManager();
 }
 
-function showFMeditor(type){
+window.showFMeditor = function(type){
 	fm.fileType = type;
 	fm.standaloneMode = false;
 	fm.selectionMode = true;
@@ -1482,6 +1482,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
 	if(dashboard){
 
 	}
+
+    if( $('#laraberg-editor') ){
+        Laraberg.init('laraberg-editor', { laravelFilemanager: true });
+    }
 
     let $closeMediaDialog = document.querySelectorAll('.close-media-dialog');
     if( $closeMediaDialog.length ){

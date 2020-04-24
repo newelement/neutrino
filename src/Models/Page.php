@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Newelement\Searchable\SearchableTrait;
 use Kyslik\ColumnSortable\Sortable;
+use VanOns\Laraberg\Models\Gutenbergable;
 use DB, Auth;
 
 class Page extends Model
 {
-	use SoftDeletes, SearchableTrait, Sortable;
+	use SoftDeletes, SearchableTrait, Sortable, Gutenbergable;
 
 	protected $searchable = [
         'columns' => [

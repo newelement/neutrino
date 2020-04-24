@@ -22,6 +22,10 @@
 						</div>
 					</div>
 
+                    <div class="form-row">
+                        <textarea id="laraberg-editor" name="laraberg_content" hidden></textarea>
+                    </div>
+
                     @if( request('editor_type') !== 'C' )
                     <div class="form-row">
                         <label class="label-col align-top full-width" for="content">Block Editor</label>

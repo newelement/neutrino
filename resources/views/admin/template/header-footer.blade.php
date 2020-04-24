@@ -19,7 +19,13 @@
 			'baseUrl' => URL::to('/')
         ]); ?>
         </script>
+
+        <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
+        <script src="{{ asset('vendor/laraberg/js/laraberg.js') }}"></script>
+
 		<link href="/vendor/newelement/neutrino/css/app.css" rel="stylesheet">
+        <link href="{{asset('vendor/laraberg/css/laraberg.css')}}" rel="stylesheet">
         {{ getAdminStyles() }}
 	</head>
 	<body class="@if( isset($_COOKIE['menu_open']) && $_COOKIE['menu_open'] === "Y" ) menu-open @endif">
@@ -89,7 +95,7 @@
 		<div id="snackbar"></div>
 		@include('neutrino::admin.partials.filemanager')
         @yield('js')
-		<script src="/vendor/newelement/neutrino/js/app.js"></script>
+		<script src="/vendor/newelement/neutrino/js/app.js" defer></script>
         {{ getAdminScripts() }}
 	</body>
 </html>

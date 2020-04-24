@@ -133,23 +133,27 @@ class PageController extends Controller
 
         }
 
-		$page = Page::create([
-			'title' => $request->title,
-			'slug' => toSlug($request->slug, 'page'),
-			'content' => $content,
-            'block_content' => $block_content,
-            'short_content' => htmlentities($request->short_content),
-			'parent_id' => $request->parent_id? $request->parent_id : 0 ,
-			'keywords' => $request->keywords ,
-			'meta_description' => $request->meta_description ,
-			'status' => $request->status? $request->status : 'P',
-            'editor_type' => $request->editor_type? $request->editor_type : 'B',
-            'template' => $request->template? $request->template : null,
-			'social_image' => $request->social_image,
-            'sitemap_change' => $request->sitemap_change? $request->sitemap_change : 'weekly',
-            'sitemap_priority' => $request->sitemap_priority? $request->sitemap_priority : 0.5 ,
-			'protected' => $request->protected ? implode(',',$request->protected) : ''
-		]);
+		$page = new Page;
+		$page->title = $request->title;
+		$page->slug = toSlug($request->slug, 'page');
+		$page->content = $content;
+        $page->block_content = $block_content;
+        $page->short_content = htmlentities($request->short_content);
+		$page->parent_id = $request->parent_id? $request->parent_id : 0;
+		$page->keywords = $request->keywords;
+		$page->meta_description = $request->meta_description;
+		$page->status = $request->status? $request->status : 'P';
+        $page->editor_type = $request->editor_type? $request->editor_type : 'B';
+        $page->template = $request->template? $request->template : null;
+		$page->social_image = $request->social_image;
+        $page->sitemap_change = $request->sitemap_change? $request->sitemap_change : 'weekly';
+        $page->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
+		$page->protected = $request->protected ? implode(',',$request->protected) : '';
+
+        $page->lb_content = $request->laraberg_content;
+        // Get the rendered HTML
+        //$page->lb_content;
+        $page->save();
 
 		if( $request->featured_image ){
 			$path = $request->featured_image;

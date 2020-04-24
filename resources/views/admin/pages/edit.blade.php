@@ -29,6 +29,10 @@
 						</div>
 					</div>
 
+                    <div class="form-row">
+                        <textarea id="laraberg-editor" name="laraberg_content" hidden>{{ $page->getRawContent() }}</textarea>
+                    </div>
+
                     @if( $page->editor_type === 'B' )
                     <div class="form-row">
                         <label class="label-col align-top full-width" for="content">Block Editor</label>
