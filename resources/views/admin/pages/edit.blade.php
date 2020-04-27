@@ -25,7 +25,7 @@
 					<div class="form-row">
 						<label class="label-col" for="slug">Slug</label>
 						<div class="input-col">
-							<input id="slug" type="text" name="slug" value="{{ old('slug', $page->slug) }}" readonly required>
+							<input id="slug" type="text" name="slug" value="{{ old('slug', $page->slug) }}" {{ $page->system_page? 'readonly' : '' }} required>
 						</div>
 					</div>
 

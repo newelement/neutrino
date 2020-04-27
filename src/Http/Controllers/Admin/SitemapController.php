@@ -82,7 +82,7 @@ class SitemapController extends Controller
 
     public function buildData()
     {
-         $objectTypes = [];
+        $objectTypes = [];
 
         if( Cache::has('sitemap-main') ){
 
@@ -104,6 +104,14 @@ class SitemapController extends Controller
 
             $taxonomyTypes = TaxonomyType::orderBy('title')->get();
             $objectTypes['taxonomy'] = $taxonomyTypes;
+
+            $bond = app('NeutrinoBond');
+            $models = $bond->getSiteMapModels();
+
+            foreach( $models as $model ){
+                $objects = $model['model']::all();
+                $objectTypes[$model['key']] = $objects;
+            }
 
             Cache::put('sitemap-main', $objectTypes, now()->addHours($this->settings->cache_hours));
         }

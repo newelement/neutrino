@@ -123,13 +123,13 @@
                                 <div class="select-wrapper">
                                     <select id="sitemap-change" name="sitemap_change">
                                         <option value=""></option>
-                                        <option value="always" {{ old('sitemap_priority') === 'always'? 'selected="selected"' : '' }}>Always</option>
-                                        <option value="hourly" {{ old('sitemap_priority') === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
-                                        <option value="daily" {{ old('sitemap_priority') === 'daily'? 'selected="selected"' : '' }}>Daily</option>
-                                        <option value="weekly" {{ old('sitemap_priority', 'weekly') === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
-                                        <option value="monthly" {{ old('sitemap_priority') === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
-                                        <option value="yearly" {{ old('sitemap_priority') === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
-                                        <option value="never" {{ old('sitemap_priority') === 'never'? 'selected="selected"' : '' }}>Never</option>
+                                        <option value="always" {{ old('sitemap_change') === 'always'? 'selected="selected"' : '' }}>Always</option>
+                                        <option value="hourly" {{ old('sitemap_change') === 'hourly'? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="daily" {{ old('sitemap_change') === 'daily'? 'selected="selected"' : '' }}>Daily</option>
+                                        <option value="weekly" {{ old('sitemap_change', 'weekly') === 'weekly'? 'selected="selected"' : '' }}>Weekly</option>
+                                        <option value="monthly" {{ old('sitemap_change') === 'monthly'? 'selected="selected"' : '' }}>Monthly</option>
+                                        <option value="yearly" {{ old('sitemap_change') === 'yearly'? 'selected="selected"' : '' }}>Yearly</option>
+                                        <option value="never" {{ old('sitemap_change') === 'never'? 'selected="selected"' : '' }}>Never</option>
                                     </select>
                                 </div>
                             </div>

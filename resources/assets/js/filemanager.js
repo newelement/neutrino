@@ -453,9 +453,14 @@ window.fm = new Vue({
 			this.closeFileManager();
 		},
         useChosenFiles(){
-
+            let self = this;
             if( this.isGallery ){
                 insertGalleryImagesCallback(this.galleryItems);
+            } else {
+                window.postMessage({
+                      mceAction: 'insertgallery',
+                      content: self.selectedFiles
+                });
             }
 
             this.closeFileManager();

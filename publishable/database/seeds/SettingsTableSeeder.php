@@ -14,9 +14,10 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-         Setting::updateOrCreate(
+         Setting::firstOrCreate(
 			[
-	            'key' => 'save_form',
+	            'key' => 'save_form'
+            ],[
 	            'value' => '',
 				'value_bool' => 1,
 				'type' => 'BOOL',
@@ -26,9 +27,10 @@ class SettingsTableSeeder extends Seeder
 				'order' => 0
 			]
 		);
-        Setting::updateOrCreate(
+        Setting::firstOrCreate(
 			[
-	            'key' => 'moderate_comments',
+	            'key' => 'moderate_comments'
+            ],[
 	            'value' => '',
 				'value_bool' => 1,
 				'type' => 'BOOL',
@@ -38,9 +40,10 @@ class SettingsTableSeeder extends Seeder
 				'order' => 0
 			]
 		);
-        Setting::updateOrCreate(
+        Setting::firstOrCreate(
 			[
-	            'key' => 'allow_comments',
+	            'key' => 'allow_comments'
+            ],[
 	            'value' => '',
 				'value_bool' => 1,
 				'type' => 'BOOL',
@@ -50,9 +53,10 @@ class SettingsTableSeeder extends Seeder
 				'order' => 0
 			]
 		);
-        Setting::updateOrCreate(
+        Setting::firstOrCreate(
 			[
-	            'key' => 'cache',
+	            'key' => 'cache'
+            ],[
 	            'value' => '',
 				'value_bool' => 1,
 				'type' => 'BOOL',
@@ -62,9 +66,10 @@ class SettingsTableSeeder extends Seeder
 				'order' => 0
 			]
 		);
-        Setting::updateOrCreate(
+        Setting::firstOrCreate(
             [
-                'key' => 'enable_asset_cache',
+                'key' => 'enable_asset_cache'
+            ],[
                 'value' => '',
                 'value_bool' => 0,
                 'type' => 'BOOL',

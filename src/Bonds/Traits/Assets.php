@@ -24,29 +24,49 @@ trait Assets
     public function enqueueScripts($scripts)
     {
         foreach( (array) $scripts as $script ){
-            $this->$enqueueJS[] = $script;
+            $this->enqueueJS[] = $script;
         }
     }
 
     public function enqueueStyles($styles)
     {
         foreach( (array) $styles as $style ){
-            $this->$enqueueCSS[] = $style;
+            $this->enqueueCSS[] = $style;
         }
     }
 
     public function enqueueAdminScripts($scripts)
     {
         foreach( (array) $scripts as $script ){
-            $this->$enqueueAdminJS[] = $script;
+            $this->enqueueAdminJS[] = $script;
         }
     }
 
     public function enqueueAdminStyles($styles)
     {
         foreach( (array) $styles as $style ){
-            $this->$enqueueAdminCSS[] = $style;
+            $this->enqueueAdminCSS[] = $style;
         }
+    }
+
+    public function getScripts()
+    {
+        return $this->enqueueJS;
+    }
+
+    public function getAdminScripts()
+    {
+        return $this->enqueueAdminJS;
+    }
+
+    public function getStyles()
+    {
+        return $this->enqueueCSS;
+    }
+
+    public function getAdminStyles()
+    {
+        return $this->enqueueAdminCSS;
     }
 
 }

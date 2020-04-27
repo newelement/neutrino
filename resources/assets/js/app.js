@@ -146,7 +146,7 @@ if( editor ){
 		file_picker_callback: function(callback, value, meta) {
 		    //console.log(meta, value);
 			var type = 'image' === meta.filetype ? 'image' : 'file';
-			showFMeditor(type);
+			showFMeditor(type, false);
 			window.addEventListener('message', (event) => {
 				if( event.data.mceAction === 'insert' ){
 					let name = event.data.content.split('/').pop();
@@ -194,7 +194,7 @@ if( typeof editorCss !== 'undefined' && cfeditor ){
         file_picker_callback: function(callback, value, meta) {
             //console.log(meta, value);
             var type = 'image' === meta.filetype ? 'image' : 'file';
-            showFMeditor(type);
+            showFMeditor(type, false);
             window.addEventListener('message', (event) => {
                 if( event.data.mceAction === 'insert' ){
                     let name = event.data.content.split('/').pop();
@@ -1217,12 +1217,12 @@ function showFMinput(inputId, previewId, type, multiple){
 	fm.showFileManager();
 }
 
-window.showFMeditor = function(type){
+window.showFMeditor = function(type, multiple){
 	fm.fileType = type;
 	fm.standaloneMode = false;
 	fm.selectionMode = true;
-	fm.callback = true;
-	fm.multiple = false;
+	fm.callback = multiple? false : true;
+	fm.multiple = multiple;
 	fm.boot();
 	fm.showFileManager();
 }
@@ -1483,7 +1483,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 	}
 
-    if( $('#laraberg-editor') ){
+    if( $('#laraberg-editor').length ){
         Laraberg.init('laraberg-editor', { laravelFilemanager: true });
     }
 
@@ -3860,7 +3860,7 @@ window.blockEditor = new Vue2({
             file_picker_callback: function(callback, value, meta) {
                 //console.log(meta, value);
                 var type = 'image' === meta.filetype ? 'image' : 'file';
-                showFMeditor(type);
+                showFMeditor(type, false);
                 window.addEventListener('message', (event) => {
                     if( event.data.mceAction === 'insert' ){
                         let name = event.data.content.split('/').pop();

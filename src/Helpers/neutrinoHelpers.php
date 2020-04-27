@@ -71,7 +71,7 @@ function checkSlug($slug, $type, $count = 0)
             $exists = DB::table('product_attributes')->where(['slug' => $slug ])->first();
         break;
 		default:
-			$exists = DB::table('entries')->where(['slug' => $slug, 'entry_type' => $type ])->first();
+			$exists = DB::table($type)->where(['slug' => $slug ])->first();
 		break;
 	}
 
@@ -119,6 +119,10 @@ function _getObjectSitemapData($type, $object, $settings){
             $data['change'] = $settings->event_default_change;
             $data['priority'] = $settings->event_default_priority;
         break;
+        default:
+            $data['url'] = $object->url();
+            $data['change'] = $settings->event_default_change;
+            $data['priority'] = $settings->event_default_priority;
 
     }
 

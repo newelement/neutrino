@@ -15,44 +15,44 @@ class LocationController extends Controller
 
 	public function index()
 	{
-		$locations = Place::paginate(30);
+		$places = Place::paginate(30);
 
-		return view('neutrino::admin.locations.index', ['locations' => $locations]);
+		return view('neutrino::admin.places.index', ['places' => $places]);
 	}
 
 	public function getCreate()
 	{
-		return view('neutrino::admin.locations.create');
+		return view('neutrino::admin.places.create');
 	}
 
 	public function create(Request $request)
 	{
 		$validatedData = $request->validate([
-	        'location_name' => 'required|max:255',
+	        'place_name' => 'required|max:255',
 			'slug' => 'required',
 	    ]);
 
-		$location = new Place;
-		$location->location_name = $request->location_name;
-		$location->slug = toSlug($request->slug, 'place');
-		$location->description = htmlentities($request->description);
-		$location->address = $request->address;
-		$location->address2 = $request->address2;
-		$location->city = $request->city;
-		$location->state = $request->state;
-		$location->postal = $request->zip;
-		$location->phone = $request->phone;
-		$location->email = $request->email;
-		$location->url = $request->url;
-		$location->country = $request->country;
-		$location->lat = $request->lat;
-		$location->lon = $request->lon;
-		$location->save();
+		$place = new Place;
+		$place->location_name = $request->place_name;
+		$place->slug = toSlug($request->slug, 'place');
+		$place->description = htmlentities($request->description);
+		$place->address = $request->address;
+		$place->address2 = $request->address2;
+		$place->city = $request->city;
+		$place->state = $request->state;
+		$place->postal = $request->zip;
+		$place->phone = $request->phone;
+		$place->email = $request->email;
+		$place->url = $request->url;
+		$place->country = $request->country;
+		$place->lat = $request->lat;
+		$place->lon = $request->lon;
+		$place->save();
 
 		if( $request->featured_image ){
 			ObjectMedia::updateOrCreate([
-				'object_id' => $location->id,
-				'object_type' => 'location',
+				'object_id' => $place->id,
+				'object_type' => 'place',
 				'featured' => 1
 			], [ 'file_path' => $request->featured_image ]);
 
@@ -62,56 +62,56 @@ class LocationController extends Controller
             'activity_package' => 'neutrino',
             'activity_group' => 'place.create',
             'object_type' => 'place',
-            'object_id' => $location->id,
+            'object_id' => $place->id,
             'content' => 'Place created',
             'log_level' => 0,
             'created_by' => auth()->user()->id,
             'created_at' => now()
         ]);
 
-		return redirect('/admin/locations/'.$location->id)->with('success', 'Location created.');
+		return redirect('/admin/places/'.$place->id)->with('success', 'Place created.');
 
 	}
 
 	public function get($id)
 	{
-		$location = Place::find($id);
-		$location->featuredImage = ObjectMedia::where([ 'object_id' => $id, 'featured' => 1, 'object_type' => 'location' ])->first();
-		return view('neutrino::admin.locations.edit', ['location' => $location]);
+		$place = Place::find($id);
+		$place->featuredImage = ObjectMedia::where([ 'object_id' => $id, 'featured' => 1, 'object_type' => 'place' ])->first();
+		return view('neutrino::admin.places.edit', ['place' => $place]);
 	}
 
 	public function update(Request $request, $id)
 	{
 		$validatedData = $request->validate([
-	        'location_name' => 'required|max:255',
+	        'place_name' => 'required|max:255',
 			'slug' => 'required',
 	    ]);
 
-		$location = Place::find($id);
-		$location->location_name = $request->location_name;
-		$location->description = htmlentities($request->description);
-		$location->address = $request->address;
-		$location->address2 = $request->address2;
-		$location->city = $request->city;
-		$location->state = $request->state;
-		$location->postal = $request->zip;
-		$location->phone = $request->phone;
-		$location->email = $request->email;
-		$location->url = $request->url;
-		$location->country = $request->country;
-		$location->lat = $request->lat;
-		$location->lon = $request->lon;
+		$place = Place::find($id);
+		$place->location_name = $request->place_name;
+		$place->description = htmlentities($request->description);
+		$place->address = $request->address;
+		$place->address2 = $request->address2;
+		$place->city = $request->city;
+		$place->state = $request->state;
+		$place->postal = $request->zip;
+		$place->phone = $request->phone;
+		$place->email = $request->email;
+		$place->url = $request->url;
+		$place->country = $request->country;
+		$place->lat = $request->lat;
+		$place->lon = $request->lon;
 
-		if( $location->slug !== $request->slug ){
-			$location->slug = toSlug($request->slug, 'place');
+		if( $place->slug !== $request->slug ){
+			$place->slug = toSlug($request->slug, 'place');
 		}
 
-		$location->save();
+		$place->save();
 
 		if( $request->featured_image ){
 			ObjectMedia::updateOrCreate([
 				'object_id' => $id,
-				'object_type' => 'location',
+				'object_type' => 'place',
 				'featured' => 1
 			], [ 'file_path' => $request->featured_image ]);
 		}
@@ -120,22 +120,22 @@ class LocationController extends Controller
             'activity_package' => 'neutrino',
             'activity_group' => 'place.updated',
             'object_type' => 'place',
-            'object_id' => $location->id,
+            'object_id' => $place->id,
             'content' => 'Place updated',
             'log_level' => 0,
             'created_by' => auth()->user()->id,
             'created_at' => now()
         ]);
 
-		return redirect('/admin/locations/'.$id)->with('success', 'Location updated.');
+		return redirect('/admin/places/'.$id)->with('success', 'Place updated.');
 
 	}
 
 
 	public function delete($id)
 	{
-		$location = Place::find($id);
-		$location->delete();
+		$place = Place::find($id);
+		$place->delete();
 
         ActivityLog::insert([
             'activity_package' => 'neutrino',
@@ -148,7 +148,7 @@ class LocationController extends Controller
             'created_at' => now()
         ]);
 
-		return redirect('/admin/locations')->with('success', 'Location deleted.');
+		return redirect('/admin/places')->with('success', 'Place deleted.');
 	}
 
 }

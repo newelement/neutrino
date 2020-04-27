@@ -20,7 +20,6 @@ use Newelement\Neutrino\Models\FormField;
 use Newelement\Neutrino\Http\Controllers\ContentController;
 use Newelement\Neutrino\Http\Controllers\BlocksController;
 
-
 function states(){
     $states	= array(
         'AL' => 'Alabama',
@@ -666,7 +665,8 @@ function getSetting($name){
 }
 
 function getScripts(){
-    $scripts = config('neutrino.enqueue_js', []);
+    $bond = app('NeutrinoBond');
+    $scripts = $bond->getScripts();
     echo '<script src="/js/app.js"></script>'."\n";
     foreach( $scripts as $script ){
         echo '<script src="'.$script.'"></script>'."\n";
@@ -677,7 +677,8 @@ function getScripts(){
 }
 
 function getStyles(){
-    $styles = config('neutrino.enqueue_css', []);
+    $bond = app('NeutrinoBond');
+    $styles = $bond->getStyles();
     $allStyles = [];
     $allStyles[] = 'css/app.css';
     foreach( $styles as $style ){

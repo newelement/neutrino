@@ -45,8 +45,13 @@ h3{
     }
 }
 
-body .laraberg__editor{
-    width: 100%;
+body {
+    .gutenberg__editor .edit-post-visual-editor {
+        padding-top: 48px;
+    }
+    .laraberg__editor{
+        width: 100%;
+    }
 }
 
 .media-dialog-overlay{
