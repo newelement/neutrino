@@ -1,20 +1,20 @@
 let $ = require('jquery');
 let Vue2 = require('vue');
 let slugger = require('slugger');
-import { Sortable, Swap } from 'sortablejs';
+import Sortable from 'sortablejs';
 import select2 from 'select2';
 import Swal from 'sweetalert2';
 import PaceProgressBar from 'pace-progressbar';
 import datepicker from 'js-datepicker'
 import flatpickr from "flatpickr";
 import moment from 'moment';
-window.moment = moment;
 import Choices from 'choices.js'
 import Tabulator from 'tabulator-tables';
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
 import axios from 'axios';
 
-Sortable.mount(new Swap());
+window.moment = moment;
+window.select2 = select2;
 
 import tinymce from 'tinymce';
 import 'tinymce/themes/silver';
@@ -158,8 +158,8 @@ if( editor ){
 			});
 		},
         body_id: 'block-editor',
-        style_formats: editorStyles,
-        content_css : editorCss,
+        style_formats: typeof editorStyles === 'undefined'? {} : editorStyles,
+        content_css : typeof editorCss === 'undefined'? {} : editorCss,
         style_formats_merge: true,
         content_css_cors: true
 	};
@@ -204,9 +204,9 @@ if( editor ){
             });
         },
         body_id: 'block-editor',
-        style_formats: editorStyles,
         style_formats_merge: true,
-        content_css : editorCss,
+        style_formats: typeof editorStyles === 'undefined'? {} : editorStyles,
+        content_css : typeof editorCss === 'undefined'? {} : editorCss,
         content_css_cors: true
     };
 
