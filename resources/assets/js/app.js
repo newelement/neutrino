@@ -1,7 +1,7 @@
 let $ = require('jquery');
 let Vue2 = require('vue');
 let slugger = require('slugger');
-import Sortable from 'sortablejs';
+import { Sortable, Swap } from 'sortablejs';
 import select2 from 'select2';
 import Swal from 'sweetalert2';
 import PaceProgressBar from 'pace-progressbar';
@@ -13,6 +13,8 @@ import Choices from 'choices.js'
 import Tabulator from 'tabulator-tables';
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
 import axios from 'axios';
+
+Sortable.mount(new Swap());
 
 import tinymce from 'tinymce';
 import 'tinymce/themes/silver';
@@ -87,7 +89,7 @@ let fields = [
 
 let editor = document.querySelector('.editor');
 let smallEditor = document.querySelector('.small-editor');
-let cfeditor = document.querySelector('.cf-editor');
+let cfeditor = document.querySelectorAll('.cf-editor');
 
 if( smallEditor ){
     var editor_config_small = {
@@ -167,11 +169,9 @@ if( editor ){
 	);
 }
 
-if( typeof editorCss !== 'undefined' && cfeditor ){
-
     cf_config = {
         path_absolute : "/",
-        "selector": ".cf-editor",
+        selector: ".cf-editor",
         height: 600,
         width: '100%',
         skin: "oxide-dark",
@@ -209,9 +209,6 @@ if( typeof editorCss !== 'undefined' && cfeditor ){
         content_css : editorCss,
         content_css_cors: true
     };
-
-    tinymce.init(cf_config);
-}
 
 
 function readURL(input) {
@@ -1483,6 +1480,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 	}
 
+    if( typeof editorCss !== 'undefined' && cfeditor.length ){
+        cfeditor.forEach( (el) => {
+            cf_config.selector = '#'+el.id;
+            tinymce.init(cf_config);
+        });
+    }
+
     if( $('#laraberg-editor').length ){
         Laraberg.init('laraberg-editor', { laravelFilemanager: true });
     }
@@ -2195,19 +2199,40 @@ window.addEventListener('DOMContentLoaded', (e) => {
 	}
 
 	let repeaterGroupList = document.querySelector('.repeater-fields-group');
+
 	if(repeaterGroupList){
 		Sortable.create(repeaterGroupList, {
 			handle: '.repeater-sort-handle',
 			easing: "cubic-bezier(1, 0, 0, 1)",
+            //swap: true,
 			animation: 150,
 			onEnd: function (e) {
 				updateObjectRepeaterSort();
+                cfeditor = document.querySelectorAll('.cf-editor');
+                if( cfeditor.length ){
+                    cfeditor.forEach( (el) => {
+                        let id = '#'+el.id;
+                        cf_config.selector = id;
+                        tinymce.remove(id);
+                        tinymce.init(cf_config);
+                        //tinymce.execCommand('mceRemoveEditor', false, id);
+                        //tinymce.execCommand('mceAddEditor', true, id);
+                    });
+                }
 			},
 			onAdd: function (e) {
 				//console.log('ADD',e);
 			},
 			onStart: function (evt) {
-				evt.oldIndex;
+                cfeditor = document.querySelectorAll('.cf-editor');
+                if( cfeditor.length ){
+                    cfeditor.forEach( (el) => {
+                        let id = '#'+el.id;
+                        //tinymce.remove(id);
+                        //tinymce.execCommand('mceRemoveEditor', false, id);
+                        //tinymce.execCommand('mceAddEditor', true, id);
+                    });
+                }
 			},
 		});
 	}
@@ -3032,9 +3057,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
 			let newId = ID();
 			let name = $($textareas[i]).attr('name');
 			$($textareas[i]).attr('name', name+'['+batchId+']['+newId+']');
+            $($textareas[i]).attr('id', 'cfs-textarea-'+newId);
 
 			if( $($textareas[i]).attr('data-type') === 'editor' ){
-				$($textareas[i]).addClass('editor');
+				$($textareas[i]).addClass('cf-editor');
 			}
 		});
 
@@ -3065,11 +3091,22 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 		$('#repeater-fields-group'+id).append($rootHtml);
 
-		tinymce.remove('.cf-editor');
-		setTimeout(function(){
-			tinymce.init(cf_config);
-		}, 1000);
+        //tinymce.remove('.cf-editor');
 
+        cfeditor = document.querySelectorAll('.cf-editor');
+        if( cfeditor.length ){
+
+            cfeditor.forEach( (el) => {
+
+                setTimeout( () => {
+                    let id = '#'+el.id;
+                    cf_config.selector = id;
+                    tinymce.init(cf_config);
+                    //tinymce.execCommand('mceRemoveEditor', false, id);
+                    //tinymce.execCommand('mceAddEditor', true, id);
+                }, 200);
+            });
+        }
 	});
 
 	let $toSlug = document.querySelector('.to-slug');
@@ -3904,32 +3941,22 @@ window.blockEditor = new Vue2({
     },
     methods: {
         dragStart(){
-            console.log('drag.start');
-            /*console.log(this.$root.$refs.editor);
-            this.$root.$refs.editor.forEach( (obj) => {
-                console.log('de-activating', obj);
-                console.log(obj.editor.id);
-                console.log(obj.elementId);
-                obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.elementId);
-            });*/
+            //console.log('drag.start');
         },
         dragEnd(){
-            console.log('drag.end');
-            /*setTimeout( () => {
-                this.$root.$refs.editor.forEach( (obj) => {
-                    console.log('de-activating', obj);
-                    //obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.elementId);
-                    console.log('re-activating', obj);
-                    console.log(obj.editor.id);
-                    console.log(obj.elementId);
-                    let id = ( obj.editor.id === obj.elementId )? obj.editor.id : obj.elementId;
-                    obj.editor.editorManager.EditorManager.execCommand('mceAddEditor', false, id);
-                });
-            }, 100 );*/
+            //console.log('drag.end');
+            let self = this;
+            this.$root.$refs.editor.forEach( (obj) => {
+                obj.editor.editorManager.EditorManager.remove('#'+obj.editor.id);
+                self.tinyInitInlineFreeText.selector = '#'+obj.editor.id;
+                obj.editor.editorManager.EditorManager.init(self.tinyInitInlineFreeText);
 
+                //obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.editor.id);
+                //obj.editor.editorManager.EditorManager.execCommand('mceAddEditor', true, obj.editor.id);
+            });
         },
         dragUpdate(){
-            console.log('drag.updated');
+            //console.log('drag.updated');
         },
         openImageMediaDialog(){
             showMediaDialog('image');
