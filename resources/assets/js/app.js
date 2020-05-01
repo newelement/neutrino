@@ -1566,6 +1566,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		showFMinput(inputId, previewId, 'image', multiple);
 	});
 
+    $('.select-2-dropdown').select2({
+        placeholder: "Select a location",
+        allowClear: true,
+        width: '200px',
+        height: '34px'
+    });
+
 	let $backupEls = document.querySelectorAll('[data-fm-backup]');
 	if( $backupEls ){
 		$backupEls.forEach(function(v){

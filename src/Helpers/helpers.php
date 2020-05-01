@@ -667,20 +667,56 @@ function getSetting($name){
 function getScripts(){
     $bond = app('NeutrinoBond');
     $scripts = $bond->getScripts();
-    echo '<script src="/js/app.js"></script>'."\n";
+    $configScripts = config('neutrino.enqueue_js');
+    $allScripts = [];
+    if (file_exists(public_path('js/app.js'))){
+        $allScripts[] = '/js/app.js';
+    }
+    foreach( $configScripts as $configScript ){
+        $allScripts[] = ltrim($configScript, '/');
+    }
     foreach( $scripts as $script ){
-        echo '<script src="'.$script.'"></script>'."\n";
+        $allScripts[] = $script;
     }
     if( shoppeExists() ){
-        echo '<script src="/vendor/newelement/shoppe/js/shoppe.js"></script>'."\n";
+        $allScripts[] = '/vendor/newelement/shoppe/js/shoppe.js';
     }
+
+    if( getSetting('enable_asset_cache') ){
+
+        $scriptContent = '';
+        foreach ( $allScripts as $scriptFile ) {
+            $scriptContent .= file_get_contents( public_path( $scriptFile ) );
+        }
+
+        //$scriptContent = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $scriptContent);
+        //$scriptContent = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $scriptContent);
+        $exists = \Storage::disk('public')->exists('assets/js/all.js');
+        if( !$exists ){
+            \Storage::disk('public')->put('assets/js/all.js', $scriptContent);
+        }
+        $allScript = \Storage::disk('public')->url('assets/js/all.js');
+        echo  '<script src="'.$allScript.'"></script>'."\n";
+
+    } else {
+        foreach( $allScripts as $script ){
+            echo  '<script src="'.$script.'"></script>'."\n";
+        }
+    }
+
 }
 
 function getStyles(){
     $bond = app('NeutrinoBond');
     $styles = $bond->getStyles();
+    $configStyles = config('neutrino.enqueue_css');
     $allStyles = [];
-    $allStyles[] = 'css/app.css';
+    if (file_exists(public_path('css/app.css'))){
+        $allStyles[] = 'css/app.css';
+    }
+    foreach( $configStyles as $configStyle ){
+        $allStyles[] = ltrim($configStyle, '/');
+    }
     foreach( $styles as $style ){
         $allStyles[] = ltrim($style, '/');
     }

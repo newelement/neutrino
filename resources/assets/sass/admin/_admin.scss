@@ -3215,6 +3215,18 @@ progress[value]::-webkit-progress-bar {
     }
 }
 
+.extra-search{
+    flex-grow: 2;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 6px;
+    justify-content: flex-end;
+
+    .select2-selection--single{
+        height: 34px;
+    }
+}
+
 @import '~flatpickr/dist/themes/dark.css';
 @import '~tabulator-tables/src/scss/tabulator.scss';
 @import '~tabulator-tables/src/scss/tabulator_simple.scss';

@@ -42,7 +42,11 @@ class SettingsController extends Controller
 		$setting = Setting::find($id);
 		$settings = Setting::where('protected', 1)->orderBy('key', 'asc')->get();
 		$csettings = Setting::where('protected', 0)->orderBy('key', 'asc')->get();
-		return view( 'neutrino::admin.settings.index', ['settings' => $settings, 'custom_settings' => $csettings, 'edit_setting' => $setting, 'edit' => true]);
+
+        $sitemapSettings = \DB::table('sitemap')->get();
+        $sitemap_settings = $sitemapSettings[0];
+
+		return view( 'neutrino::admin.settings.index', ['settings' => $settings, 'custom_settings' => $csettings, 'sitemap_settings' => $sitemap_settings, 'edit_setting' => $setting, 'edit' => true]);
 	}
 
 	public function create(Request $request)
