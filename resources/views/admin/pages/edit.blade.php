@@ -45,7 +45,7 @@
                                         <span>@{{ block.title }}</span> <i v-if="block.icon" :class="'fal fa-'+block.icon+' fa-fw'"></i>
                                     </a>
                                 </div>
-                                    <draggable v-if="currentBlocks.length" v-model="currentBlocks" class="blocks-list" group="blocks" handle=".block-drag-handle">
+                                    <draggable v-if="currentBlocks.length" v-model="currentBlocks" ref="dragItem" @end="dragEnd()" @update="dragUpdate()" @start="dragStart()" class="blocks-list" group="blocks" handle=".block-drag-handle">
                                         <div v-if="currentBlocks.length > 0" v-for="(block, blockIndex) in currentBlocks" :key="block.id" class="block-item" v-cloak>
                                             <div class="block-chooser-block">
                                                 <div class="inner">
@@ -71,7 +71,7 @@
                                             </h3>
                                             <div class="block-template" :class="{ grouped: block.group }">
                                                 <tinymce-editor v-if="block.contentEditable && !block.template && block.tag" v-model="block.value" :init="tinyInitInlineParagraph" :tag-name="block.tag"></tinymce-editor>
-                                                <tinymce-editor v-if="block.contentEditable && !block.template && !block.tag" v-model="block.value" :init="tinyInitInlineFreeText"></tinymce-editor>
+                                                <tinymce-editor v-if="block.contentEditable && !block.template && !block.tag" v-model="block.value" ref="editor" :init="tinyInitInlineFreeText"></tinymce-editor>
                                                 <keep-alive>
                                                     <component v-if="!block.contentEditable" :block="block" :block-index="blockIndex" v-bind:is="block.name" />
                                                 </keep-alive>

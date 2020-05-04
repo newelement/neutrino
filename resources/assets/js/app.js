@@ -3951,9 +3951,10 @@ window.blockEditor = new Vue2({
             //console.log('drag.start');
         },
         dragEnd(){
-            //console.log('drag.end');
+            console.log('drag.end');
             let self = this;
             this.$root.$refs.editor.forEach( (obj) => {
+                console.log(obj);
                 obj.editor.editorManager.EditorManager.remove('#'+obj.editor.id);
                 self.tinyInitInlineFreeText.selector = '#'+obj.editor.id;
                 obj.editor.editorManager.EditorManager.init(self.tinyInitInlineFreeText);
