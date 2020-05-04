@@ -2222,8 +2222,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
                         cf_config.selector = id;
                         tinymce.remove(id);
                         tinymce.init(cf_config);
-                        //tinymce.execCommand('mceRemoveEditor', false, id);
-                        //tinymce.execCommand('mceAddEditor', true, id);
+                        //tinymce.execCommand('mceRemoveControl', false, id);
+                        //tinymce.execCommand('mceAddControl', true, id);
                     });
                 }
 			},
@@ -2236,8 +2236,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     cfeditor.forEach( (el) => {
                         let id = '#'+el.id;
                         //tinymce.remove(id);
-                        //tinymce.execCommand('mceRemoveEditor', false, id);
-                        //tinymce.execCommand('mceAddEditor', true, id);
+                        //tinymce.execCommand('mceRemoveControl', false, id);
+                        //tinymce.execCommand('mceAddControl', false, id);
                     });
                 }
 			},

@@ -2,7 +2,6 @@
 namespace Newelement\Neutrino\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Intervention\Image\ImageServiceProviderLaravel5;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 use Newelement\Neutrino\Providers\NeutrinoDummyServiceProvider;
