@@ -3628,7 +3628,37 @@ if( typeof blocks !== 'undefined' ){
                     groupIndex: 0,
                     fieldIndex: 0,
                     valueIndex: 0,
-                    tag: tags
+                    tag: tags,
+                    tinyInitInlineFreeText: {
+                        skin: "oxide-dark",
+                        menubar: false,
+                        toolbar: 'styleselect fontsizeselect | forecolor backcolor | bullist numlist | link | bold italic alignleft aligncenter alignright alignjustify | image | table tabledelete | hr | blockquote | anchor | pastetext',
+                        plugins: [ 'anchor', 'link', 'table', 'lists', 'hr', 'image', 'imagetools', 'paste' ],
+                        fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
+                        hidden_input: false,
+                        style_formats: editorStyles,
+                        inline: false,
+                        contextmenu: "link imagetools styleselect table",
+                        branding: false,
+                        paste_as_text: true,
+                        body_id: 'block-editor-tiny',
+                        content_css : editorCss,
+                        content_css_cors: true,
+                        style_formats_merge: true,
+                        file_picker_callback: function(callback, value, meta) {
+                            //console.log(meta, value);
+                            var type = 'image' === meta.filetype ? 'image' : 'file';
+                            showFMeditor(type, false);
+                            window.addEventListener('message', (event) => {
+                                if( event.data.mceAction === 'insert' ){
+                                    let name = event.data.content.split('/').pop();
+                                    let obj = type === 'image'? { alt: '' } : { text: name } ;
+                                    callback(event.data.content, obj);
+                                }
+                            });
+                        },
+                        quickbars_selection_toolbar: 'bold italic underline bullist numlist | alignleft aligncenter alignright | image quicklink anchor forecolor'
+                    },
                 }),
                 computed: {
 
@@ -3664,7 +3694,32 @@ if( typeof blocks !== 'undefined' ){
                             }
                         });
                         return value;
-                    }
+                    },
+                    dragStart(){
+                        //console.log('drag.start');
+                    },
+                    dragEnd(){
+                        console.log('drag.end');
+                        let self = this;
+                        console.log(this.$root);
+                        let children = this.$root.$refs.dragItem.$children;
+                        children.forEach( (c) => {
+                            //console.log(c);
+                            if( typeof c.$refs.editor !== 'undefined' ){
+                                c.$refs.editor.forEach( (obj) => {
+                                    console.log(obj.editor.id);
+                                    obj.editor.editorManager.EditorManager.remove('#'+obj.editor.id);
+                                    self.tinyInitInlineFreeText.selector = '#'+obj.editor.id;
+                                    obj.editor.editorManager.EditorManager.init(self.tinyInitInlineFreeText);
+
+                                });
+                            }
+                        });
+
+                    },
+                    dragUpdate(){
+                        //console.log('drag.updated');
+                    },
                 }
             });
 
@@ -3844,7 +3899,28 @@ Vue2.component('child-blocks', {
     methods: {
         deleteBlock(block){
             this.field.blocks.splice( this.field.blocks.indexOf(block) , 1);
-        }
+        },
+        dragStart(){
+            //console.log('drag.start');
+        },
+        dragEnd(){
+            console.log('drag.end');
+            let self = this;
+            if( typeof this.$root.$refs.editor !== 'undefined' ){
+                this.$root.$refs.editor.forEach( (obj) => {
+                    console.log(obj);
+                    obj.editor.editorManager.EditorManager.remove('#'+obj.editor.id);
+                    self.tinyInitInlineFreeText.selector = '#'+obj.editor.id;
+                    obj.editor.editorManager.EditorManager.init(self.tinyInitInlineFreeText);
+
+                    //obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.editor.id);
+                    //obj.editor.editorManager.EditorManager.execCommand('mceAddEditor', true, obj.editor.id);
+                });
+            }
+        },
+        dragUpdate(){
+            //console.log('drag.updated');
+        },
     },
     mounted(){
         //console.log('mounted child blocks', this.field);
@@ -3953,15 +4029,17 @@ window.blockEditor = new Vue2({
         dragEnd(){
             console.log('drag.end');
             let self = this;
-            this.$root.$refs.editor.forEach( (obj) => {
-                console.log(obj);
-                obj.editor.editorManager.EditorManager.remove('#'+obj.editor.id);
-                self.tinyInitInlineFreeText.selector = '#'+obj.editor.id;
-                obj.editor.editorManager.EditorManager.init(self.tinyInitInlineFreeText);
+            if( typeof this.$root.$refs.editor !== 'undefined' ){
+                this.$root.$refs.editor.forEach( (obj) => {
+                    console.log(obj);
+                    obj.editor.editorManager.EditorManager.remove('#'+obj.editor.id);
+                    self.tinyInitInlineFreeText.selector = '#'+obj.editor.id;
+                    obj.editor.editorManager.EditorManager.init(self.tinyInitInlineFreeText);
 
-                //obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.editor.id);
-                //obj.editor.editorManager.EditorManager.execCommand('mceAddEditor', true, obj.editor.id);
-            });
+                    //obj.editor.editorManager.EditorManager.execCommand('mceRemoveEditor', false, obj.editor.id);
+                    //obj.editor.editorManager.EditorManager.execCommand('mceAddEditor', true, obj.editor.id);
+                });
+            }
         },
         dragUpdate(){
             //console.log('drag.updated');
