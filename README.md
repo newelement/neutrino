@@ -22,7 +22,7 @@ composer require newelement/neutrino
 
 If you like using Neutrino and would like to show your support, please donate.
 
-[Paypal](https://paypal.me/donjones) [Venmo](https://www.venmo.com/don-jones)
+[Paypal](https://paypal.me/donjones) |  [Venmo](https://www.venmo.com/don-jones)
 
 ## Sponsors
 
