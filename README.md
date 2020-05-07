@@ -2,7 +2,7 @@
 
 Please read documentation at:
 
-[https://neutrinocms.com/docs](https://docs.neutrinocms.com/docs)
+[https://neutrinocms.com/docs](https://neutrinocms.com/docs)
 
 ## Requirements
 
