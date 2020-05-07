@@ -1,4 +1,4 @@
-@extends('neutrino::templates.header-footer')
+@extends('neutrino::layouts.header-footer')
 @section('title', $data->title.' | ')
 @section('meta_keywords', $data->keywords)
 @section('meta_description', $data->meta_description)

@@ -1,4 +1,4 @@
-@extends('neutrino::templates.header-footer')
+@extends('neutrino::layouts.header-footer')
 @section('title', $data->title.' | ')
 @section('meta_keywords', $data->keywords)
 @section('meta_description', $data->meta_description)
@@ -17,9 +17,9 @@ $socialImages = getImageSizes($data->social_image);
     <div class="container">
         <form class="form-signin text-center mt-3 pt-5" method="post" action="{{ route('login') }}">
     	    @csrf
-    	    
+
             <img class="mb-4" src="/vendor/newelement/neutrino/images/neutrino-star.png" alt="Neutrino CMS" width="90" style="height: auto;">
-            
+
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             <label for="email" class="sr-only">Email address</label>
             <input type="email" id="email" class="form-control" name="email" placeholder="Email address" value="{{ old('email') }}" required autofocus>
@@ -37,7 +37,7 @@ $socialImages = getImageSizes($data->social_image);
                 <a class="btn-link" href="/email-reset-password">
 		            Forgot Password
 		        </a>
-            </p>  
+            </p>
         </form>
-    </div>      
+    </div>
 @endsection

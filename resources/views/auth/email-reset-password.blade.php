@@ -1,4 +1,4 @@
-@extends('neutrino::templates.header-footer')
+@extends('neutrino::layouts.header-footer')
 @section('title', $data->title.' | ')
 @section('meta_keywords', $data->keywords)
 @section('meta_description', $data->meta_description)
@@ -15,12 +15,12 @@ $socialImages = getImageSizes($data->social_image);
 
 @section('content')
     <div class="container">
-            
+
 		<form class="form-signin mt-3 mb-5 pt-5" method="post" action="/email-reset-password">
 	        @csrf
-	        
+
 	        <h1 class="h3 mb-3 font-weight-normal">Reset Password</h1>
-	        
+
 	        <p>
     	        Enter your account email address and we will send you a reset password link.
 	        </p>

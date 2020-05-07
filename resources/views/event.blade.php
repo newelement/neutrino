@@ -1,4 +1,4 @@
-@extends('neutrino::templates.header-footer')
+@extends('neutrino::layouts.header-footer')
 @section('title', $data->title.' | ')
 @section('meta_keywords', '')
 @section('meta_description', '')
@@ -15,22 +15,22 @@
 	<h1>{{ $data->title }}</h1>
 
 	<section>
-		
-		<article>			
+
+		<article>
 			<p>
     			{{ $data->start_datetime }}<br>
     			{{ $data->end_datetime }}
 			</p>
-			
+
 			<div>
     			{!! $data->description !!}
 			</div>
-			
+
 			<div>
     			{!! $data->place->location_name !!}
 			</div>
 		</article>
-		
+
 	</section>
 
 

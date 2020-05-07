@@ -3349,21 +3349,72 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     });
 
-    $('.print-shipping-label-btn').click( (e) => {
+    $('.get-shipping-estimate').click( e => {
         e.preventDefault();
-        let id = e.target.getAttribute('data-order-id');
-        HTTP.get('/admin/shipping-label/'+id)
-        .then(response => {
-            if( response.data.success ){
-                $('.print-shipping-label-btn').hide();
-                let html = '<strong>Tracking #:</strong> <a href="'+response.data.tracking_url+'" target="_blank">'+response.data.tracking_number+'</a><br>';
-                html += '<a href="'+response.data.label_url+'" class="view-shipping-label-link" target="_blank"><i class="fal fa-barcode-read"></i>View Shipping Label</a>';
-                $('.tracking-label-info').html(html);
-            }
-        })
-        .catch(e => {
-            console.log('Shipping label error.');
-        });
+        let $estimateLoader = document.querySelector('.estimate-loader');
+
+        let errors = [];
+        let errorMessage = '';
+        let carrier = document.getElementById('carrier').value;
+        let service = document.getElementById('service').value;
+        let parcel = document.getElementById('parcel').value;
+
+        let weight = document.getElementById('weight').value;
+        let width = document.getElementById('width').value;
+        let height = document.getElementById('height').value;
+        let length = document.getElementById('length').value;
+
+        if(weight === ''){
+            errors.push('Please enter a weight.');
+        }
+
+        if(carrier === ''){
+            errors.push('Please choose a carrier.');
+        }
+
+        if(service === ''){
+            errors.push('Please choose a service.');
+        }
+
+        if( width === '' ||  height === '' || length === '' ){
+            errors.push('Please enter dimensions.');
+        }
+
+        if( errors.length ){
+            errors.forEach( (message) => {
+                errorMessage += message+'<br>';
+            });
+            snackbar('error', errorMessage);
+        }
+
+        if( !errors.length ){
+            $estimateLoader.classList.remove('hide');
+            let formData = new FormData;
+            formData.append('weight', weight);
+            formData.append('width', width);
+            formData.append('height', height);
+            formData.append('length', length);
+            formData.append('carrier', carrier);
+            formData.append('service', service);
+            formData.append('parcel', parcel);
+            formData.append('order_id', orderId);
+
+            HTTP.post('/admin/shipping-estimate', formData)
+            .then(response => {
+                if( response.data.success ){
+                    if(response.data.rates.length > 0 ){
+                        document.querySelector('.order-shipping-estimate').innerHTML = '$'+response.data.rates[0].amount;
+                    } else {
+                        document.querySelector('.order-shipping-estimate').innerHTML = 'Could not match shipping service. Make sure you have the chosen carrier enabled in your shipping provider\'s account.';
+                    }
+                }
+                $estimateLoader.classList.add('hide');
+            })
+            .catch(e => {
+                $estimateLoader.classList.add('hide');
+            });
+        }
+
     });
 
     $('.resend-order-receipt').click( el => {
@@ -3964,8 +4015,9 @@ window.blockEditor = new Vue2({
         tinyInitInlineFreeText: {
             skin: "oxide-dark",
             menubar: false,
-            toolbar: 'styleselect fontsizeselect | forecolor backcolor | bullist numlist | link | bold italic alignleft aligncenter alignright alignjustify | image | table tabledelete | hr | blockquote | anchor | pastetext',
-            plugins: [ 'anchor', 'link', 'table', 'lists', 'hr', 'image', 'imagetools', 'paste' ],
+            toolbar: false,
+            //toolbar: 'styleselect fontsizeselect | forecolor backcolor | bullist numlist | link | bold italic alignleft aligncenter alignright alignjustify | image | table tabledelete | hr | blockquote | anchor | pastetext',
+            plugins: [ 'quickbars','anchor', 'link', 'table', 'lists', 'hr', 'image', 'imagetools', 'paste' ],
             fontsize_formats: "8px 10px 12px 14pt 16px 18px 20px 22px 24px 26px 28px 30px 36px",
             hidden_input: false,
             style_formats: editorStyles,
@@ -3989,7 +4041,8 @@ window.blockEditor = new Vue2({
                     }
                 });
             },
-            quickbars_selection_toolbar: 'bold italic underline bullist numlist | alignleft aligncenter alignright | image quicklink anchor forecolor'
+            quickbars_insert_toolbar: 'styleselect bullist numlist image table',
+            quickbars_selection_toolbar: 'styleselect fontsizeselect bold italic underline bullist numlist | alignleft aligncenter alignright | image link anchor pastetext hr blockquote forecolor backcolor'
         },
         tinyInitInlineHeading: {
             skin: "oxide-dark",

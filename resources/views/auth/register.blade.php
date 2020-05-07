@@ -1,4 +1,4 @@
-@extends('neutrino::templates.header-footer')
+@extends('neutrino::layouts.header-footer')
 @section('title', $data->title.' | ')
 @section('meta_keywords', $data->keywords)
 @section('meta_description', $data->meta_description)
@@ -16,7 +16,7 @@ $socialImages = getImageSizes($data->social_image);
 @section('content')
     <div class="container">
 		<form class="form-signin mt-3 mb-5 pt-5" method="post" action="{{ route('register') }}">
-	        @csrf  
+	        @csrf
             <h1 class="h3 mb-3 font-weight-normal">Register</h1>
             <div class="form-group">
 	            <label for="name" class="form-label">Name</label>
@@ -30,7 +30,7 @@ $socialImages = getImageSizes($data->social_image);
 	            <label for="password" class="form-label">Password</label>
                 <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
 	        </div>
-	            
+
             <div class="form-group">
 	            <label for="password-confirm" class="form-label">Confirm Password</label>
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>

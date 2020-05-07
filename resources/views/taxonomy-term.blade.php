@@ -1,4 +1,4 @@
-@extends('neutrino::templates.header-footer')
+@extends('neutrino::layouts.header-footer')
 @section('title', $data->title.' | ')
 @section('meta_keywords', '')
 @section('meta_description', '')
@@ -13,8 +13,8 @@
 @section('content')
 
 	<h1>{{ $data->title }}</h1>
-	
-	@php 
+
+	@php
 	$fields = getCustomFields('taxonomy_'.$data->id);
 	@endphp
 
