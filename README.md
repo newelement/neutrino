@@ -18,15 +18,12 @@ Install package via composer:
 composer require newelement/neutrino
 ```
 
-When composer is finished run the install command:
+## Support
 
-```
-php artisan neutrino:install
-```
+If you like using Neutrino and would like to show your support.
 
-Follow the install prompts.
-
+Support button coming soon...
 
 ## Sponsors
 
-
+[https://xternsoftware.com](https://xternsoftware.com)
