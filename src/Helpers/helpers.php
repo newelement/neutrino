@@ -823,8 +823,18 @@ function hex2rgba($color, $opacity = false) {
 *
 */
 
+/*
+    $arr = [
+        'package_name' => 'My Package Name',
+        'version' => '1.0',
+        'website' => 'https://mypackagewebsite.io',
+        'repo' => 'https://github.com/vendor/package',
+        'image' => 'https://url-to-my-package-image/image.png'
+    ];
+*/
 function registerPackage($arr){
     $bond = app('NeutrinoBond');
+    $bond->registerPackage($arr);
 }
 
 /*
