@@ -816,6 +816,77 @@ function hex2rgba($color, $opacity = false) {
         return $output;
 }
 
+/*
+*
+* BOND HELPERS
+*
+*
+*/
+
+function registerPackage($arr){
+    $bond = app('NeutrinoBond');
+}
+
+/*
+    $menuItems = [
+        [
+            'slot' => 4,
+            'url' => '/admin/locations',
+            'parent_title' => 'Locations',
+            'named_route' => 'neutrino.locations',
+            'fa-icon' => 'fa-map-marked',
+            'children' => [
+                [ 'url' => '/admin/locations', 'title' => 'All Locations' ],
+                [ 'url' => '/admin/location', 'title' => 'Create Location' ],
+            ]
+        ]
+    ];
+*/
+function registerAdminMenus($arr){
+    $bond = app('NeutrinoBond');
+    $bond->registerMenuItems($arr);
+}
+
+/*
+    $styles = [
+        '/vendor/newelement/packagename/css/app.css',
+    ];
+*/
+function registerStyles($arr){
+    $bond = app('NeutrinoBond');
+    $bond->enqueueStyles($arr);
+}
+
+/*
+    $scripts = [
+        '/vendor/newelement/packagename/js/app.js',
+    ];
+*/
+function registerScripts($arr){
+    $bond = app('NeutrinoBond');
+    $bond->enqueueScripts($arr);
+}
+
+function registerAdminStyles($arr){
+    $bond = app('NeutrinoBond');
+    $bond->enqueueStyles($style);
+}
+
+function registerAdminScripts($arr){
+    $bond = app('NeutrinoBond');
+    $bond->enqueueAdminScripts($arr);
+}
+
+/*
+    $arr = [ 'model' => '\\Newelement\\Locations\\Models\\Location', 'key' => 'locations'];
+*/
+function registerSiteMap($arr){
+    $bond = app('NeutrinoBond');
+    $bond->registerSiteMap($arr);
+}
+
+
+
 function trimWords($text, $num_words = 5, $more = '...', $args = [], $remove_breaks = false){
     $text = getContent($args, $text);
     $original_text = $text;
@@ -844,3 +915,4 @@ function trimWords($text, $num_words = 5, $more = '...', $args = [], $remove_bre
 
     return $text;
 }
+
