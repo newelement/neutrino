@@ -66,12 +66,11 @@ class UpdateCommand extends Command
         $this->call('vendor:publish', ['--provider' => "Torann\GeoIP\GeoIPServiceProvider", '--tag' => 'config']);
         $this->call('vendor:publish', ['--provider' => "JamesMills\LaravelTimezone\LaravelTimezoneServiceProvider", '--tag' => 'config']);
 
-        $initData = $this->ask('Do you want to update the Neutrino application views? CAUTION this will overwrite any Neutrino views you may have altered. If you do not update the views you may need to update them manually. See documentation for more info. [Y/N]');
+        $initData = $this->ask('Do you want to update the Neutrino theme views? CAUTION this will overwrite any Neutrino views you may have altered. If you do not update the views you may need to update them manually. See documentation for more info. [Y/N]');
 
         if( $initData === 'y' || $initData === 'Y' ){
             $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'views', '--force' => true ]);
         }
-        $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'adminviews', '--force' => true ]);
 
         $this->info('Updating assets...');
         $this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'public', '--force' => true ]);
@@ -80,6 +79,7 @@ class UpdateCommand extends Command
         \Storage::disk('public')->delete('assets/css/all.css');
         \Storage::disk('public')->delete('assets/js/all.js');
         $this->call('cache:clear');
+        $this->call('view:clear');
 
         $this->info('Successfully updated Neutrino.');
 

@@ -114,7 +114,7 @@ class InstallCommand extends Command
             $this->info('Successfully installed Neutrino. Enjoy!');
         } else {
             $this->info('Successfully installed Neutrino. Enjoy!');
-            $this->info('-> NEXT please run `php artisan neutrino:admin` ONLY IF this is a fresh install.');
+            $this->info('-> To setup an admin run: `php artisan neutrino:admin` ');
         }
 
     }

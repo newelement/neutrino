@@ -51,14 +51,14 @@ class NeutrinoServiceProvider extends ServiceProvider
 	public function boot(Router $router, Dispatcher $event)
 	{
 
-		$viewsDirectory = __DIR__.'/../resources/views';
-        $adminViewsDirectory = __DIR__.'/../resources/views/admin';
+		$viewsDirectory = __DIR__.'/../resources/views/theme';
+        $adminViewsDirectory = __DIR__.'/../resources/views/cms';
 		$publishAssetsDirectory = __DIR__.'/../publishable/assets';
 
         $this->loadViewsFrom($viewsDirectory, 'neutrino');
+        $this->loadViewsFrom($adminViewsDirectory, 'neutrino');
 
 		$this->publishes([$viewsDirectory => base_path('resources/views/vendor/neutrino')], 'views');
-        $this->publishes([$adminViewsDirectory => base_path('resources/views/vendor/neutrino/admin')], 'adminviews');
 		$this->publishes([ $publishAssetsDirectory => public_path('vendor/newelement/neutrino') ], 'public');
         $router->aliasMiddleware('admin.user', NeutrinoAdminMiddleware::class);
 		$this->loadTranslationsFrom(realpath(__DIR__.'/../publishable/lang'), 'neutrino');
@@ -116,14 +116,14 @@ class NeutrinoServiceProvider extends ServiceProvider
 
     private function initActions()
     {
-        Eventy::addAction('neutrino.admin.menu', function($json) {
+        /*Eventy::addAction('neutrino.admin.menu', function($json) {
 
             $menuItems = config('neutrino.admin_menu_items', [] );
             $newMenuItems = json_decode($json, true);
             $items = array_push($menuItems, $newMenuItems);
             config(['neutrino.admin_menu_items' => $items]);
 
-        }, 5, 1);
+        }, 5, 1);*/
     }
 
 }
