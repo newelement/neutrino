@@ -19,6 +19,7 @@ use Newelement\Neutrino\Models\Form;
 use Newelement\Neutrino\Models\FormField;
 use Newelement\Neutrino\Http\Controllers\ContentController;
 use Newelement\Neutrino\Http\Controllers\BlocksController;
+use TorMorten\Eventy\Facades\Events as Eventy;
 
 function states(){
     $states	= array(
@@ -255,6 +256,8 @@ function getContent($args = [], $content = false){
     }
 
     $content = html_entity_decode($content);
+
+    $content = Eventy::filter('content', $content);
 
     return $content;
 }
@@ -826,11 +829,21 @@ function hex2rgba($color, $opacity = false) {
 /*
     $arr = [
         'package_name' => 'My Package Name',
-        'version' => '1.0',
+        'version' => 1.0,
         'website' => 'https://mypackagewebsite.io',
         'repo' => 'https://github.com/vendor/package',
         'image' => 'https://url-to-my-package-image/image.png'
     ];
+
+    Highly encouraged to create a .bond file. This will allow neutrino to check for version updates.
+
+    .bond file -
+
+    {
+        package_name: 'My Package Name',
+        version: 1.0
+    }
+
 */
 function registerPackage($arr){
     $bond = app('NeutrinoBond');

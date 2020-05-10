@@ -63,8 +63,6 @@ class UpdateCommand extends Command
         //$this->info('Merging config...');
         //$this->call('vendor:publish', ['--provider' => 'Newelement\Neutrino\NeutrinoServiceProvider', '--tag' => 'config']);
 
-        $this->call('vendor:publish', ['--provider' => "Torann\GeoIP\GeoIPServiceProvider", '--tag' => 'config']);
-        $this->call('vendor:publish', ['--provider' => "JamesMills\LaravelTimezone\LaravelTimezoneServiceProvider", '--tag' => 'config']);
 
         $initData = $this->ask('Do you want to update the Neutrino theme views? CAUTION this will overwrite any Neutrino views you may have altered. If you do not update the views you may need to update them manually. See documentation for more info. [Y/N]');
 
