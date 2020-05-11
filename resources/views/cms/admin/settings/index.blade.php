@@ -5,6 +5,14 @@
 		<div class="content">
 			<h2>Settings</h2>
 
+            @if( $health['update_available'] )
+            <div class="alert alert-info">
+                <p>
+                An update is available for Neutrino. {{ $health['update_message'] }}
+                </p>
+            </div>
+            @endif
+
 			<ul class="tabs smaller" style="margin-bottom: 12px; border-bottom: 1px solid #444444">
 				<li>
 					<a class="active" href="#settings">Settings</a>

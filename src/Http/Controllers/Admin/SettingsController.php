@@ -36,7 +36,8 @@ class SettingsController extends Controller
             'edit_setting' => $setting,
             'sitemap_settings' => $sitemap_settings,
             'health' => $health,
-            'edit' => false]);
+            'edit' => false
+        ]);
 	}
 
 	public function get($id)
@@ -44,11 +45,19 @@ class SettingsController extends Controller
 		$setting = Setting::find($id);
 		$settings = Setting::where('protected', 1)->orderBy('key', 'asc')->get();
 		$csettings = Setting::where('protected', 0)->orderBy('key', 'asc')->get();
+        $health = $this->checkHealth();
 
         $sitemapSettings = \DB::table('sitemap')->get();
         $sitemap_settings = $sitemapSettings[0];
 
-		return view( 'neutrino::admin.settings.index', ['settings' => $settings, 'custom_settings' => $csettings, 'sitemap_settings' => $sitemap_settings, 'edit_setting' => $setting, 'edit' => true]);
+		return view( 'neutrino::admin.settings.index', [
+            'settings' => $settings,
+            'custom_settings' => $csettings,
+            'sitemap_settings' => $sitemap_settings,
+            'edit_setting' => $setting,
+            'health' => $health,
+            'edit' => true
+        ]);
 	}
 
 	public function create(Request $request)
@@ -246,15 +255,76 @@ class SettingsController extends Controller
 
     private function checkHealth()
     {
-        //try{
+        $thisVersion = [
+                'major' => 0,
+                'minor' => 0,
+                'patch' => 0
+            ];
+
+        $latestVersion = [
+                'major' => 0,
+                'minor' => 0,
+                'patch' => 0
+            ];
+
+        $releaseNotes = '';
+        $update_message = '';
+        $update = false;
+
+        try{
             $thisBond = file_get_contents(base_path('vendor/newelement/neutrino/').'bond.json');
             $latestBond = file_get_contents('https://raw.githubusercontent.com/newelement/neutrino/master/bond.json');
 
-            dd(json_decode($thisBond));
+            $thisBondJson = json_decode($thisBond);
+            $versionString = $thisBondJson->version;
+            $versionSplit = explode('.', $versionString);
+            $major = (int) $versionSplit[0];
+            $minor = (int) $versionSplit[1];
+            $patch = (int) $versionSplit[2];
 
-        //} catch( \Exception $e ) {
-            // void
-        //}
+            $latestBondJson = json_decode($latestBond);
+            $latestVersionString = $latestBondJson->version;
+            $latestVersionSplit = explode('.', $latestVersionString);
+            $latestMajor = (int) $latestVersionSplit[0];
+            $latestMinor = (int) $latestVersionSplit[1];
+            $latestPatch = (int) $latestVersionSplit[2];
+
+            $thisVersion = [
+                'major' => $major,
+                'minor' => $minor,
+                'patch' => $patch
+            ];
+
+            $latestVersion = [
+                'major' => $latestMajor,
+                'minor' => $latestMinor,
+                'patch' => $latestPatch
+            ];
+
+            if( $latestPatch > $patch && $latestMinor === $minor ){
+                $update_message = 'Patch, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
+                $update = true;
+            }
+
+            if( $latestMinor > $minor && $latestMajor === $major ){
+                $update_message = 'Minor version, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
+                $update = true;
+            }
+
+            if( $latestMajor > $major ){
+                $update_message = 'Major version, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
+                $update = true;
+            }
+
+        } catch( \Exception $e ) {}
+
+        return [
+            'this_version' => $thisVersion,
+            'latest_version' => $latestVersion,
+            'update_available' => $update,
+            'update_message' => $update_message,
+            'release_notes' => $releaseNotes
+        ];
 
     }
 
