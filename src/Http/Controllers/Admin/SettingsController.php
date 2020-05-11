@@ -17,6 +17,7 @@ class SettingsController extends Controller
 	{
 		$settings = Setting::where('protected', 1)->orderBy('key', 'asc')->get();
 		$csettings = Setting::where('protected', 0)->orderBy('key', 'asc')->get();
+        $health = $this->checkHealth();
 
         $sitemapSettings = \DB::table('sitemap')->get();
         $sitemap_settings = $sitemapSettings[0];
@@ -34,6 +35,7 @@ class SettingsController extends Controller
             'custom_settings' => $csettings,
             'edit_setting' => $setting,
             'sitemap_settings' => $sitemap_settings,
+            'health' => $health,
             'edit' => false]);
 	}
 
@@ -240,6 +242,20 @@ class SettingsController extends Controller
         ];
 
         return response()->json($arr);
+    }
+
+    private function checkHealth()
+    {
+        //try{
+            $thisBond = file_get_contents(base_path('vendor/newelement/neutrino/').'bond.json');
+            $latestBond = file_get_contents('https://raw.githubusercontent.com/newelement/neutrino/master/bond.json');
+
+            dd(json_decode($thisBond));
+
+        //} catch( \Exception $e ) {
+            // void
+        //}
+
     }
 
 }
