@@ -8,12 +8,15 @@ import PaceProgressBar from 'pace-progressbar';
 import datepicker from 'js-datepicker'
 import flatpickr from "flatpickr";
 import moment from 'moment';
+import { Notyf } from 'notyf';
 import Choices from 'choices.js'
 import Tabulator from 'tabulator-tables';
 import 'pace-progressbar/themes/blue/pace-theme-minimal.css';
 import axios from 'axios';
+const notyf = new Notyf();
 
 window.moment = moment;
+window.notyf = notyf;
 window.select2 = select2;
 
 import tinymce from 'tinymce';
@@ -1477,7 +1480,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 	let dashboard = document.querySelector('.dashboard');
 	if(dashboard){
-
+        //notyf.error('Please fill out the form');
 	}
 
     if( typeof editorCss !== 'undefined' && cfeditor.length ){
