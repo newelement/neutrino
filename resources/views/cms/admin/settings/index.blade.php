@@ -145,7 +145,7 @@
 
                     <p>
                     Current Version: {{ $health['this_version']['major'].'.'.$health['this_version']['minor'].'.'.$health['this_version']['patch'] }}<br>
-                    Latest Version {{$health['latest_version']['major'].'.'.$health['latest_version']['minor'].'.'.$health['latest_version']['patch'] }} {{ $health['update_available']? ' - <strong>Update available</strong>' : ' - Up to date' }}
+                    Latest Version {{$health['latest_version']['major'].'.'.$health['latest_version']['minor'].'.'.$health['latest_version']['patch'] }} - <strong>{{ $health['update_available']? 'Update available' : 'Up to date' }}</strong>
                     </p>
 
                     @if( $packages )
