@@ -38,7 +38,7 @@ class SitemapController extends Controller
     public function update(Request $request)
     {
         $validatedData = $request->validate([
-            'cache_houra' => 'required',
+            'cache_hours' => 'required',
             'page_default_change' => 'required',
             'page_default_priority' => 'required',
             'entry_default_change' => 'required',
