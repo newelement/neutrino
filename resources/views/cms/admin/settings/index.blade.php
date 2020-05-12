@@ -174,8 +174,13 @@
                                     @if( isset($package['website']) && strlen($package['website']) )
                                     <a href="{{$package['website']}}" target="_blank">Website</a>
                                     @endif
+
+                                    @if( isset($package['website']) && strlen($package['website']) && isset($package['repo']) && strlen($package['repo']) )
+                                    <span> | </span>
+                                    @endif
+
                                     @if( isset($package['repo']) && strlen($package['repo']) )
-                                    <a href="{{$package['repo']}}" target="_blank">Repo</a>
+                                    <a href="{{$package['repo']}}" target="_blank"><i class="fab fa-github"></i></a>
                                     @endif
                                 </div>
                             </div>

@@ -3269,6 +3269,22 @@ progress[value]::-webkit-progress-bar {
         a{
             text-decoration: none;
             color: #5874d6;
+            transition: color .25s ease;
+
+            &:hover{
+                color: #888;
+            }
+        }
+
+        i{
+            font-size: 18px;
+            vertical-align: text-bottom;
+        }
+
+        span{
+            display: inline-block;
+            margin: 0 3px;
+            color: #888;
         }
     }
 }
