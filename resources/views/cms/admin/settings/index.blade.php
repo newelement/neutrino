@@ -6,7 +6,7 @@
 			<h2>Settings</h2>
 
             @if( $health['update_available'] )
-            <div class="alert alert-info">
+            <div class="alert alert-info" style="margin-bottom: 24px;">
                 <p>
                 An update is available for Neutrino. {{ $health['update_message'] }}
                 </p>
@@ -29,6 +29,9 @@
 				<li>
 					<a href="#cache">Cache</a>
 				</li>
+                <li>
+                    <a href="#info">Info</a>
+                </li>
 			</ul>
 
 			<div class="tabs-container">
@@ -137,6 +140,52 @@
                     </p>
 
 				</div>
+
+                <div id="info" class="tab-content" style="padding-top: 24px;">
+
+                    <p>
+                    Current Version: {{ $health['this_version']['major'].'.'.$health['this_version']['minor'].'.'.$health['this_version']['patch'] }}<br>
+                    Latest Version {{$health['latest_version']['major'].'.'.$health['latest_version']['minor'].'.'.$health['latest_version']['patch'] }} {{ $health['update_available']? ' - <strong>Update available</strong>' : ' - Up to date' }}
+                    </p>
+
+                    @if( $packages )
+                    <h3 style="margin-bottom: 6px;">Neutrino Packages</h3>
+
+                    <ul class="installed-neutrino-packages-list">
+                    @foreach( $packages as $package )
+                        @if( isset( $package['package_name'] ) )
+                        <li>
+                            @if( isset( $package['image'] ) && strlen($package['image']) )
+                            <div class="package-image">
+                                <img src="{{ $package['image'] }}" style="max-width: 100px; height: auto;" alt="{{ $package['package_name'] }}">
+                            </div>
+                            @endif
+                            <div class="package-info">
+                                <div class="package-name">
+                                    {{ $package['package_name'] }}
+                                    @if( isset($package['version']) ) <span class="package-version">v {{$package['version']}}</span>@endif
+                                </div>
+                                @if( isset($package['description']) && strlen($package['description']) )
+                                    <div class="package-description">
+                                    {{$package['description']}}
+                                    </div>
+                                @endif
+                                <div class="package-meta">
+                                    @if( isset($package['website']) && strlen($package['website']) )
+                                    <a href="{{$package['website']}}" target="_blank">Website</a>
+                                    @endif
+                                    @if( isset($package['repo']) && strlen($package['repo']) )
+                                    <a href="{{$package['repo']}}" target="_blank">Repo</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+                    @endforeach
+                    </ul>
+                    @endif
+
+                </div>
 
 
                 <div id="sitemap" class="tab-content" style="padding-top: 24px;">

@@ -83,6 +83,10 @@
 	margin: 0 auto;
 	font-weight: 700;
 
+    p:last-of-type{
+        margin: 0;
+    }
+
 	&.alert-danger{
 		background-color: darken(red, 15%);
 		font-weight: 700;
@@ -93,6 +97,11 @@
 		background-color: lighten(green, 5%);
 		color: #fff;
 	}
+
+    &.alert-info{
+        background-color: #E8EDFF;
+        color: darken(#E8EDFF, 30%);
+    }
 
 	ul{
 		display: block;

@@ -18,6 +18,7 @@ class SettingsController extends Controller
 		$settings = Setting::where('protected', 1)->orderBy('key', 'asc')->get();
 		$csettings = Setting::where('protected', 0)->orderBy('key', 'asc')->get();
         $health = $this->checkHealth();
+        $packages = $this->getPackages();
 
         $sitemapSettings = \DB::table('sitemap')->get();
         $sitemap_settings = $sitemapSettings[0];
@@ -36,6 +37,7 @@ class SettingsController extends Controller
             'edit_setting' => $setting,
             'sitemap_settings' => $sitemap_settings,
             'health' => $health,
+            'packages' => $packages,
             'edit' => false
         ]);
 	}
@@ -46,6 +48,7 @@ class SettingsController extends Controller
 		$settings = Setting::where('protected', 1)->orderBy('key', 'asc')->get();
 		$csettings = Setting::where('protected', 0)->orderBy('key', 'asc')->get();
         $health = $this->checkHealth();
+        $packages = $this->getPackages();
 
         $sitemapSettings = \DB::table('sitemap')->get();
         $sitemap_settings = $sitemapSettings[0];
@@ -56,6 +59,7 @@ class SettingsController extends Controller
             'sitemap_settings' => $sitemap_settings,
             'edit_setting' => $setting,
             'health' => $health,
+            'packages' => $packages,
             'edit' => true
         ]);
 	}
@@ -253,6 +257,14 @@ class SettingsController extends Controller
         return response()->json($arr);
     }
 
+    private function getPackages()
+    {
+        $bond = app('NeutrinoBond');
+        $packages = $bond->getPackages();
+
+        return $packages;
+    }
+
     private function checkHealth()
     {
         $thisVersion = [
@@ -302,17 +314,17 @@ class SettingsController extends Controller
             ];
 
             if( $latestPatch > $patch && $latestMinor === $minor ){
-                $update_message = 'Patch, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
+                $update_message = ' Patch, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
                 $update = true;
             }
 
             if( $latestMinor > $minor && $latestMajor === $major ){
-                $update_message = 'Minor version, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
+                $update_message = ' Minor version, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
                 $update = true;
             }
 
             if( $latestMajor > $major ){
-                $update_message = 'Major version, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
+                $update_message = ' Major version, '.$latestVersionString.' is available. Your current version is: '.$versionString .'.';
                 $update = true;
             }
 

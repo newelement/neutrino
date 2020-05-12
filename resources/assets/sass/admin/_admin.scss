@@ -3228,6 +3228,51 @@ progress[value]::-webkit-progress-bar {
     }
 }
 
+.installed-neutrino-packages-list{
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li{
+        display: flex;
+        flex-direction: row;
+        background-color: #f3f3f3;
+        padding: 12px;
+        margin-bottom: 6px;
+    }
+
+    .package-image{
+        flex-grow: 1;
+        padding-right: 18px;
+    }
+    .package-info{
+        flex-grow: 2;
+    }
+    .package-name{
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .package-version{
+        display: inline-block;
+        margin-left: 12px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #888;
+    }
+    .package-description{
+        font-size: 16px;
+    }
+    .package-meta{
+        font-size: 14px;
+        a{
+            text-decoration: none;
+            color: #5874d6;
+        }
+    }
+}
+
 @import '~flatpickr/dist/themes/dark.css';
 @import '~tabulator-tables/src/scss/tabulator.scss';
 @import '~tabulator-tables/src/scss/tabulator_simple.scss';
