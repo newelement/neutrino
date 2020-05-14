@@ -150,7 +150,6 @@ class PageController extends Controller
         $page->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$page->protected = $request->protected ? implode(',',$request->protected) : '';
 
-        $page->lb_content = $request->laraberg_content;
         $page->save();
 
 		if( $request->featured_image ){
@@ -275,8 +274,6 @@ class PageController extends Controller
         $page->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
         $page->template = $request->template? $request->template : null;
 		$page->protected = $request->protected ? implode(',',$request->protected) : '';
-
-        $page->lb_content = $request->laraberg_content;
 
 		$page->save();
 
