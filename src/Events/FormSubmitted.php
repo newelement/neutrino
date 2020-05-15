@@ -3,7 +3,7 @@ namespace Newelement\Neutrino\Events;
 use Illuminate\Queue\SerializesModels;
 use Newelement\Neutrino\Models\Form;
 
-class CommentAdded
+class FormSubmitted
 {
     use SerializesModels;
 
