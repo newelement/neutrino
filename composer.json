@@ -22,6 +22,7 @@
 		"newelement/searchable": "1.*",
 		"league/flysystem-aws-s3-v3": "^1.0",
         "newelement/laravel-calendar-event": "0.2.*",
+        "spatie/laravel-honeypot": "^2.2",
 		"arrilot/laravel-widgets": "^3.13.0",
 		"tormjens/eventy": "^0.6",
         "kyslik/column-sortable": "^6.3"
