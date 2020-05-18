@@ -1,11 +1,13 @@
 <?php
+use Spatie\Honeypot\ProtectAgainstSpam;
+
 $namespacePrefix = '\\'.config('neutrino.controllers.namespace').'\\';
 
 Route::get('/', $namespacePrefix.'ContentController@guessContent');
 
-Route::post('/neutrino-form', $namespacePrefix.'ContentController@submitForm');
-Route::post('/neutrino-comment', $namespacePrefix.'ContentController@submitComment');
-Route::post('/neutrino-comment-vote', $namespacePrefix.'ContentController@submitCommentVote');
+Route::post('/neutrino-form', $namespacePrefix.'ContentController@submitForm')->middleware(ProtectAgainstSpam::class);
+Route::post('/neutrino-comment', $namespacePrefix.'ContentController@submitComment')->middleware(ProtectAgainstSpam::class);
+Route::post('/neutrino-comment-vote', $namespacePrefix.'ContentController@submitCommentVote')->middleware(ProtectAgainstSpam::class);
 
 Route::get('email-reset-password', $namespacePrefix.'NeutrinoAuthController@getEmailResetPassword');
 Route::post('email-reset-password', $namespacePrefix.'NeutrinoAuthController@emailResetPassword');

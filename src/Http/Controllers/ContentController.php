@@ -609,6 +609,9 @@ class ContentController extends Controller
 	public function submitForm(Request $request)
 	{
 		$form = Form::find($request->id);
+        if( !$form ){
+            abort(404);
+        }
 		$fields = $form->fields()->get();
 		foreach( $fields as $field ){
 			if( $field->required ){
