@@ -8,9 +8,11 @@ class FormSubmitted
     use SerializesModels;
 
 	public $form;
+    public $data;
 
-    public function __construct(Form $form)
+    public function __construct(Form $form, $data)
     {
         $this->form = $form;
+        $this->data = $data;
     }
 }

@@ -625,7 +625,7 @@ class ContentController extends Controller
 
 		$validatedData = $request->validate($validate);
 
-		event(new FormSubmitted($form));
+		event(new FormSubmitted($form, $data));
 
 		return redirect()->back()->with('success', 'Thank you. Your form has been submitted.');
 	}
