@@ -609,7 +609,7 @@ class ContentController extends Controller
 	public function submitForm(Request $request)
 	{
 		$form = Form::find($request->id);
-		$fields = $form->fields();
+		$fields = $form->fields()->get();
 		foreach( $fields as $field ){
 			if( $field->required ){
 				$max = '';
