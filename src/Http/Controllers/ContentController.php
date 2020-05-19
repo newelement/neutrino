@@ -194,10 +194,12 @@ class ContentController extends Controller
                             ->orderBy($entryOrderBy, $entrySort)
                             ->paginate( $entryTypePageLimit );
 
-			$data->entries = $targetObject;
-			$data->title = pluralTitle($entryType->slug);
-			$data->data_type = 'entry_archive';
-			$blade = $this->bladeVendor.'entry-archive';
+            $data = $entryType;
+            $data->featuredImage = getImageSizes($entryType->featured_image);
+            $data->entries = $targetObject;
+            $data->title = pluralTitle($entryType->slug);
+            $data->data_type = 'entry_archive';
+            $blade = $this->bladeVendor.'entry-archive';
 
 			$bladeType = $blade.'-'.$entryType->slug;
 

@@ -21,4 +21,9 @@ class EntryType extends Model
 			'created_at',
 			'updated_at'
 		];
+
+    public function featuredImage()
+    {
+        return $this->hasOne('\Newelement\Neutrino\Models\ObjectMedia', 'object_id', 'id')->where(['object_type' => 'entry_type', 'featured' => 1]);
+    }
 }
