@@ -11,14 +11,6 @@ trait Assets
     public $enqueueAdminCSS = [];
 
     public function __construct() {
-        $js = config('neutrino.enqueue_js', []);
-        $css = config('neutrino.enqueue_css', []);
-        $adminJs = config('neutrino.enqueue_admin_js', []);
-        $adminCss = config('neutrino.enqueue_admin_css', []);
-        $this->enqueueJS = $js;
-        $this->enqueueCSS = $css;
-        $this->enqueueAdminJS = $adminJs;
-        $this->enqueueAdminCSS = $adminCss;
     }
 
     public function enqueueScripts($scripts)
@@ -51,22 +43,30 @@ trait Assets
 
     public function getScripts()
     {
-        return $this->enqueueJS;
+        $js = config('neutrino.enqueue_js', []);
+        $all = array_merge($this->enqueueJS, $js);
+        return $all;
     }
 
     public function getAdminScripts()
     {
-        return $this->enqueueAdminJS;
+        $adminJs = config('neutrino.enqueue_admin_js', []);
+        $all = array_merge($this->enqueueAdminJS, $adminJs);
+        return $all;
     }
 
     public function getStyles()
     {
-        return $this->enqueueCSS;
+        $css = config('neutrino.enqueue_css', []);
+        $all = array_merge($this->enqueueCSS, $css);
+        return $all;
     }
 
     public function getAdminStyles()
     {
-        return $this->enqueueAdminCSS;
+        $adminCss = config('neutrino.enqueue_admin_css', []);
+        $all = array_merge($this->enqueueAdminCSS, $adminCss);
+        return $all;
     }
 
 }

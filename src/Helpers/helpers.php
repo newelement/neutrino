@@ -753,15 +753,17 @@ function getStyles(){
 }
 
 function getAdminScripts(){
-    $scripts = config('neutrino.enqueue_admin_js', []);
-    foreach( $scripts as $script ){
+    $bond = app('NeutrinoBond');
+    $adminScripts = $bond->getAdminScripts();
+    foreach( $adminScripts as $script ){
         echo '<script src="'.$script.'"></script>'."\n";
     }
 }
 
 function getAdminStyles(){
-    $styles = config('neutrino.enqueue_admin_css', []);
-    foreach( $styles as $style ){
+    $bond = app('NeutrinoBond');
+    $adminStyles = $bond->getAdminStyles();
+    foreach( $adminStyles as $style ){
         echo '<link href="'.$style.'" rel="stylesheet">'."\n";
     }
 }
@@ -892,7 +894,7 @@ function registerScripts($arr){
 
 function registerAdminStyles($arr){
     $bond = app('NeutrinoBond');
-    $bond->enqueueStyles($style);
+    $bond->enqueueAdminStyles($arr);
 }
 
 function registerAdminScripts($arr){
