@@ -30,6 +30,7 @@
 					<select class="rule-category-select">
 						<option value="">Show on &hellip;</option>
 						<option value="entries">Entries</option>
+                        <option value="entry_type">Entry Type</option>
 						<option value="pages">Pages</option>
 						<option value="taxonomy">Taxonomy</option>
 						@if( shoppeExists() )

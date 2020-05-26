@@ -164,6 +164,28 @@
                         </div>
                     </div>
 
+                    @foreach( $field_groups as $group )
+                    <h2 class="cf-group-title">{{ $group->title }}</h2>
+                        @if( $group->description )
+                            <p>{{ $group->description }}</p>
+                        @endif
+
+                        @if( !$edit )
+
+                            @foreach( $group->fields as $field )
+                                {!! _generateField($field) !!}
+                            @endforeach
+
+                        @else
+
+                            @foreach( $group->fields as $field )
+                                {!! _generateField($field, 'entry_type', $edit_entry_type->id) !!}
+                            @endforeach
+
+                        @endif
+
+                    @endforeach
+
 					@if( !$edit )
 					<button type="submit" class="btn full">Create Entry Type</button>
 					@else

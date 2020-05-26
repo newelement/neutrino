@@ -18,6 +18,9 @@ const notyf = new Notyf();
 window.moment = moment;
 window.notyf = notyf;
 window.select2 = select2;
+window.datepicker = datepicker;
+window.sortable = Sortable;
+window.axios = axios;
 
 import tinymce from 'tinymce';
 import 'tinymce/themes/silver';
@@ -631,7 +634,7 @@ function initRepeaterSorter(repeater){
 		easing: "cubic-bezier(1, 0, 0, 1)",
 		animation: 150,
 		onEnd: function (e) {
-			updateGroupFieldsSort();
+			//updateGroupFieldsSort();
 		},
 		onAdd: function (e) {
 			//console.log('ADD',e);
@@ -2743,6 +2746,32 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 			}
 
+            if( data.id === 'entry_type' ){
+
+                $('.rule-category-type-select').prop("disabled", false);
+                var newOption = new Option('Choose entry type', '', false, false);
+                $('.rule-category-type-select').prepend(newOption).trigger('change');
+
+                var newOption = new Option('All', '*', false, false);
+                $('.rule-category-type-select').append(newOption).trigger('change');
+
+                HTTP.get('/admin/custom-fields/entry-types')
+                .then(response => {
+                    response.data.entry_types.forEach(function(v){
+                        var newOption = new Option(v.entry_type, v.slug, false, false);
+                        $('.rule-category-type-select').append(newOption).trigger('change');
+                    });
+                })
+                .catch(e => {
+                    console.log('entry types error');
+                });
+
+                var newOption = new Option('Skip this step', '', false, false);
+                $('.rule-category-specific-select').empty();
+                $('.rule-category-specific-select').prepend(newOption).trigger('change');
+                $('.rule-category-specific-select').prop("disabled", true);
+            }
+
 			if( data.id === 'taxonomy' ){
 				$('.rule-category-type-select').prop("disabled", false);
 				var newOption = new Option('Choose taxonomy type', '', false, false);
@@ -2852,6 +2881,15 @@ window.addEventListener('DOMContentLoaded', (e) => {
 			if( ruleCategory === 'pages' ){
 
 			}
+
+            if( ruleCategory === 'entry_type' ){
+
+                var newOption = new Option('Skip this step', '', false, false);
+                $('.rule-category-specific-select').empty();
+                $('.rule-category-specific-select').prepend(newOption).trigger('change');
+                $('.rule-category-specific-select').prop("disabled", true);
+
+            }
 
 			if( ruleCategory === 'taxonomy' ){
 
@@ -3431,6 +3469,19 @@ window.addEventListener('DOMContentLoaded', (e) => {
         });
     });
 
+    $('input[name="amount_type"]').change(function(){
+        if( $(this).val() === 'DOLLAR' ){
+            $('#amount-row').removeClass('hide');
+            $('#percent-row').addClass('hide');
+        } else if( $(this).val() === 'PERCENT'  ) {
+            $('#amount-row').addClass('hide');
+            $('#percent-row').removeClass('hide');
+        } else {
+            $('#amount-row').addClass('hide');
+            $('#percent-row').addClass('hide');
+        }
+    });
+
     $('.view-payment-details-btn').click( (e) => {
         e.preventDefault();
     });
@@ -3624,12 +3675,17 @@ window.addEventListener('DOMContentLoaded', (e) => {
         profitEndDate.getRange();
     }
 
+    let $datePickers = document.querySelector('.expires-date');
+    if( $datePickers ){
+        const myPicker = datepicker('.expires-date', {id: 99});
+    }
+
     if($clearDatetimePicker.length){
         $clearDatetimePicker.forEach( (el) => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
                 let pickerId = e.target.getAttribute('data-date-picker');
-                let dPicker = document.querySelector('[data-date-picker="'+pickerId+'"]');
+                let dPicker = document.querySelector('#'+pickerId);
                 dPicker.value = '';
             });
         });

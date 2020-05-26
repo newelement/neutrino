@@ -60,7 +60,12 @@ class EntryController extends Controller
 		$fieldGroups = $this->getFieldGroups('entries', $entry->entry_type, $id);
 		$backups = Backup::where(['object_id' => $id, 'object_type' => $entry->entry_type])->orderBy('updated_at', 'desc')->get();
 		$roles = Role::orderBy('display_name', 'asc')->get();
-		return view( 'neutrino::admin.entries.edit' , [ 'entry' => $entry, 'terms' => $terms, 'field_groups' => $fieldGroups, 'backups' => $backups, 'roles' => $roles ]);
+		return view( 'neutrino::admin.entries.edit' , [
+            'entry' => $entry, 'terms' => $terms,
+            'field_groups' => $fieldGroups,
+            'backups' => $backups,
+            'roles' => $roles
+        ]);
 	}
 
 	public function create(Request $request)
@@ -401,7 +406,14 @@ class EntryController extends Controller
         $edit_entry_type->sitemap_change = '';
         $edit_entry_type->sitemap_priority = 0.5;
 
-		return view('neutrino::admin.entry-types.index', ['entry_types' => $entryTypes, 'edit_entry_type' => $edit_entry_type, 'edit' => false]);
+        $fieldGroups = $this->getFieldGroups('entry_type');
+
+		return view('neutrino::admin.entry-types.index', [
+            'entry_types' => $entryTypes,
+            'edit_entry_type' => $edit_entry_type,
+            'field_groups' => $fieldGroups,
+            'edit' => false
+        ]);
 	}
 
 	public function createEntryType(Request $request)
@@ -425,6 +437,12 @@ class EntryController extends Controller
         $entryType->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$entryType->save();
 
+        // Custom Fields
+        $customFields = $request->cfs;
+        if( $customFields ){
+            $this->parseCustomFields($customFields, $entryType->id, 'entry_type');
+        }
+
         ActivityLog::insert([
                 'activity_package' => 'neutrino',
                 'activity_group' => 'entrytype.create',
@@ -444,7 +462,14 @@ class EntryController extends Controller
 		$entryTypes = EntryType::orderBy('entry_type', 'asc')->paginate(15);
 		$edit_entry_type = EntryType::find($id);
 
-		return view('neutrino::admin.entry-types.index', ['entry_types' => $entryTypes, 'edit_entry_type' => $edit_entry_type, 'edit' => true]);
+        $fieldGroups = $this->getFieldGroups('entry_type', $edit_entry_type->slug);
+
+		return view('neutrino::admin.entry-types.index', [
+            'entry_types' => $entryTypes,
+            'edit_entry_type' => $edit_entry_type,
+            'field_groups' => $fieldGroups,
+            'edit' => true
+        ]);
 	}
 
 	public function updateEntryType(Request $request, $id)
@@ -466,6 +491,12 @@ class EntryController extends Controller
         $entryType->sitemap_change = $request->sitemap_change;
         $entryType->sitemap_priority = $request->sitemap_priority? $request->sitemap_priority : 0.5;
 		$entryType->save();
+
+        // Custom Fields
+        $customFields = $request->cfs;
+        if( $customFields ){
+            $this->parseCustomFields($customFields, $entryType->id, 'entry_type');
+        }
 
         ActivityLog::insert([
                 'activity_package' => 'neutrino',

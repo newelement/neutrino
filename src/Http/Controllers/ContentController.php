@@ -195,6 +195,8 @@ class ContentController extends Controller
                             ->paginate( $entryTypePageLimit );
 
             $data = $entryType;
+            $CFields = getCustomFields('entry_type_'.$entryType->id);
+            $data->custom_fields = $CFields;
             $data->featuredImage = getImageSizes($entryType->featured_image);
             $data->entries = $targetObject;
             $data->title = pluralTitle($entryType->slug);
