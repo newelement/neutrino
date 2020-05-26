@@ -68,6 +68,12 @@ trait CustomFields
 
 					break;
 
+                    case 'textarea' :
+
+                        $this->_createUpdateFieldObjectData($key, $fieldName, $objectId, $value, $objectType, $object, 'textarea');
+
+                    break;
+
 					case 'checkbox' :
 
 						$this->_createUpdateFieldObjectData($key, $fieldName, $objectId, $value, $objectType, $object, 'text');
