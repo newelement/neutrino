@@ -452,6 +452,11 @@ function _compileFields($object, $key = false, $term = false, $repeater = false,
 		$id = (int) $parts[1];
 	}
 
+    if(isset($parts[2])){
+        $type = $parts[0].'_'.$parts[1];
+        $id = (int) $parts[2];
+    }
+
 	$where = [
 		['object_id', '=', $id],
 		['object_type', '=', $type]
