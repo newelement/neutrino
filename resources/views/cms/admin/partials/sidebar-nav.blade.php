@@ -159,6 +159,7 @@
                 <li><a href="/admin/subscriptions">Subscriptions</a>
                 <li><a href="/admin/subscription-plans">Subscription Plans</a>
                 <li><a href="/admin/stripe/tax-rates">Subscription Tax Rates</a>
+                <li><a href="/admin/discount-codes">Discount Codes</a>
                 <li><a href="/admin/shoppe-reports">Reports</a></li>
     		    <li><a href="/admin/shoppe-settings">Shoppe Settings</a></li>
 		    </ul>
