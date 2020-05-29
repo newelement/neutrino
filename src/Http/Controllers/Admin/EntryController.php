@@ -47,7 +47,7 @@ class EntryController extends Controller
 
 	public function getCreate()
 	{
-		$fieldGroups = $this->getFieldGroups('entries');
+		$fieldGroups = $this->getFieldGroups('entries', request('entry_type'));
 		$roles = Role::orderBy('display_name', 'asc')->get();
 		return view( 'neutrino::admin.entries.create', ['field_groups' => $fieldGroups, 'roles' => $roles]);
 	}

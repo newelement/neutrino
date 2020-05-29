@@ -8,7 +8,7 @@
 		<div class="container">
 			<div class="content">
 
-				<h2>Edit {{ ucwords(str_replace('-', '',request('entry_type'))) }} <a class="headline-btn" href="/admin/entry?entry_type={{ $entry->entry_type }}" role="button">Create {{ ucwords(request('entry_type')) }} </a></h2>
+				<h2>Edit {{ ucwords(str_replace('-', ' ',request('entry_type'))) }} Entry <a class="headline-btn" href="/admin/entry?entry_type={{ $entry->entry_type }}" role="button">Create {{ ucwords(str_replace('-', ' ',request('entry_type'))) }} Entry</a></h2>
 
 					@method('PUT')
 					@csrf

@@ -7,7 +7,7 @@
 
 			<div class="content">
 
-				<h2>Create {{ ucwords(str_replace('-','',request('entry_type'))) }}</h2>
+				<h2>Create {{ ucwords(str_replace('-',' ',request('entry_type'))) }} Entry</h2>
 
 					@csrf
 					<div class="form-row">

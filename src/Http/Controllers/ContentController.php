@@ -611,28 +611,30 @@ class ContentController extends Controller
 	}
 
 	public function submitForm(Request $request)
-	{
-		$form = Form::find($request->id);
+    {
+        $form = Form::where('id', $request->id)->orWhere('id', $request->form_id)->first();
         if( !$form ){
             abort(404);
         }
-		$fields = $form->fields()->get();
-		foreach( $fields as $field ){
-			if( $field->required ){
-				$max = '';
-				if( $field->max_length ){
-					$max = '|max:'.$field->max_length;
-				}
-				$validate[$field->field_name] = 'required'.$max;
-			}
-		}
+        $fields = $form->fields()->get();
+        foreach( $fields as $field ){
+            if( $field->required ){
+                $max = '';
+                if( $field->max_length ){
+                    $max = '|max:'.$field->max_length;
+                }
+                $validate[$field->field_name] = 'required'.$max;
+            }
+        }
 
-		$validatedData = $request->validate($validate);
+        $data = $request->all();
 
-		event(new FormSubmitted($form, $data));
+        $validatedData = $request->validate($validate);
 
-		return redirect()->back()->with('success', 'Thank you. Your form has been submitted.');
-	}
+        event(new FormSubmitted($form, $data));
+
+        return redirect()->back()->with('success', 'Thank you. Your form has been submitted.');
+    }
 
 	public function submitComment(Request $request)
 	{
