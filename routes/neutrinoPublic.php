@@ -18,6 +18,7 @@ Route::get('register', $namespacePrefix.'NeutrinoAuthController@getRegister')->n
 Route::post('register', $namespacePrefix.'NeutrinoRegisterController@create')->name('register');
 
 Route::get('sitemap', $namespacePrefix.'Admin\SitemapController@generate')->name('sitemap');
+Route::get('sitemap.xml', $namespacePrefix.'Admin\SitemapController@generate')->name('sitemap');
 
 Route::get('/{any}', $namespacePrefix.'ContentController@guessContent')->where('any', '.*'); // Yeah seriously
 Route::group(['prefix' => 'api', 'middleware' => ['api']], function () use ( $namespacePrefix ) {
