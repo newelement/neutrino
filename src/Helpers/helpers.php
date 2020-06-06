@@ -308,10 +308,30 @@ function getFormHTML($id, $args = []){
     	return '';
 	}
 
+    $honeypotConfig = config('honeypot');
+    $nameFieldName = $honeypotConfig['name_field_name'];
+    $randomNameFieldName = $honeypotConfig['randomize_name_field_name'];
+    $enabled = $honeypotConfig['enabled'];
+    $validFromFieldName = $honeypotConfig['valid_from_field_name'];
+    $validFrom = now()->addSeconds($honeypotConfig['amount_of_seconds']);
+
+    $encryptedValidFrom = Spatie\Honeypot\EncryptedTime::create($validFrom);
+
+    if ($randomNameFieldName) {
+        $nameFieldName = sprintf('%s_%s', $nameFieldName, \Str::random());
+    }
+
 	$html = '';
 
 	$html .= '<form class="form" action="/neutrino-form" method="post">';
 	    $html .= csrf_field();
+        if($enabled){
+            $html .= '
+            <div id="'.$nameFieldName.'_wrap" style="display:none;">
+            <input name="'.$nameFieldName.'" type="text" value="" id="'.$nameFieldName.'">
+            <input name="'.$validFromFieldName.'" type="text" value="'.$encryptedValidFrom.'">
+            </div>';
+        }
 	    $html .= isset( $args['show_title']) && !$args['show_title']? '' : '<h2 class="form-title">'.$form['title'].'</h2>';
 	    $html .= '<input type="hidden" name="form_id" value="'.$form['id'].'">';
 
