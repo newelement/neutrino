@@ -105,8 +105,9 @@ class GalleryController extends Controller
         $updates = [];
         $i = 0;
         foreach( $images as $key => $image ){
+            $id = !is_numeric($key)? 0 : $key;
             $updated = GalleryImage::updateOrCreate(
-                [ 'id' => $key, 'gallery_id' => $gallery->id ], [
+                [ 'id' => $id, 'gallery_id' => $gallery->id ], [
                     'gallery_id' => $gallery->id,
                     'image_path' => $images[$key]['image'],
                     'title' => $images[$key]['title'],
