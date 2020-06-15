@@ -137,7 +137,7 @@ class MediaController extends Controller
                 }
 
                 if( !$this->imageType( $mimeType ) ){
-                    Storage::disk($this->disk)->put($path, $file, 'public');
+                    Storage::disk($this->disk)->put($path.$imageName, $file, 'public');
                   } else {
 
                     try{
