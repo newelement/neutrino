@@ -7,12 +7,14 @@ class FormSubmitted
 {
     use SerializesModels;
 
-	public $form;
+    public $form;
     public $data;
+    public $files;
 
-    public function __construct(Form $form, $data)
+    public function __construct(Form $form, $data, $files)
     {
         $this->form = $form;
         $this->data = $data;
+        $this->files = $files;
     }
 }

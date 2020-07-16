@@ -616,22 +616,53 @@ class ContentController extends Controller
         if( !$form ){
             abort(404);
         }
+        $validate = [];
+
         $fields = $form->fields()->get();
+
         foreach( $fields as $field ){
+            $max = '';
             if( $field->required ){
-                $max = '';
                 if( $field->max_length ){
                     $max = '|max:'.$field->max_length;
                 }
+                if( $field->field_type === 'file' || $field->field_type === 'image' ){
+                    $max = '|max:10240';
+                }
                 $validate[$field->field_name] = 'required'.$max;
+            } else {
+
+                if( $field->field_type === 'file' ){
+                    $max = 'file|max:10240';
+                    $validate[$field->field_name] = $max;
+                }
+
+                if( $field->field_type === 'image' ){
+                    $max = 'image|max:10240';
+                    $validate[$field->field_name] = $max;
+                }
             }
+
         }
 
         $data = $request->all();
 
+        $files = [];
+
+        foreach( $data as $key => $input ){
+
+            if( $request->hasFile($key) ){
+                $files[] = [
+                    'path' => $request->file($key)->getRealPath(),
+                    'as' => $request->file($key)->getClientOriginalName(),
+                    'mime' => $request->file($key)->getClientMimeType()
+                ];
+            }
+        }
+
         $validatedData = $request->validate($validate);
 
-        event(new FormSubmitted($form, $data));
+        event(new FormSubmitted($form, $data, $files));
 
         return redirect()->back()->with('success', 'Thank you. Your form has been submitted.');
     }
