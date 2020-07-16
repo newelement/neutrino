@@ -630,17 +630,16 @@ class ContentController extends Controller
                     $max = '|max:10240';
                 }
                 $validate[$field->field_name] = 'required'.$max;
-            } else {
+            }
 
-                if( $field->field_type === 'file' ){
-                    $max = 'file|max:10240';
-                    $validate[$field->field_name] = $max;
-                }
+            if( $field->field_type === 'file' ){
+                $max = 'file|max:10240';
+                $validate[$field->field_name] = $max;
+            }
 
-                if( $field->field_type === 'image' ){
-                    $max = 'image|max:10240';
-                    $validate[$field->field_name] = $max;
-                }
+            if( $field->field_type === 'image' ){
+                $max = 'image|max:10240';
+                $validate[$field->field_name] = $max;
             }
 
         }
