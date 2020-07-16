@@ -119,6 +119,24 @@
         }
     }
 
+    .hero-block{
+        padding: 56px 60px;
+        background-color: #f3f3f3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
+
+    .divider-block{
+        padding: 24px 60px;
+        background-color: #f3f3f3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
+
 }
 
 .mce-content-body{

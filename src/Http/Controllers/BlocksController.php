@@ -138,6 +138,32 @@ class BlocksController extends Controller
         return  $html;
     }
 
+    public function heroTemplate($blockData)
+    {
+        $html = view('neutrino::blocks.hero.template', [ 'data' => $blockData ])->render();
+        return  $html;
+    }
+
+    public function heroCompiler($json)
+    {
+        $json->options_assoc = $this->convertToAssoc($json->options);
+        $html = view('neutrino::blocks.hero.compiled', [ 'data' => $json ])->render();
+        return  $html;
+    }
+
+    public function dividerTemplate($blockData)
+    {
+        $html = view('neutrino::blocks.dividers.template', [ 'data' => $blockData ])->render();
+        return  $html;
+    }
+
+    public function dividerCompiler($json)
+    {
+        $json->options_assoc = $this->convertToAssoc($json->options);
+        $html = view('neutrino::blocks.dividers.compiled', [ 'data' => $json ])->render();
+        return  $html;
+    }
+
     private function convertToAssoc($options)
     {
         $optionsAssoc = [];

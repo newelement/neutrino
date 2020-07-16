@@ -313,5 +313,108 @@ return [
                 [ 'type' => 'text', 'name' => 'zoom', 'label' => 'Zoom (0-20)', 'value' => '12' ],
             ]
         ],
+        [
+            'name' => 'hero',
+            'title' => 'Hero',
+            'icon' => 'rectangle-wide',
+            'tag' => false,
+            'contentEditable' => false,
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@heroTemplate',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@heroCompiler',
+            'fields' => [
+                ['name' => 'link' , 'value' => '', 'placeholder' => 'Hero Link (optional)', 'allow_blocks' => false] ,
+                ['name' => 'content', 'value' => '', 'placeholder' => 'Hero content (optional)', 'allow_blocks' => false] ,
+                ['name' => 'image', 'value' => '', 'placeholder' => 'Hero Image', 'allow_blocks' => false ]
+            ],
+            'value' => '',
+            'blocks' => [],
+            'group' => false,
+            'show_align_options' => true,
+            'full_width' => true,
+            'options' => [
+                [ 'type' => 'checkbox', 'name' => 'full_width', 'label' => 'Full width (outside container)', 'value' => '1' ],
+                [ 'type' => 'text', 'name' => 'height', 'label' => 'Height', 'value' => '500px' ],
+                [ 'type' => 'text', 'name' => 'width', 'label' => 'Width', 'value' => '100%' ],
+                [ 'type' => 'dropdown', 'name' => 'background_size' , 'label' => 'Background Size', 'value' => 'cover', 'options' => [
+                    ['label' => 'Cover', 'value' => 'cover'],
+                    ['label' => 'Contain', 'value' => 'contain'],
+                    ['label' => '100%', 'value' => '100%'],
+                    ['label' => '80%', 'value' => '80%'],
+                    ['label' => '60%', 'value' => '60%'],
+                    ['label' => '50%', 'value' => '50%']
+                ]
+            ],
+            [ 'type' => 'dropdown', 'name' => 'background_position' , 'label' => 'Background Position', 'value' => 'center center', 'options' => [
+                ['label' => 'center center', 'value' => 'center center'],
+                ['label' => 'center right', 'value' => 'center right'],
+                ['label' => 'center left', 'value' => 'center left'],
+                ['label' => 'top center', 'value' => 'top center'],
+                ['label' => 'top right', 'value' => 'top right'],
+                ['label' => 'top left', 'value' => 'top left'],
+                ['label' => 'bottom center', 'value' => 'bottom center'],
+                ['label' => 'bottom right', 'value' => 'bottom right'],
+                ['label' => 'bottom left', 'value' => 'bottom left']
+            ]
+        ],
+        [ 'type' => 'dropdown', 'name' => 'content_position' , 'label' => 'Content Position', 'value' => 'center', 'options' => [
+                    ['label' => 'Center', 'value' => 'center'],
+                    ['label' => 'Left', 'value' => 'left'],
+                    ['label' => 'Right', 'value' => 'right']
+                ]
+            ],
+            [ 'type' => 'color', 'name' => 'content_background_color', 'label' => 'Content Background Color', 'value' => '' ],
+            [ 'type' => 'text', 'name' => 'content_background_opacity', 'label' => 'Content Background Opacity (0-1)', 'value' => '.25' ],
+        ]
+        ],
+
+
+        [
+            'name' => 'divider',
+            'title' => 'Dividers',
+            'icon' => 'horizontal-rule',
+            'tag' => false,
+            'contentEditable' => false,
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@dividerTemplate',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@dividerCompiler',
+            'fields' => [
+                ['name' => 'link' , 'value' => '', 'placeholder' => 'Hero Link (optional)', 'allow_blocks' => false] ,
+                ['name' => 'content', 'value' => '', 'placeholder' => 'Hero content (optional)', 'allow_blocks' => false] ,
+                ['name' => 'image', 'value' => '', 'placeholder' => 'Divider Image', 'allow_blocks' => false ]
+            ],
+            'value' => '',
+            'blocks' => [],
+            'group' => false,
+            'show_align_options' => true,
+            'full_width' => true,
+            'options' => [
+                [ 'type' => 'checkbox', 'name' => 'full_width', 'label' => 'Full width (outside container)', 'value' => '1' ],
+                [ 'type' => 'text', 'name' => 'height', 'label' => 'Height', 'value' => '24px' ],
+                [ 'type' => 'text', 'name' => 'width', 'label' => 'Width', 'value' => '100%' ],
+                [ 'type' => 'dropdown', 'name' => 'background_size' , 'label' => 'Background Size', 'value' => 'cover', 'options' => [
+                    ['label' => 'Cover', 'value' => 'cover'],
+                    ['label' => 'Contain', 'value' => 'contain'],
+                    ['label' => '100%', 'value' => '100%'],
+                    ['label' => '80%', 'value' => '80%'],
+                    ['label' => '60%', 'value' => '60%'],
+                    ['label' => '50%', 'value' => '50%']
+                ]
+            ],
+            [ 'type' => 'dropdown', 'name' => 'background_position' , 'label' => 'Background Position', 'value' => 'center center', 'options' => [
+                ['label' => 'center center', 'value' => 'center center'],
+                ['label' => 'center right', 'value' => 'center right'],
+                ['label' => 'center left', 'value' => 'center left'],
+                ['label' => 'top center', 'value' => 'top center'],
+                ['label' => 'top right', 'value' => 'top right'],
+                ['label' => 'top left', 'value' => 'top left'],
+                ['label' => 'bottom center', 'value' => 'bottom center'],
+                ['label' => 'bottom right', 'value' => 'bottom right'],
+                ['label' => 'bottom left', 'value' => 'bottom left']
+            ]
+        ],
+
+        [ 'type' => 'color', 'name' => 'background_color', 'label' => 'Divider Background Color', 'value' => '' ]
+
+        ]
+        ],
     ],
 ];
