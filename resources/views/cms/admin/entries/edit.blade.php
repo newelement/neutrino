@@ -114,6 +114,13 @@
 
                     <h3 class="cf-group-title">SEO</h3>
 
+                    <div class="form-row">
+                        <label class="label-col" for="seo-title">SEO Title</label>
+                        <div class="input-col">
+                            <input id="seo-title" type="text" name="seo_title" value="{{ old('seo_title', $entry->seo_title) }}">
+                        </div>
+                    </div>
+
 					<div class="form-row">
 						<label class="label-col" for="keywords">Keywords</label>
 						<div class="input-col">

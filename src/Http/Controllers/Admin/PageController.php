@@ -142,6 +142,7 @@ class PageController extends Controller
 		$page->parent_id = $request->parent_id? $request->parent_id : 0;
 		$page->keywords = $request->keywords;
 		$page->meta_description = $request->meta_description;
+        $page->seo_title = $request->seo_title;
 		$page->status = $request->status? $request->status : 'P';
         $page->editor_type = $request->editor_type? $request->editor_type : 'B';
         $page->template = $request->template? $request->template : null;
@@ -267,6 +268,7 @@ class PageController extends Controller
 		$page->parent_id = $request->parent_id? $request->parent_id : 0 ;
 		$page->keywords = $request->keywords ;
 		$page->meta_description = $request->meta_description ;
+        $page->seo_title = $request->seo_title;
 		$page->status = $request->status? $request->status : 'P' ;
         $page->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$page->social_image = $request->social_image;
