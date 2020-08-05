@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
     		Route::get('/pages-trash', $namespacePrefix.'Admin\PageController@getTrash')->name('trash');
     		Route::get('/pages/recover/{id}', $namespacePrefix.'Admin\PageController@recover')->name('recover');
     		Route::get('/pages/destroy/{id}', $namespacePrefix.'Admin\PageController@destroy')->name('destroy');
+            Route::get('/pages-duplicate/{page}', $namespacePrefix.'Admin\PageController@duplicate')->name('duplicate');
 
         });
 

@@ -2,10 +2,16 @@
     <td data-label="Title">
         <div class="object-edit-wrapper">
             <a href="/admin/page/{{ $page->id }}">{{ $page->title }}</a>
-            @if( $page->system_page )
-            <br>
-            <span class="system-page">system page</span>
-            @endif
+            <div class="list-item-actions">
+                <div class="inner">
+                    <small>
+                        @if( $page->system_page )
+                        <span class="system-page">system page</span>
+                        @endif &nbsp;
+                        <a href="/admin/pages-duplicate/{{ $page->id }}">Duplicate</a>
+                    </small>
+                </div>
+            </div>
             <div class="object-editing {{ $page->editing && $page->editing->object_id === $page->id? '' : 'hide' }}" data-editing-object-type="page" data-editing-object-id="{{ $page->id }}">
                 @if( $page->editing && $page->editing->object_id === $page->id )
                 {{ $page->editing->user->name }} is currently editing.

@@ -759,6 +759,31 @@ h2, h3{
 
 }
 
+.table tbody tr td{
+
+    .list-item-actions{
+        height: 18px;
+        small { font-size: 90%; }
+        a{
+            display: none;
+            font-weight: normal;
+            color: #4290a9;
+            font-size: 100%;
+        }
+    }
+
+}
+
+.table tbody tr:hover td{
+
+    .list-item-actions{
+        a{
+            display: inline-block;
+        }
+    }
+
+}
+
 .system-page{
     display: inline-block;
     font-size: 13px;

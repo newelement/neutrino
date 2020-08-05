@@ -389,4 +389,45 @@ class PageController extends Controller
 		return redirect('/admin/pages-trash')->with('success', 'Page destroyed.');
 	}
 
+    public function duplicate(Request $request, Page $page)
+    {
+
+        $pageDup = new Page;
+        $pageDup->title = $page->title;
+        $pageDup->slug = toSlug($page->slug, 'pages');
+        $pageDup->content = $page->content;
+        $pageDup->block_content = $page->block_content;
+        $pageDup->short_content = $page->short_content;
+        $pageDup->parent_id = $page->parent_id;
+        $pageDup->keywords = $page->keywords ;
+        $pageDup->meta_description = $page->meta_description ;
+        $pageDup->status = $page->status;
+        $pageDup->editor_type = $page->editor_type ;
+        $pageDup->social_image = $page->social_image;
+        $pageDup->sitemap_change = $page->sitemap_change;
+        $pageDup->sitemap_priority = $page->sitemap_priority;
+        $pageDup->template = $page->template;
+        $pageDup->protected = $page->protected;
+        $pageDup->save();
+
+        $id = $pageDup->id;
+
+        // Custom Fields
+
+
+        ActivityLog::insert([
+            'activity_package' => 'harmony',
+            'activity_group' => 'page.duplicated',
+            'object_type' => 'page',
+            'object_id' => $id,
+            'content' => 'Page duplicated',
+            'log_level' => 0,
+            'created_by' => auth()->user()->id,
+            'created_at' => now()
+        ]);
+
+        return redirect('/admin/page/'.$id)->with('success', 'Page duplicated.');
+
+    }
+
 }
