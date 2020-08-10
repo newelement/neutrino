@@ -175,4 +175,14 @@ class FormController extends Controller
 
 		return response()->json(['success' => true]);
 	}
+
+    public function getSubmissions(Request $request, $id)
+    {
+        $form = Form::findOrFail($id);
+
+        $data = $form;
+        $data->submissions = $form->submissions()->paginate(30);
+
+        return view('neutrino::admin.forms.submissions', ['data' => $data]);
+    }
 }

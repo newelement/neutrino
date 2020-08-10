@@ -155,6 +155,7 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::get('/forms/{id}/fields',  $namespacePrefix.'Admin\FormController@getCreateFields')->name('forms');
 		Route::post('/forms/{id}/fields',  $namespacePrefix.'Admin\FormController@createFields');
 		Route::post('/form-fields/{id}/sort', $namespacePrefix.'Admin\FormController@createFields');
+        Route::get('/forms/{id}/submissions', $namespacePrefix.'Admin\FormController@getSubmissions');
 
 		Route::get('/cache/clear/{type}', $namespacePrefix.'Admin\SettingsController@cacheClear');
         Route::get('/cache/clear-asset-cache', $namespacePrefix.'Admin\SettingsController@clearAssetCache');

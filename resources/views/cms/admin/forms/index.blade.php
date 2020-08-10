@@ -11,6 +11,7 @@
 						<th class="text-left">Title</th>
 						<th class="text-center">Form ID</th>
 						<th class="text-center">Shortcode</th>
+                        <th class="text-center">Submissions</th>
 						<th width="120">Edit Fields</th>
 						<th width="100"></th>
 					</tr>
@@ -23,6 +24,7 @@
 						</td>
 						<td data-label="Form ID" class="text-center">{{ $form->id }}</td>
 						<td data-label="Shortcode" class="text-center">[form id='{{ $form->id }}' show_title='true']</td>
+                        <td class="text-center" data-label="Submissions"><a href="/admin/forms/{{$form->id}}/submissions">Submissions</a></td>
 						<td data-label="Edit" class="text-center">
 							<a href="/admin/forms/{{ $form->id }}/fields">Edit Fields</a>
 						</td>

@@ -13,6 +13,7 @@ use Newelement\Neutrino\Models\EventSlug;
 use Newelement\Neutrino\Models\Place;
 use Newelement\Neutrino\Models\Role;
 use Newelement\Neutrino\Models\Form;
+use Newelement\Neutrino\Models\FormSubmission;
 use Newelement\Neutrino\Models\TaxonomyType;
 use Newelement\Neutrino\Models\Taxonomy;
 use Newelement\Neutrino\Models\CfGroups;
@@ -654,7 +655,8 @@ class ContentController extends Controller
                 $files[] = [
                     'path' => $request->file($key)->getRealPath(),
                     'as' => $request->file($key)->getClientOriginalName(),
-                    'mime' => $request->file($key)->getClientMimeType()
+                    'mime' => $request->file($key)->getClientMimeType(),
+                    'url' => $request->file($key)->store('form_files', config('neutrino.storage.filesystem') )
                 ];
             }
         }
@@ -663,7 +665,14 @@ class ContentController extends Controller
 
         event(new FormSubmitted($form, $data, $files));
 
+        $this->saveFormData($form, $data, $files);
+
         return redirect()->back()->with('success', 'Thank you. Your form has been submitted.');
+    }
+
+    private function saveFormData($form, $data, $files)
+    {
+
     }
 
 	public function submitComment(Request $request)

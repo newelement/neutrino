@@ -16,4 +16,9 @@ class Form extends Model
 		return $this->hasMany('\Newelement\Neutrino\Models\FormField')->orderBy('sort', 'asc');
 	}
 
+    public function submissions()
+    {
+        return $this->hasMany('\Newelement\Neutrino\Models\FormSubmission')->orderBy('created_at', 'desc');
+    }
+
 }
