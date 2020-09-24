@@ -32,11 +32,11 @@ class RolesController extends Controller
 	public function create(Request $request)
 	{
 		$validatedData = $request->validate([
-	   		'name' => 'required|unique:roles,key|max:255',
+	   		'name' => 'required|unique:roles,name|max:255',
 	   		'display_name' => 'required',
    		]);
 
-		$setting= new Role;
+		$role = new Role;
 		$role->name = $this->parseKey($request->name);
     	$role->display_name = $request->display_name;
 		$role->save();

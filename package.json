@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.2.0",
-    "bootstrap-icons": "^1.0.0-alpha3",
+    "bootstrap-icons": "^1.0.0",
     "choices.js": "^9.0.1",
     "dropzone": "^5.7.0",
     "flatpickr": "^4.6.3",
