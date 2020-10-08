@@ -24,6 +24,7 @@ class BlocksController extends Controller
             $newBlock['id'] = uniqid();
             $newBlock['value'] = '';
             $newBlock['group'] = isset($block['group'])? $block['group'] : false;
+            $newBlock['columns'] = isset($block['columns'])? $block['columns'] : false;
             $newBlock['name'] = isset($block['name'])? $block['name'] : false;
             $newBlock['title'] = isset($block['title'])? $block['title'] : false;
             $newBlock['icon'] = isset($block['icon'])? $block['icon'] : false;
@@ -161,6 +162,19 @@ class BlocksController extends Controller
     {
         $json->options_assoc = $this->convertToAssoc($json->options);
         $html = view('neutrino::blocks.dividers.compiled', [ 'data' => $json ])->render();
+        return  $html;
+    }
+
+    public function columnsTemplate($blockData)
+    {
+        $html = view('neutrino::blocks.columns.template', [ 'data' => $blockData ])->render();
+        return  $html;
+    }
+
+    public function columnsCompiler($json)
+    {
+        $json->options_assoc = $this->convertToAssoc($json->options);
+        $html = view('neutrino::blocks.columns.compiled', [ 'data' => $json ])->render();
         return  $html;
     }
 

@@ -122,7 +122,7 @@ class EntryController extends Controller
         $entry->publish_date = $publishDate;
         $entry->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$entry->keywords = $request->keywords ;
-		$entry->meta_description = $request->meta_description ;
+		$entry->meta_description = $request->meta_desc ;
         $entry->seo_title = $request->seo_title;
 		$entry->entry_type = $request->entry_type? $request->entry_type : 'entry';
         $entry->template = $request->template? $request->template : null;
@@ -294,7 +294,7 @@ class EntryController extends Controller
         $entry->publish_date = $publishDate;
         $entry->editor_type = $request->editor_type? $request->editor_type : 'B' ;
 		$entry->keywords = $request->keywords ;
-		$entry->meta_description = $request->meta_description ;
+		$entry->meta_description = $request->meta_desc ;
         $entry->seo_title = $request->seo_title;
 		$entry->entry_type = $request->entry_type;
         $entry->template = $request->template? $request->template : null;

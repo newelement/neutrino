@@ -3965,6 +3965,34 @@ Vue2.component('block-item-actions', {
                 </div>`
 });
 
+Vue2.component('block-columns', {
+    props: [ 'block', 'blockItem', 'blockIndex' ],
+    mixins: [ clickaway ],
+    data: () => ({
+
+    }),
+    methods: {
+        removeColumn(i){
+            this.blockItem.columns.splice( i, 1 );
+        },
+        away(){
+            //this.blockItem.showBlockItemOptions = false;
+        }
+    },
+    mounted(){
+    },
+    template: `<div>
+                    <div class="" >
+                        <div class="row">
+                            <div v-for="( col, colIndex ) in blockItem.columns" class="col-sm block-column">
+                                <a href="#" class="remove-block-column" role="button" @click.prevent="removeColumn(colIndex)">&times;</a>
+                            </div>
+                        </div>
+                    </div>
+               </div>`
+});
+
+
 Vue2.component('child-block-chooser', {
     props: [ 'field' ],
     mixins: [ clickaway ],
