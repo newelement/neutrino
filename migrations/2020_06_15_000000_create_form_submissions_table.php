@@ -13,7 +13,7 @@ class CreateFormSubmissionsTable extends Migration
     */
     public function up()
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('form_submissions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('form_id');
             $table->json('fields')->nullable();
