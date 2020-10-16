@@ -36,7 +36,8 @@ return [
     'protected_route' => 'login',
 
     'storage' => [
-        'filesystem' => 'public'
+        'filesystem' => 'public',
+        'filesyste_private' => 'local'
     ],
 
     // Enqueue scripts and css files. Files should be in the public folder.

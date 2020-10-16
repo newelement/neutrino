@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Newelement\Neutrino\Facades\Neutrino;
 use Newelement\Neutrino\Models\Form;
 use Newelement\Neutrino\Models\FormField;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class FormController extends Controller
 {
@@ -33,6 +35,7 @@ class FormController extends Controller
 		$form = new Form;
 		$form->title = $request->title;
 		$form->slug = $request->slug;
+        $form->private = $request->boolean('private');
 		$form->content = $request->content;
 		$form->subject = $request->subject;
 		$form->email_to = $request->email_to;
@@ -66,6 +69,7 @@ class FormController extends Controller
 		$form = Form::find($id);
 		$form->title = $request->title;
 		$form->slug = $request->slug;
+        $form->private = $request->boolean('private');
 		$form->content = $request->content;
 		$form->subject = $request->subject;
 		$form->email_to = $request->email_to;
@@ -184,5 +188,14 @@ class FormController extends Controller
         $data->submissions = $form->submissions()->paginate(30);
 
         return view('neutrino::admin.forms.submissions', ['data' => $data]);
+    }
+
+    public function getPrivateFile(Request $request)
+    {
+        $fileName = $request->file;
+
+        $file = base_path().'/storage/app/'.$fileName;
+
+        return response()->download($file);
     }
 }

@@ -8,7 +8,6 @@
         <table cellpadding="0" cellspacing="0" class="table">
             <thead>
                 <tr>
-                    <th class="text-left" width="300">Title</th>
                     <th class="text-left">Data</th>
                     <th width="180">Submitted On</th>
                 </tr>
@@ -16,24 +15,35 @@
             <tbody>
                 @foreach( $data->submissions as $submission )
                 <tr>
-                    <td data-label="Title">
-                        <a href="/admin/forms/{{ $data->id }}">{{ $data->title }}</a>
-                    </td>
                     <td data-label="Data" class="text-left">
                         @php
-                        $fields = json_decode( $submission->fields );
-                        $files = json_decode( $submission->files );
+                        $fields = json_decode( $submission->fields, true );
+                        $files = json_decode( $submission->files, true );
+                        unset($fields['_token']);
+                        unset($fields['form_id']);
+                        unset($fields['valid_from']);
+                        foreach($fields as $key => $value){
+                            if (strpos($key, 'my_name_') === 0){
+                              unset($fields[$key]);
+                            }
+                        }
+
                         @endphp
-                        <p>
+                        <p style="margin-bottom: 0;">
                             <small>
                                 @foreach( $fields as $key => $value )
-                                {{ $key }}: {{ $value }} <br>
+                                {{ $key }}: @if( !is_array( $value) ) {{ $value }} @endif<br>
                                 @endforeach
                             </small>
                         </p>
                         <small>
                             @foreach( (array) $files as $file )
-                            <a href="{{ $file->url }}">{{ $file->as }}</a><br>
+                                @if( $data->private )
+                                <a href="/admin/private-file?file={{ $file['url'] }}">{{ $file['as'] }}</a><br>
+                                @else
+                                <a href="{{ $file['url'] }}">{{ $file['as'] }}</a><br>
+                                @endif
+
                             @endforeach
                         </small>
                     </td>

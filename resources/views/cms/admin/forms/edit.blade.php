@@ -28,6 +28,16 @@
 				</div>
 			</div>
 
+            <div class="form-row">
+                <div class="label-col">Private</div>
+                <div class="input-col has-checkbox">
+                    <label><input id="private" type="checkbox" name="private" {{ $form->private? 'checked="checked"' : '' }}> <span>Yes</span></label>
+                </div>
+                <div class="input-notes">
+                    <span class="note">Private forms will not submit data to users. Only site admins.</span>
+                </div>
+            </div>
+
 			<div class="form-row">
 				<label class="label-col" for="subject">Email Subject</label>
 				<div class="input-col">

@@ -26,6 +26,7 @@ use Newelement\Neutrino\Models\ObjectMedia;
 use Newelement\Neutrino\Models\ObjectTerm;
 use Newelement\Neutrino\Events\FormSubmitted;
 use Newelement\Neutrino\Events\CommentSubmitted;
+use Illuminate\Support\Facades\Crypt;
 use Newelement\LaravelCalendarEvent\Models\CalendarEvent;
 use Newelement\LaravelCalendarEvent\Models\TemplateCalendarEvent;
 use TorMorten\Eventy\Facades\Events as Eventy;
@@ -649,15 +650,21 @@ class ContentController extends Controller
 
         $files = [];
 
+        $i = 0;
         foreach( $data as $key => $input ){
 
             if( $request->hasFile($key) ){
-                $files[] = [
+                $files[$i] = [
                     'path' => $request->file($key)->getRealPath(),
                     'as' => $request->file($key)->getClientOriginalName(),
                     'mime' => $request->file($key)->getClientMimeType(),
                     'url' => $request->file($key)->store('form_files', config('neutrino.storage.filesystem') )
                 ];
+                if( $form->private ){
+                    $files[$i]['url'] = $request->file($key)->store('form_files_private', config('neutrino.storage.filesystem_private', 'local') );
+                }
+
+                $i++;
             }
         }
 
@@ -672,7 +679,17 @@ class ContentController extends Controller
 
     private function saveFormData($form, $data, $files)
     {
+        $json1 = Crypt::encryptString(json_encode($data));
+        $json2 = Crypt::encryptString(json_encode($files));
 
+        $arr1 = [ 'data' => $json1 ];
+        $arr2 = [ 'data' => $json2 ];
+
+        $saveForm = new FormSubmission;
+        $saveForm->form_id = $form->id;
+        $saveForm->fields = json_encode($arr1);
+        $saveForm->files = json_encode($arr2);
+        $saveForm->save();
     }
 
 	public function submitComment(Request $request)

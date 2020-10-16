@@ -323,7 +323,7 @@ function getFormHTML($id, $args = []){
 
 	$html = '';
 
-	$html .= '<form class="form" action="/neutrino-form" method="post">';
+	$html .= '<form class="form" action="/neutrino-form" method="post" enctype="multipart/form-data">';
 	    $html .= csrf_field();
         if($enabled){
             $html .= '
