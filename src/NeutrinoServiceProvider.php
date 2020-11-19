@@ -11,8 +11,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Arr;
 use TorMorten\Eventy\Facades\Events as Eventy;
+use Newelement\Neutrino\Contracts\RedirectModelContract;
+use Newelement\Neutrino\Middleware\RedirectRequests;
+use Newelement\Neutrino\Models\Redirect;
 
 use Newelement\Neutrino\Facades\Neutrino as NeutrinoFacade;
 use Newelement\Neutrino\Bonds\BondService;
@@ -20,6 +24,7 @@ use Newelement\Neutrino\Http\Middleware\NeutrinoAdminMiddleware;
 
 class NeutrinoServiceProvider extends ServiceProvider
 {
+    protected $router;
 
 	public function register()
     {
@@ -39,6 +44,9 @@ class NeutrinoServiceProvider extends ServiceProvider
             return new BondService;
         });
 
+        $this->app->bind(RedirectModelContract::class, Redirect::class);
+        $this->app->alias(RedirectModelContract::class, 'redirect.model');
+
 		$this->loadHelpers();
 		$this->registerConfigs();
 
@@ -50,6 +58,7 @@ class NeutrinoServiceProvider extends ServiceProvider
 
 	public function boot(Router $router, Dispatcher $event)
 	{
+        $this->router = $router;
 
 		$viewsDirectory = __DIR__.'/../resources/views/theme';
         $adminViewsDirectory = __DIR__.'/../resources/views/cms';
@@ -65,6 +74,10 @@ class NeutrinoServiceProvider extends ServiceProvider
 		$this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
 
 		app('arrilot.widget-namespaces')->registerNamespace('neutrino', '\Newelement\Neutrino\Widgets');
+
+        // Redirects
+        $this->app->alias(RedirectModelContract::class, 'redirect.model');
+        $this->router->pushMiddlewareToGroup('web', RedirectRequests::class);
 
 		$this->initActions();
 	}

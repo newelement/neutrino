@@ -13,12 +13,20 @@ class FormSubmission extends Model
 
     public function getFieldsAttribute($value)
     {
-        return Crypt::decryptString( json_decode($value)->data );
+        if( $this->private ){
+            return Crypt::decryptString( json_decode($value)->data );
+        } else {
+            return Crypt::decryptString( json_decode($value) );
+        }
     }
 
     public function getFilesAttribute($value)
     {
-        return Crypt::decryptString( json_decode($value)->data );
+        if( $this->private ){
+            return Crypt::decryptString( json_decode($value)->data );
+        } else {
+            return Crypt::decryptString( json_decode($value) );
+        }
     }
 
 }

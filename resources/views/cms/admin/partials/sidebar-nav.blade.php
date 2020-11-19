@@ -338,10 +338,14 @@
             @endif
         </li>
         @endforeach
-		<li @if( \Route::currentRouteName() === 'neutrino.settings') class="active" @endif>
+		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.settings') active open @endif">
 		    <a href="/admin/settings">
     		    <i class="fal fa-cog fa-fw"></i> <span class="parent-nav-title">Settings</span>
             </a>
+            <ul @if( \Route::currentRouteName() === 'neutrino.settings') class="open" @endif>
+                <li><a href="/admin/settings">Settings</a></li>
+                <li><a href="/admin/redirects">Redirects</a></li>
+            </ul>
         </li>
 		@endif
 	</ul>

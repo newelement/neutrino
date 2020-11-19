@@ -109,6 +109,12 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 
         Route::post('/settings/sitemap',  $namespacePrefix.'Admin\SitemapController@update');
 
+        Route::get('/redirects',  $namespacePrefix.'Admin\RedirectController@index')->name('settings');
+        Route::post('/redirects',  $namespacePrefix.'Admin\RedirectController@create');
+        Route::get('/redirects/{id}',  $namespacePrefix.'Admin\RedirectController@get')->name('settings');
+        Route::put('/redirects/{id}',  $namespacePrefix.'Admin\RedirectController@update')->name('settings');
+        Route::delete('/redirects/{id}',  $namespacePrefix.'Admin\RedirectController@delete')->name('settings');
+
 		Route::get('/roles',  $namespacePrefix.'Admin\RolesController@index')->name('users');
 		Route::post('/roles',  $namespacePrefix.'Admin\RolesController@create');
 		Route::get('/roles/{id}',  $namespacePrefix.'Admin\RolesController@get')->name('users');
