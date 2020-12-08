@@ -100,7 +100,7 @@
     position: relative;
 
     .slide{
-        min-height: 43.75rem;
+        min-height: 48px;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
@@ -140,6 +140,24 @@
             }
         }
     }
+}
+
+.grid-block{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.block-columns-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.flex-col{
+    min-width: 200px;
 }
 
 

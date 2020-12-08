@@ -43,29 +43,33 @@ trait Assets
 
     public function getScripts()
     {
-        $js = config('neutrino.enqueue_js', []);
-        $all = array_merge($this->enqueueJS, $js);
+        //$js = config('neutrino.enqueue_js', []);
+        //$all = array_merge($this->enqueueJS, $js);
+        $all = $this->enqueueJS;
         return $all;
     }
 
     public function getAdminScripts()
     {
-        $adminJs = config('neutrino.enqueue_admin_js', []);
-        $all = array_merge($this->enqueueAdminJS, $adminJs);
+        //$adminJs = config('neutrino.enqueue_admin_js', []);
+        //$all = array_merge($this->enqueueAdminJS, $adminJs);
+        $all = $this->enqueueAdminJS;
         return $all;
     }
 
     public function getStyles()
     {
-        $css = config('neutrino.enqueue_css', []);
-        $all = array_merge($this->enqueueCSS, $css);
+        //$css = config('neutrino.enqueue_css', []);
+        //$all = array_merge($this->enqueueCSS, $css);
+        $all = $this->enqueueCSS;
         return $all;
     }
 
     public function getAdminStyles()
     {
-        $adminCss = config('neutrino.enqueue_admin_css', []);
-        $all = array_merge($this->enqueueAdminCSS, $adminCss);
+        //$adminCss = config('neutrino.enqueue_admin_css', []);
+        //$all = array_merge($this->enqueueAdminCSS, $adminCss);
+        $all = $this->enqueueAdminCSS;
         return $all;
     }
 
