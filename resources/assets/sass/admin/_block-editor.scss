@@ -178,7 +178,7 @@
             position: relative;
 
             .block-template{
-                padding: 6px;
+                padding: 32px 6px 6px 6px;
                 border-top: 1px solid #f3f3f3;
             }
 
@@ -422,6 +422,33 @@
     .tox-tinymce{
         width: 100%;
         margin-bottom: 24px;
+    }
+
+    .columns-block{
+        display: flex !important;
+        flex-direction: row;
+        padding-top: 32px;
+
+        .block-column{
+            padding: 0 4px;
+            position: relative;
+            min-width: 200px;
+            min-height: 300px;
+
+            .block-item-options{
+                right: 6px !important;
+            }
+
+            .tox-tinymce{
+                margin-bottom: 0;
+            }
+        }
+
+        .block-column-inner{
+            .tox-tinymce{
+                min-height: 300px !important;
+            }
+        }
     }
 
 }

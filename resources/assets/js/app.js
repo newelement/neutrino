@@ -25,6 +25,7 @@ window.axios = axios;
 import tinymce from 'tinymce';
 import 'tinymce/themes/silver';
 import 'tinymce/themes/mobile';
+import 'tinymce/icons/default';
 import 'tinymce/plugins/autolink/plugin.js';
 import 'tinymce/plugins/advlist/plugin.js';
 import 'tinymce/plugins/lists/plugin.js';
@@ -3920,7 +3921,7 @@ Vue2.component('block-item-actions', {
     template: `<div>
                 <div class="block-item-options">
                 <div class="inner">
-                    <span v-if="$root.currentBlocks[blockIndex].field_groups.length > 1" class="block-item-drag-handle"><i class="fas fa-grip-horizontal"></i></span>
+                    <span v-if="$root.currentBlocks[blockIndex].field_groups.length > 1 && $root.currentBlocks[blockIndex].draggable" class="block-item-drag-handle"><i class="fas fa-grip-horizontal"></i></span>
                     <a href="#" class="block-item-options-toggle" @click.prevent="blockItem.showBlockItemOptions = !blockItem.showBlockItemOptions" role="button">
                         <i class="fal fa-ellipsis-h-alt"></i>
                     </a>
@@ -3969,7 +3970,7 @@ Vue2.component('block-columns', {
     props: [ 'block', 'blockItem', 'blockIndex' ],
     mixins: [ clickaway ],
     data: () => ({
-
+        columns: [],
     }),
     methods: {
         removeColumn(i){
@@ -4199,6 +4200,7 @@ window.blockEditor = new Vue2({
             newBlock['tag'] = block.tag? block.tag : false;
             newBlock['template'] = block.template? block.template : false;
             newBlock['contentEditable'] = block.contentEditable? block.contentEditable : false;
+            newBlock['draggable'] = block.draggable? block.draggable : false;
             newBlock['showBlockItemOptions'] = false;
             newBlock['value'] = '';
             newBlock['title'] = block.title;

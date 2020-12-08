@@ -32,6 +32,7 @@ class BlocksController extends Controller
             $newBlock['contentEditable'] = isset($block['contentEditable'])? $block['contentEditable'] : false;
             $newBlock['blocks'] = isset($block['block'])? $block['blocks'] : [];
             $newBlock['fields'] = isset($block['fields'])? $block['fields'] : [];
+            $newBlock['draggable'] = isset($block['draggable'])? $block['draggable'] : false;
             $newBlock['options'] = isset($block['options'])? $block['options'] : [];
             $newBlock['showBlockItemOptions'] = false;
             $newBlock['group_options'] = isset($block['group_options'])? $block['group_options'] : [];
