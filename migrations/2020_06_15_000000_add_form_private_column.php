@@ -15,7 +15,7 @@ class AddFormPrivateColumn extends Migration
     {
         if (!Schema::hasColumn('forms', 'private')) {
             Schema::table('forms', function (Blueprint $table) {
-                $table->bool('private');
+                $table->boolean('private');
             });
         }
     }
