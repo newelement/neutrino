@@ -18,7 +18,7 @@
         "intervention/image": "2.5.*",
 		"doctrine/dbal": "^2.5",
         "ext-json": "*",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.2",
 		"newelement/searchable": "1.*",
 		"league/flysystem-aws-s3-v3": "^1.0",
         "newelement/laravel-calendar-event": "0.2.*",
