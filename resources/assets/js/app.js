@@ -4178,6 +4178,7 @@ window.blockEditor = new Vue2({
         },
         tinyInitInlineFreeText: {
             skin: "oxide-dark",
+            path_absolute : "/",
             menubar: false,
             toolbar: false,
             //toolbar: 'styleselect fontsizeselect | forecolor backcolor | bullist numlist | link | bold italic alignleft aligncenter alignright alignjustify | image | table tabledelete | hr | blockquote | anchor | pastetext',
@@ -4189,6 +4190,7 @@ window.blockEditor = new Vue2({
             contextmenu: "link imagetools styleselect table",
             branding: false,
             paste_as_text: true,
+            relative_urls: false,
             body_id: 'block-editor-tiny',
             content_css : editorCss,
             content_css_cors: true,
