@@ -33,6 +33,7 @@
 							<li class="form-field-type" data-type="select">Dropdown</li>
 							<li class="form-field-type" data-type="file">File Upload</li>
 							<li class="form-field-type" data-type="image">Image Upload</li>
+                            <li class="form-field-type" data-type="descriptive_text">Descriptive Text</li>
 						</ul>
 					</div>
 				</div>

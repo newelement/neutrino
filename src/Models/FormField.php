@@ -18,6 +18,7 @@ class FormField extends Model
 		'min_length',
 		'settings',
 		'select_multiple',
+        'descriptive_text',
 		'sort'
 	];
 }

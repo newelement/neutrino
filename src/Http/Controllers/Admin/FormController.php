@@ -97,6 +97,7 @@ class FormController extends Controller
 		$form = Form::find($id);
 
 		$i = 0;
+        //dd($request->all());
 		foreach( (array) $request->field_type as $key => $value ){
 
 			$settings = [];
@@ -110,8 +111,9 @@ class FormController extends Controller
 			[
 				'form_id' => $form->id,
 				'field_type' => $request->field_type[$key],
-				'field_label' => $request->field_label[$key],
-				'field_name' => $request->field_name[$key],
+				'field_label' => isset( $request->field_label[$key])? $request->field_label[$key] : 'NA' ,
+				'field_name' => isset( $request->field_name[$key] )? $request->field_name[$key] : 'NA' ,
+                'descriptive_text' => isset( $request->field_text[$key] )? $request->field_text[$key] : null ,
 				'required' => (isset($request->field_required[$key]) && (int) $request->field_required[$key] === 1) ? 1 : 0,
 				'select_multiple' => (isset($request->field_select_multiple[$key]) && (int) $request->field_select_multiple[$key] === 1) ? 1 : 0,
 				'settings' => json_encode($settings),

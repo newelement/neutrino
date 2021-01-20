@@ -91,7 +91,8 @@ let fields = [
 	{ label: 'Dropdown', type: 'select'},
 	{ label: 'File', type: 'file'},
 	{ label: 'Image', type: 'image'},
-	{ label: 'Rich Text Editor', type: 'editor'}
+	{ label: 'Rich Text Editor', type: 'editor'},
+    { label: 'Descriptive Text', type: 'descriptive_text'}
 ];
 
 let editor = document.querySelector('.editor');
@@ -269,6 +270,20 @@ function addFieldType(type, repeater){
 			html += '</div>';
 
 		break;
+
+        case 'descriptive_text':
+
+            html += '<div class="field-row">';
+                html += '<div class="field-sort"><i class="far fa-sort"></i></div><div class="field-type-title">Descriptive Text</div><div class="field-row-options"><a class="collapse-field-row" href="/" data-row-id="'+id+'"><i class="fas fa-angle-down"></i></a> <a class="remove-field-row" data-repeater="'+repeater+'" data-row-id="'+id+'" href="/">&times;</a></div>';
+            html += '</div>';
+
+            html += '<div id="field-group-'+id+'" class="field-group" data-row-id="'+id+'">';
+                html += '<div class="field-row">';
+                    html += '<div class="label-col">Descriptive Text</div>';
+                    html += '<div class="field-col"><textarea id="label-'+id+'" class="field-label cf-editor" name="field_text['+id+']"></textarea><input type="hidden" name="field_type['+id+']" value="descriptive_text"></div>';
+                html += '</div>';
+
+        break;
 
 		case 'email':
 
@@ -692,6 +707,22 @@ function addFormFieldType(type){
 			html += '</div>';
 
 		break;
+
+        case 'descriptive_text':
+
+            html += '<div class="field-row">';
+                html += '<div class="field-sort"><i class="far fa-sort"></i></div><div class="field-type-title">Text</div><div class="field-row-options"><a class="collapse-field-row" href="/" data-row-id="'+id+'"><i class="fas fa-angle-down"></i></a> <a class="remove-field-row"  data-row-id="'+id+'" href="/">&times;</a></div>';
+            html += '</div>';
+
+            html += '<div id="field-group-'+id+'" class="field-group" data-row-id="'+id+'">';
+                html += '<div class="field-row">';
+                    html += '<div class="label-col">Descriptive Text</div>';
+                    html += '<div class="field-col"><textarea id="label-'+id+'" class="field-label cf-editor" name="field_text['+id+']"></textarea><input type="hidden" name="field_type['+id+']" value="descriptive_text"></div>';
+                html += '</div>';
+
+            html += '</div>';
+
+        break;
 
 		case 'email':
 
@@ -2704,7 +2735,20 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		e.preventDefault();
 		let type = $(this).attr('data-type');
 		addFormFieldType(type);
+
+        if( type === 'descriptive_text' ){
+            setTimeout(function(){
+                tinymce.init( cf_config );
+            }, 200);
+        }
+
 	});
+
+    let $formFieldsPage = document.getElementById('form-fields');
+
+    if( $formFieldsPage ){
+        tinymce.init( cf_config );
+    }
 
 	$('.fields-list').on('click', '.fields-drop-down ul li', function(){
 		//console.log('ADD Repeater field');

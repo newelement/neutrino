@@ -740,7 +740,8 @@ function _parseField($field, $repeater = 0)
 		[ 'label' => 'Date', 'type' => 'date'],
 		[ 'label' => 'Dropdown', 'type' => 'select'],
 		[ 'label' => 'File', 'type' => 'file'],
-		[ 'label' => 'Image', 'type' => 'image']
+		[ 'label' => 'Image', 'type' => 'image'],
+        [ 'label' => 'Descriptive Text', 'type' => 'descriptive_text']
 	];
 
 	$attrs = json_decode($field->settings);
@@ -801,6 +802,31 @@ function _parseField($field, $repeater = 0)
 			$html .= '</div>
 			';
 		break;
+
+        case 'descriptive_text':
+            $html .= '<div class="field-row">
+                <div class="field-sort">
+                    <i class="far fa-sort"></i>
+                </div>
+                <div class="field-type-title">Descriptive Text</div>
+                <div class="field-row-options">
+                    <a class="collapse-field-row" href="/" data-row-id="'.$field->field_id.'">
+                        <i class="fas fa-angle-down"></i></a> <a class="remove-field-row" data-row-current="1" data-row-id="'.$field->field_id.'" href="/">&times;</a>
+                </div>
+            </div>
+
+            <div id="field-group-'.$field->field_id.'" class="field-group" data-row-id="'.$field->field_id.'">
+                <div class="field-row">
+                    <div class="label-col">Descriptive Text</div>
+                    <div class="field-col">
+                        <textarea id="label-'.$field->field_id.'" class="field-label cf-editor" name="field_text['.$field->field_id.']">'.$field->descriptive_text.'</textarea>
+                        <input type="hidden" name="field_type['.$field->field_id.']" value="descriptive_text">
+                    </div>
+                </div>
+            </div>
+            ';
+        break;
+
 		case 'email':
 			$html .= '<div class="field-row">
 				<div class="field-sort">
@@ -1348,6 +1374,10 @@ function _generateField($field, $objectType = false, $id = 0, $repeater = false,
 			$html .= '</div>';
 
 		break;
+
+        case 'descriptive_text':
+
+            $html .= 'DESCRIPTIVE TEXT';
 
 		case 'number':
 
