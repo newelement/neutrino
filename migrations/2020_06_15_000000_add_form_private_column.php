@@ -28,7 +28,7 @@ class AddFormPrivateColumn extends Migration
     public function down()
     {
         if (Schema::hasColumn('forms','private')) {
-            Schema::table('private', function (Blueprint $table) {
+            Schema::table('forms', function (Blueprint $table) {
                 $table->dropColumn('private');
             });
         }
