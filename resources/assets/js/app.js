@@ -2453,12 +2453,44 @@ window.addEventListener('DOMContentLoaded', (e) => {
 			group: 'shared',
 			onEnd: function (e) {
 				updateFieldSort();
+
+                let $editors = document.querySelectorAll('.cf-editor');
+                $editors.forEach(function(v){
+                    tinymce.EditorManager.execCommand('mceRemoveControl',true, v.id);
+                    tinymce.EditorManager.execCommand('mceAddEditor',true, v.id);
+                })
+
+
 			},
 			onAdd: function (e) {
 				///console.log('ADD',e);
 			},
 			onStart: function (evt) {
 				evt.oldIndex;
+
+                let $editors = document.querySelectorAll('.cf-editor');
+                $editors.forEach(function(v){
+                    tinymce.EditorManager.execCommand('mceRemoveControl',true, v.id);
+                    tinymce.EditorManager.execCommand('mceRemoveEditor',true, v.id);
+
+                    // OR TRY
+                    //var editor = tinymce.get('editor_id');
+                    //editor.setContent(content);
+
+                });
+
+                //tinymce.remove("#id .class or tag");
+
+                /*tinymce.EditorManager.editors.forEach(function(editor) {
+                    var old_global_settings = tinymce.settings;
+                    tinymce.settings = editor.settings;
+                    tinymce.EditorManager.execCommand('mceRemoveEditor', false, editor.id);
+                    tinymce.EditorManager.execCommand('mceAddEditor', false, editor.id);
+                    tinymce.settings = old_global_settings;
+                });*/
+
+
+
 			},
 		});
 	}
