@@ -338,12 +338,23 @@ function getFormHTML($id, $args = []){
 	    $fields = $form['fields'];
 
 	    foreach( $fields as $field ){
-    	    $html .= '<div class="form-group '.( $form['form_style'] === 'horizontal'? 'row' : '' ).'">';
-    	    $html .= '<label for="input-'.$field['field_name'].'" class="'.( $form['form_style'] === 'horizontal'? 'col-sm-3 col-form-label' : '' ).'">'.$field['field_label'].'</label>
-                        <div class="form-input '.( $form['form_style'] === 'horizontal'? 'col-sm-9' : '' ).'">';
-                $html .= parseFieldType($field);
+
+            if( $field['field_type'] === 'descriptive_text' ){
+                $html .= '<div class="form-group '.( $form['form_style'] === 'horizontal'? 'row' : '' ).'">';
+                    $html .= '<div class="col-md-12 form-descriptive-text">';
+                        $html .= parseFieldType($field);
+                    $html .= '</div>';
                 $html .= '</div>';
-    	    $html .= '</div>';
+
+            } else {
+                $html .= '<div class="form-group '.( $form['form_style'] === 'horizontal'? 'row' : '' ).'">';
+                $html .= '<label for="input-'.$field['field_name'].'" class="'.( $form['form_style'] === 'horizontal'? 'col-sm-3 col-form-label' : '' ).'">'.$field['field_label'].'</label>
+                            <div class="form-input '.( $form['form_style'] === 'horizontal'? 'col-sm-9' : '' ).'">';
+                    $html .= parseFieldType($field);
+                    $html .= '</div>';
+                $html .= '</div>';
+            }
+
 	    }
 
 	    $html .= '<div class="form-footer">';
@@ -369,6 +380,9 @@ function parseFieldType($field){
         break;
         case 'textarea':
             $fieldHtml = '<textarea class="form-control" name="'.$field['field_name'].'" id="input-'.$field['field_name'].'" '.( $field['required']? 'required' : '' ).'></textarea>';
+        break;
+        case 'descriptive_text':
+            $fieldHtml = $field['descriptive_text'];
         break;
         case 'checkbox':
 
