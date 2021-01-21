@@ -7,7 +7,7 @@ Please read documentation at:
 ## Requirements
 
 - PHP 7.2+
-- Laravel 6+
+- Laravel 6+ (DOES NOT WORK ON 8 YET)
 - Database
 
 ## Installation
