@@ -13,15 +13,17 @@ class CreateFormSubmissionsTable extends Migration
     */
     public function up()
     {
-        Schema::create('form_submissions', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('form_id');
-            $table->json('fields')->nullable();
-            $table->json('files')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-            $table->index('form_id');
-        });
+        if (!Schema::hasTable('form_submissions')) {
+            Schema::create('form_submissions', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->bigInteger('form_id');
+                $table->json('fields')->nullable();
+                $table->json('files')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+                $table->index('form_id');
+            });
+        }
     }
 
     /**

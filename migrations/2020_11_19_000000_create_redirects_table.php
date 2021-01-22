@@ -13,13 +13,15 @@ class CreateRedirectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('redirects', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('old_url')->unique();
-            $table->string('new_url')->nullable();
-            $table->smallInteger('status')->default(301);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('redirects')) {
+            Schema::create('redirects', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('old_url')->unique();
+                $table->string('new_url')->nullable();
+                $table->smallInteger('status')->default(301);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

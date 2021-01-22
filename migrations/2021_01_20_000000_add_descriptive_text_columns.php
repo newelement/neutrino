@@ -13,7 +13,7 @@ class AddDescriptiveTextColumns extends Migration
     */
     public function up()
     {
-        if (!Schema::hasColumn('forms_fields', 'descriptive_text')) {
+        if (!Schema::hasColumn('form_fields', 'descriptive_text')) {
             Schema::table('form_fields', function (Blueprint $table) {
                 $table->text('descriptive_text')->nullable();
             });

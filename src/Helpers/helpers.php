@@ -107,7 +107,7 @@ function getMenu($menuName, $type = 'array', $options = []){
 	return $arr;
 }
 
-function _buildMenuHtml( $array = [], $children = false, $options)
+function _buildMenuHtml( $array = [], $children = false, $options = [])
 {
 
     $ulClass = isset($options['ul_class']) && !$children? 'class="'.$options['ul_class'].'"' : '';

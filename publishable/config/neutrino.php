@@ -417,5 +417,64 @@ return [
 
         ]
         ],
+
+        [
+            'name' => 'columns',
+            'title' => 'Columns',
+            'icon' => 'columns',
+            'tag' => false,
+            'contentEditable' => false,
+            'template'  => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@columnsTemplate',
+            'compiler' => 'Newelement\\Neutrino\\Http\\Controllers\\BlocksController@columnsCompiler',
+            'fields' => [
+                ['name' => 'content', 'value' => '', 'placeholder' => 'Slide content (optional)', 'allow_blocks' => false] ,
+            ],
+            'value' => '',
+            'blocks' => [],
+            'group' => true,
+            'draggable' => false,
+            'has_columns' => true,
+            'show_align_options' => false,
+            'full_width' => true,
+            'group_options' => [
+                [ 'type' => 'color', 'name' => 'background_color' , 'label' => 'Background Color', 'value' => '#ffffff' ],
+                [ 'type' => 'text', 'name' => 'padding', 'label' => 'Padding', 'value' => '0px' ],
+                [ 'type' => 'text', 'name' => 'margin', 'label' => 'Margin', 'value' => '0px' ],
+                [ 'type' => 'dropdown', 'name' => 'column_width', 'label' => 'Column Width', 'value' => '0', 'options' => [
+                        ['label' => 'Normal', 'value' => '0'],
+                        ['label' => 'Larger', 'value' => '2'],
+                    ]
+                ],
+                [ 'type' => 'dropdown', 'name' => 'width', 'label' => 'Column Width Percent', 'value' => 'auto', 'options' => [
+                        ['label' => 'None', 'value' => 'auto'],
+                        ['label' => '10%', 'value' => '10%'],
+                        ['label' => '20%', 'value' => '20%'],
+                        ['label' => '30%', 'value' => '30%'],
+                        ['label' => '40%', 'value' => '40%'],
+                        ['label' => '50%', 'value' => '50%'],
+                        ['label' => '60%', 'value' => '60%'],
+                        ['label' => '70%', 'value' => '70%'],
+                        ['label' => '80%', 'value' => '80%'],
+                        ['label' => '90%', 'value' => '90%'],
+                        ['label' => '100%', 'value' => '100%']
+                    ]
+                ]
+
+            ],
+            'options' => [
+                [ 'type' => 'color', 'name' => 'background_color' , 'label' => 'Background Color', 'value' => '#ffffff' ],
+                [ 'type' => 'text', 'name' => 'padding', 'label' => 'Padding', 'value' => '0px' ],
+                [ 'type' => 'text', 'name' => 'margin', 'label' => 'Margin', 'value' => '0px' ],
+                [ 'type' => 'dropdown', 'name' => 'alignment', 'label' => 'Columns Alignment', 'value' => 'center', 'options' => [
+                        ['label' => 'Center', 'value' => 'center'],
+                        ['label' => 'Left', 'value' => 'flex-start'],
+                        ['label' => 'Right', 'value' => 'flex-end'],
+                        ['label' => 'Space Between', 'value' => 'space-between'],
+                        ['label' => 'Space Around', 'value' => 'space-around'],
+                        ['label' => 'Space Evenly', 'value' => 'space-evenly'],
+                    ]
+                ]
+            ]
+        ]
     ],
 ];

@@ -40,6 +40,10 @@ class NeutrinoServiceProvider extends ServiceProvider
             return auth();
         });
 
+        $this->app->singleton('NeutrinoGuard', function () {
+            return config('auth.defaults.guard', 'web');
+        });
+
         $this->app->singleton('NeutrinoBond', function () {
             return new BondService;
         });
