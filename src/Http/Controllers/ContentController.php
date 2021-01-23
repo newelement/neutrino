@@ -25,6 +25,7 @@ use Newelement\Neutrino\Models\MenuItem;
 use Newelement\Neutrino\Models\ObjectMedia;
 use Newelement\Neutrino\Models\ObjectTerm;
 use Newelement\Neutrino\Events\FormSubmitted;
+use Newelement\Neutrino\Http\Controllers\NeutrinoEmailController;
 use Newelement\Neutrino\Events\CommentSubmitted;
 use Illuminate\Support\Facades\Crypt;
 use Newelement\LaravelCalendarEvent\Models\CalendarEvent;
@@ -670,9 +671,20 @@ class ContentController extends Controller
 
         $validatedData = $request->validate($validate);
 
-        event(new FormSubmitted($form, $data, $files));
-
         $this->saveFormData($form, $data, $files);
+
+        if( config('neutrino.use_form_even') ){
+
+            event(new FormSubmitted($form, $data, $files));
+
+        } else {
+            $emailController = new NeutrinoEmailController;
+            if( $form->private ){
+                $emailController->processPrivateForm($form);
+            } else {
+                $emailController->processForm($form, $data, $files);
+            }
+        }
 
         return redirect()->back()->with('success', 'Thank you. Your form has been submitted.');
     }

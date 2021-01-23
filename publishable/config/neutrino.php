@@ -14,6 +14,8 @@ return [
 
     'timezone' => 'America/New_York',
 
+    'use_form_event' => false,
+
     'admin_menu_items' => [
         /*[
             'slot' => 4,

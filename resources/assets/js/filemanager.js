@@ -5,6 +5,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 
+
 const HTTP = axios.create(axios.defaults.headers.common = {
 	'X-Requested-With': 'XMLHttpRequest',
 	'X-CSRF-TOKEN' : window.app.csrfToken,
