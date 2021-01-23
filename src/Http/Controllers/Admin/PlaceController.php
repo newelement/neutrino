@@ -8,7 +8,7 @@ use Newelement\Neutrino\Models\ObjectMedia;
 use Newelement\Neutrino\Models\Place;
 use Newelement\Neutrino\Models\ActivityLog;
 
-class LocationController extends Controller
+class PlaceController extends Controller
 {
 
 	public function __construct(){}

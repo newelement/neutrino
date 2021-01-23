@@ -189,7 +189,7 @@
 			<ul @if( \Route::currentRouteName() === 'neutrino.events') class="open" @endif>
 				<li><a href="/admin/events">All Events</a></li>
 				<li><a href="/admin/event">Create Event</a></li>
-				<li><a href="/admin/locations">Locations</a></li>
+				<li><a href="/admin/places">Places</a></li>
 			</ul>
 		</li>
 		@php

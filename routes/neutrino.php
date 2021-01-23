@@ -128,12 +128,12 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::put('/events/{id}',  $namespacePrefix.'Admin\EventController@update');
 		Route::delete('/events/{id}',  $namespacePrefix.'Admin\EventController@delete');
 
-		Route::get('/places',  $namespacePrefix.'Admin\LocationController@index')->name('events');
-		Route::post('/places',  $namespacePrefix.'Admin\LocationController@create');
-		Route::get('/place',  $namespacePrefix.'Admin\LocationController@getCreate')->name('events');
-		Route::get('/places/{id}',  $namespacePrefix.'Admin\LocationController@get')->name('events');
-		Route::put('/places/{id}',  $namespacePrefix.'Admin\LocationController@update');
-		Route::delete('/places/{id}',  $namespacePrefix.'Admin\LocationController@delete');
+		Route::get('/places',  $namespacePrefix.'Admin\PlaceController@index')->name('events');
+		Route::post('/places',  $namespacePrefix.'Admin\PlaceController@create');
+		Route::get('/place',  $namespacePrefix.'Admin\PlaceController@getCreate')->name('events');
+		Route::get('/places/{id}',  $namespacePrefix.'Admin\PlaceController@get')->name('events');
+		Route::put('/places/{id}',  $namespacePrefix.'Admin\PlaceController@update');
+		Route::delete('/places/{id}',  $namespacePrefix.'Admin\PlaceController@delete');
 
         Route::get('/galleries',  $namespacePrefix.'Admin\GalleryController@index')->name('galleries');
         Route::post('/galleries',  $namespacePrefix.'Admin\GalleryController@create');
