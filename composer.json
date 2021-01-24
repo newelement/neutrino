@@ -21,7 +21,6 @@
         "ext-json": "*",
 		"newelement/searchable": "1.*",
 		"league/flysystem-aws-s3-v3": "^1.0",
-        "laravel/ui": ">=1.0",
         "newelement/laravel-calendar-event": "0.2.*",
         "spatie/laravel-honeypot": "^3.0",
 		"arrilot/laravel-widgets": "^3.13.0",

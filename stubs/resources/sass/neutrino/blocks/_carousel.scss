@@ -1,0 +1,127 @@
+.carousel{
+    position: relative;
+
+    .dots{
+        position: absolute;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 300;
+
+        ul{
+            display: flex;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+
+            li{
+                margin: 0 4px;
+                outline: none;
+            }
+
+            button{
+                appearance: none;
+                border: 0;
+                border-radius: 50%;
+                width: 16px;
+                height: 16px;
+                background-color: #fff;
+                text-index: -9999px;
+                font-size: 0;
+                content: '';
+                transition: background-color .25s ease;
+                outline: none;
+
+                &:hover{
+                    background-color: #b5dbe3;
+                }
+            }
+
+            li.slick-active{
+                button{
+                    background-color: #33bfd4;
+                }
+            }
+        }
+    }
+
+
+}
+
+.carousel-slides{
+    position: relative;
+
+    .slide{
+        min-height: 10px !important;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: relative;
+    }
+
+    .slide-content{
+        display: flex;
+        background-color: rgba(#194F60, .55);
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 50%;
+        z-index: 1;
+
+        .inner{
+            padding: 48px 0 24px 54px;
+
+            h1, h2, h3, h4{
+                color: #fff;
+                font-weight: 700;
+                font-size: 3.5rem;
+                line-height: 1.1;
+                max-width: 460px;
+                margin-bottom: 24px;
+            }
+
+            p{
+                max-width: 400px;
+                font-size: 1.25rem;
+                color: #fff;
+
+                &:last-of-type{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+@media( max-width: 960px ){
+
+    .carousel-slides .slide{
+        height: auto !important;
+        padding: 24px 12px;
+    }
+
+    .carousel-slides .slide-content {
+        right: auto;
+        bottom: auto;
+        top: auto;
+        left: auto;
+        width: 100%;
+        position: static;
+
+        .inner{
+            padding: 24px 12px;
+        }
+    }
+    .carousel-slides .slide-content .inner {
+        h1 {
+            font-size: 2rem;
+        }
+
+
+        h3 *{
+            font-size: 1.35rem !important;
+            line-height: 1.2;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+.hero-block{
+    padding: 56px 60px;
+    background-color: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.hero{
+    display: flex;
+    position: relative;
+    margin-bottom: 32px;
+
+    &.center{
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.left{
+        justify-content: start;
+        align-items: center;
+    }
+
+    &.right{
+        justify-content: end;
+        align-items: center;
+    }
+
+    .hero-overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+}
+
+.hero-content{
+    padding: 24px;
+    position: relative;
+    z-index: 2;
+}

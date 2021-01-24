@@ -52,6 +52,31 @@ class InstallCommand extends Command
         $this->info('Publishing the Neutrino assets, database, and config files');
         // Publish only relevant resources on install
 
+        // NPM Packages...
+        $this->updateNodePackages(function ($packages) {
+            return [
+                "axios" => "^0.21",
+                "bootstrap" => "^4.0.0",
+                "cross-env" => "^7.0",
+                "jquery" => "^3.2",
+                "laravel-mix" => "^5.0.9",
+                "lodash" => "^4.17.13",
+                "popper.js" => "^1.12",
+                "resolve-url-loader" => "^3.1.0",
+                "sass" => "^1.15.2",
+                "sass-loader" => "^8.0.0",
+                "vue-template-compiler" => "^2.6.11",
+                "@fortawesome/fontawesome-free" => "^5.13.0",
+                "slick-carousel" => "^1.8.1"
+            ] + $packages;
+        });
+
+        $this->flushNodeModules();
+
+        copy(__DIR__.'/../../stubs/webpack.mix.js', base_path('webpack.mix.js'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/sass', resource_path('sass'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js', resource_path('js'));
+
         $this->call('vendor:publish', ['--provider' => NeutrinoServiceProvider::class]); // , '--tag' => $tags
 		$this->call('vendor:publish', ['--provider' => 'Newelement\LaravelCalendarEvent\ServiceProvider']);
         $this->call('vendor:publish', ['--provider' => 'Intervention\Image\ImageServiceProviderLaravelRecent']);
@@ -72,15 +97,15 @@ class InstallCommand extends Command
                 file_put_contents($userPath, $str);
             }
         } else {
-            $this->warn('Unable to locate "User.php" in app or app/Models.  Did you move this file?');
-            $this->warn('You will need to update this manually.  Change "extends Authenticatable" to "extends \Newelement\Neutrino\Models\User" in your User model');
+            $this->warn('Unable to locate "User.php" in app or app/Models. Did you move this file?');
+            $this->warn('You will need to update this manually. Change "extends Authenticatable" to "extends \Newelement\Neutrino\Models\User" in your User model');
         }
 
         $this->info('Dumping the autoloaded files and reloading all new files');
 
         $composer = $this->findComposer();
         $process = new Process([$composer.' dump-autoload']);
-        $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
+        $process->setTimeout(null);
         $process->setWorkingDirectory(base_path())->run();
 
 		$this->info('Adding Neutrino routes to routes/web.php');
@@ -102,7 +127,7 @@ class InstallCommand extends Command
 
         $initData = $this->ask('Do you want the initial installation data? HIGHLY recommended for fresh install. [Y/N]');
 
-        if( $initData === 'y' || $initData === 'Y' ){
+        if( strtoupper($initData) === 'Y' ){
             $this->info('Seeding data into the database');
             $this->seed('NeutrinoDatabaseSeeder');
         }
@@ -112,13 +137,69 @@ class InstallCommand extends Command
 
         $initUser = $this->ask('Do you want to create an admin user? HIGHLY recommended for fresh install. [Y/N]');
 
-        if( $initUser === 'y' || $initUser === 'Y' ){
+        if( strtoupper($initUser) === 'Y' ){
             $this->call('neutrino:admin');
             $this->info('Successfully installed Neutrino. Enjoy!');
+            $this->comment('Please execute the "npm install && npm run dev" command to build your assets.');
+            $this->comment('You will also need to update your package.json file and use these scripts: ');
+            $this->comment('"scripts": {
+                "dev": "npm run development",
+                "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+                "watch": "npm run development -- --watch",
+                "watch-poll": "npm run watch -- --watch-poll",
+                "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+                "prod": "npm run production",
+                "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+            }');
         } else {
             $this->info('Successfully installed Neutrino. Enjoy!');
             $this->info('-> To setup an admin run: `php artisan neutrino:admin` ');
+            $this->comment('Please execute the "npm install && npm run dev" command to build your assets.');
+            $this->comment('You will also need to update your package.json file and use these scripts: ');
+            $this->comment('"scripts": {
+                "dev": "npm run development",
+                "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+                "watch": "npm run development -- --watch",
+                "watch-poll": "npm run watch -- --watch-poll",
+                "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+                "prod": "npm run production",
+                "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+            }');
         }
 
     }
+
+    protected static function updateNodePackages(callable $callback, $dev = true)
+    {
+        if (! file_exists(base_path('package.json'))) {
+            return;
+        }
+
+        $configurationKey = $dev ? 'devDependencies' : 'dependencies';
+
+        $packages = json_decode(file_get_contents(base_path('package.json')), true);
+
+        $packages[$configurationKey] = $callback(
+            array_key_exists($configurationKey, $packages) ? $packages[$configurationKey] : [],
+            $configurationKey
+        );
+
+        ksort($packages[$configurationKey]);
+
+        file_put_contents(
+            base_path('package.json'),
+            json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
+        );
+    }
+
+    protected function flushNodeModules()
+    {
+        tap(new Filesystem, function ($files) {
+            $files->deleteDirectory(base_path('node_modules'));
+
+            $files->delete(base_path('yarn.lock'));
+            $files->delete(base_path('package-lock.json'));
+        });
+    }
+
 }

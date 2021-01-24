@@ -1,0 +1,17 @@
+.grid-block{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.block-columns-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.flex-col{
+    min-width: 200px;
+}
