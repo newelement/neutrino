@@ -129,6 +129,7 @@ class NeutrinoServiceProvider extends ServiceProvider
         $this->commands(Commands\InstallCommand::class);
         $this->commands(Commands\AdminCommand::class);
         $this->commands(Commands\UpdateCommand::class);
+        $this->commands(Commands\DomainMigrationCommand::class);
     }
 
     private function initActions()
