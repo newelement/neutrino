@@ -132,6 +132,8 @@ class MediaController extends Controller
                 $mimeType = $file->getMimeType();
                 $pathInfo = pathinfo($path.$imageName);
 
+                $imageName = $this->sanitizeFilename($imageName);
+
                 if( $this->fileExists($path.$imageName) ){
                     $imageName = uniqid().'-'.$imageName;
                 }
@@ -436,6 +438,7 @@ class MediaController extends Controller
     {
         $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
         $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
+        $filename = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $filename ) );
         return $filename;
     }
 

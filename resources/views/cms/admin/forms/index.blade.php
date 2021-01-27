@@ -10,7 +10,21 @@
 					<tr>
 						<th class="text-left">Title</th>
 						<th class="text-center">Form ID</th>
-						<th class="text-center">Shortcode</th>
+						<th class="text-center">Shortcode
+                            <span class="help-info">
+                                <i class="fal fa-question-circle"></i>
+                                <div class="help-info-content">
+                                    <p>
+                                    Copy and paste this optional shortcode into an editor to display a form.
+                                    </p>
+                                    <p>
+                                    Options:<br>
+                                    <strong>id:</strong> [The Form ID]<br>
+                                    <strong>show_title:</strong> true/false
+                                    </p>
+                                </div>
+                            </span>
+                        </th>
                         <th class="text-center">Submissions</th>
 						<th width="120">Edit Fields</th>
 						<th width="100"></th>
