@@ -100,6 +100,12 @@ Route::group(['prefix' => 'admin', 'as' => 'neutrino.'], function () use ( $name
 		Route::put('/users/{id}',  $namespacePrefix.'Admin\UserController@update');
 		Route::delete('/users/{id}',  $namespacePrefix.'Admin\UserController@delete');
 
+        Route::get('/shortcodes',  $namespacePrefix.'Admin\ShortcodesController@index')->name('shortcodes');
+        Route::post('/shortcodes',  $namespacePrefix.'Admin\ShortcodesController@create');
+        Route::get('/shortcodes/{id}',  $namespacePrefix.'Admin\ShortcodesController@get')->name('shortcodes');
+        Route::put('/shortcodes/{id}',  $namespacePrefix.'Admin\ShortcodesController@update');
+        Route::delete('/shortcodes/{id}',  $namespacePrefix.'Admin\ShortcodesController@delete');
+
 		Route::get('/settings',  $namespacePrefix.'Admin\SettingsController@index')->name('settings');
 		Route::post('/settings',  $namespacePrefix.'Admin\SettingsController@create');
 		Route::get('/settings/{id}',  $namespacePrefix.'Admin\SettingsController@get')->name('settings');

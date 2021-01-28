@@ -288,10 +288,13 @@
                 <li><a href="/admin/gallery">Create Gallery</a></li>
             </ul>
         </li>
-		<li @if( \Route::currentRouteName() === 'neutrino.custom-fields') class="active" @endif>
+		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.custom-fields') active open @endif">
 		    <a href="/admin/custom-fields">
     		    <i class="fal fa-ballot fa-fw"></i> <span class="parent-nav-title">Custom Fields</span>
             </a>
+            <ul @if( \Route::currentRouteName() === 'neutrino.custom-fields') class="open" @endif>
+            <li><a href="/admin/custom-fields">Custom Fields</a></li>
+        </ul>
         </li>
 		@if( auth()->user()->hasRole('admin') )
 		@php
@@ -311,6 +314,16 @@
             @endif
         </li>
         @endforeach
+
+        <li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.shortcodes') active open @endif">
+            <a href="/admin/shortcodes">
+                <i class="fal fa-brackets fa-fw"></i> <span class="parent-nav-title">Shortcodes</span>
+            </a>
+            <ul @if( \Route::currentRouteName() === 'neutrino.shortcodes') class="open" @endif>
+                <li><a href="/admin/shortcodes">Shortcodes</a></li>
+            </ul>
+        </li>
+
 		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.users') active open @endif">
 		    <a href="/admin/users">
     		    <i class="fal fa-users fa-fw"></i> <span class="parent-nav-title">Users</span>

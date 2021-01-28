@@ -253,6 +253,7 @@ function getContent($args = [], $content = false){
         $content = stripShortcodes($content);
     } else {
         $content = ContentController::doShortCodes($content);
+        $content = ContentController::doDynamicShortcodes($content);
     }
 
     $content = html_entity_decode($content);

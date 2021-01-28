@@ -25,6 +25,7 @@ use Newelement\Neutrino\Models\MenuItem;
 use Newelement\Neutrino\Models\ObjectMedia;
 use Newelement\Neutrino\Models\ObjectTerm;
 use Newelement\Neutrino\Events\FormSubmitted;
+use Newelement\Neutrino\Models\Shortcode;
 use Newelement\Neutrino\Http\Controllers\NeutrinoEmailController;
 use Newelement\Neutrino\Events\CommentSubmitted;
 use Illuminate\Support\Facades\Crypt;
@@ -791,6 +792,19 @@ class ContentController extends Controller
         $content = preg_replace_callback( "/$pattern/", array(self::class, 'do_shortcode_tag'), $content );
 
         return $content;
+    }
+
+    public static function doDynamicShortcodes($content)
+    {
+        $shortcodes = Shortcode::all();
+        $codes = [];
+        $embeds = [];
+        foreach( $shortcodes as $shortcode ){
+            $codes[] = '/\['.$shortcode->slug.'\]/';
+            $embeds[] = $shortcode->embed;
+        }
+
+        return preg_replace($codes, $embeds, $content);
     }
 
     private static function do_shortcode_tag( $m ) {
