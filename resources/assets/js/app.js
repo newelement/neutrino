@@ -643,6 +643,15 @@ function addFieldType(type, repeater){
 
 }
 
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }
+
 function initRepeaterSorter(repeater){
 	let repeaterList = document.querySelector('.repeater-fields-list');
 	Sortable.create(repeaterList, {
