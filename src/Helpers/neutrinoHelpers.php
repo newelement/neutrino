@@ -2,7 +2,7 @@
 use Illuminate\Support\Str;
 use Newelement\Neutrino\Models\ActivityLog;
 
-function toSlug($text, $type = false)
+function toSlug($text, $type = false, $entryType = false)
 {
 	$text = preg_replace('~[^\pL\d]+~u', '-', $text);
     $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
@@ -15,7 +15,7 @@ function toSlug($text, $type = false)
         return 'n-a';
     }
 
-	$slug = checkSlug($text, $type);
+	$slug = checkSlug($text, $type, $entryType);
     return $slug;
 }
 
@@ -31,7 +31,7 @@ function str_singular($string)
     return $string;
 }
 
-function checkSlug($slug, $type, $count = 0)
+function checkSlug($slug, $type, $entryType, $count = 0)
 {
 	if( $count ){
 		$slug = $count > 1 ? preg_replace('/-[^-]*$/', '', $slug).'-'.$count : $slug.'-'.$count;
@@ -41,7 +41,7 @@ function checkSlug($slug, $type, $count = 0)
 
 	switch($type){
 		case 'entry':
-			$exists = DB::table('entries')->where(['slug' => $slug, 'entry_type' => $type ])->first();
+			$exists = DB::table('entries')->where(['slug' => $slug, 'entry_type' => $entryType ])->first();
 		break;
 		case 'page':
 			$exists = DB::table('pages')->where('slug', $slug)->first();
@@ -77,7 +77,7 @@ function checkSlug($slug, $type, $count = 0)
 
 	if( $exists ){
 		$count++;
-		return checkSlug($slug, $type, $count);
+		return checkSlug($slug, $type, $entryType, $count);
 	} else {
 		return $slug;
 	}
