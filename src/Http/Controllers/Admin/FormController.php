@@ -200,4 +200,66 @@ class FormController extends Controller
 
         return response()->download($file);
     }
+
+    public function exportForm(Request $request, $id)
+    {
+        $form = Form::findOrFail($id);
+        $submissions = $form->submissions()->get();
+        $filename = 'form-'.$id.'-export-'.date("Y-m-d").'.csv';
+
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=".$filename,
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+
+        $columns = [];
+        $rows = [];
+
+        $i = 0;
+        foreach( $submissions as $submission ){
+            $fields = json_decode( $submission->fields, true );
+            unset($fields['_token']);
+            unset($fields['form_id']);
+            unset($fields['valid_from']);
+            unset($fields['submit']);
+            unset($fields['q']);
+            unset($fields['gr_score']);
+            unset($fields['recaptcha_challenge_field']);
+            unset($fields['recaptcha_response_field']);
+
+            foreach($fields as $key => $value){
+                if (strpos($key, 'my_name_') === 0){
+                  unset($fields[$key]);
+                }
+            }
+
+            foreach( $fields as $key => $value ){
+                $columns[strtolower($key)] = strtolower($key);
+                $rows[$i][strtolower($key)] = $value;
+            }
+
+            $columns['submission_date'] = 'submission_date';
+            $rows[$i]['submission_date'] = $submission->created_at->format('Y-m-d H:i');
+
+            $i++;
+        }
+
+        $columns = array_values($columns);
+
+        $callback = function() use ($rows, $columns)
+        {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach($rows as $row) {
+                fputcsv($file, array_values($row) );
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

@@ -27,6 +27,7 @@
                         </th>
                         <th class="text-center">Submissions</th>
 						<th width="120">Edit Fields</th>
+                        <th width="100" class="text-center">Export</th>
 						<th width="100"></th>
 					</tr>
 				</thead>
@@ -42,6 +43,9 @@
 						<td data-label="Edit" class="text-center">
 							<a href="/admin/forms/{{ $form->id }}/fields">Edit Fields</a>
 						</td>
+                        <td>
+                            <a href="/admin/form/export/{{ $form->id }}"><i class="fal fa-file-export"></i></a>
+                        </td>
 						<td data-label="Delete">
 							<form action="/admin/forms/{{$form->id}}" method="post">
 								@csrf

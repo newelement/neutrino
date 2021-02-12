@@ -112,9 +112,11 @@ class EntryController extends Controller
             $publishDate = now();
         }
 
+        $entryType = $request->entry_type? $request->entry_type : 'entry';
+
 		$entry = new Entry;
 		$entry->title = $request->title;
-		$entry->slug = toSlug($request->slug, 'entry');
+		$entry->slug = toSlug($request->slug, $entryType);
 		$entry->content = $content;
         $entry->block_content = $block_content;
         $entry->short_content = htmlentities($request->short_content);
@@ -124,7 +126,7 @@ class EntryController extends Controller
 		$entry->keywords = $request->keywords ;
 		$entry->meta_description = $request->meta_desc ;
         $entry->seo_title = $request->seo_title;
-		$entry->entry_type = $request->entry_type? $request->entry_type : 'entry';
+		$entry->entry_type = $entryType;
         $entry->template = $request->template? $request->template : null;
 		$entry->allow_comments = $request->allow_comments? 1 : 0 ;
 		$entry->social_image = $request->social_image;
@@ -285,8 +287,10 @@ class EntryController extends Controller
             $publishDate = now();
         }
 
+        $entryType = $request->entry_type;
+
 		$entry->title = $request->title;
-		$entry->slug = $entry->slug === $request->slug? $request->slug : toSlug($request->slug, 'entry');
+		$entry->slug = $entry->slug === $request->slug? $request->slug : toSlug($request->slug, $entryType);
 		$entry->content = $content;
         $entry->block_content = $block_content;
         $entry->short_content = htmlentities($request->short_content);

@@ -41,7 +41,7 @@ function checkSlug($slug, $type, $count = 0)
 
 	switch($type){
 		case 'entry':
-			$exists = DB::table('entries')->where(['slug' => $slug, 'entry_type' => 'entry' ])->first();
+			$exists = DB::table('entries')->where(['slug' => $slug, 'entry_type' => $type ])->first();
 		break;
 		case 'page':
 			$exists = DB::table('pages')->where('slug', $slug)->first();
