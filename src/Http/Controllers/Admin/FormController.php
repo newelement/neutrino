@@ -237,8 +237,8 @@ class FormController extends Controller
             }
 
             foreach( $fields as $key => $value ){
-                $columns[strtolower($key)] = strtolower($key);
-                $rows[$i][strtolower($key)] = $value;
+                $columns[$this->cleanKey($key)] = $this->cleanKey($key);
+                $rows[$i][$this->cleanKey($key)] = is_array($value)? implode(' | ', $value) : $value;
             }
 
             $columns['submission_date'] = 'submission_date';
@@ -261,5 +261,17 @@ class FormController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    private function cleanKey($string)
+    {
+        $string = strtolower($string);
+        $string = preg_replace("/[^A-Za-z0-9 ]/", '', $string);
+        $string = htmlentities($string);
+        $string = str_replace('"', '', $string);
+        $string = str_replace('\'', '', $string);
+        $string = str_replace('\\', '', $string);
+        $string = str_replace('/', '', $string);
+        return $string;
     }
 }
