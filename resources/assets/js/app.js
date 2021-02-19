@@ -3827,6 +3827,7 @@ if( typeof blocks !== 'undefined' ){
                     tag: tags,
                     tinyInitInlineFreeText: {
                         skin: "oxide-dark",
+                        path_absolute : "/",
                         menubar: false,
                         toolbar: 'styleselect fontsizeselect | forecolor backcolor | bullist numlist | link | bold italic alignleft aligncenter alignright alignjustify | image | table tabledelete | hr | blockquote | anchor | pastetext',
                         plugins: [ 'anchor', 'link', 'table', 'lists', 'hr', 'image', 'imagetools', 'paste' ],

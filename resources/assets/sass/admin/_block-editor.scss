@@ -445,6 +445,10 @@
         }
 
         .block-column-inner{
+            img{
+                max-width: 100%;
+                height: auto;
+            }
             .tox-tinymce{
                 min-height: 300px !important;
             }
