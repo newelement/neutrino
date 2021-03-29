@@ -19,6 +19,7 @@ use Newelement\Neutrino\Models\Form;
 use Newelement\Neutrino\Models\FormField;
 use Newelement\Neutrino\Http\Controllers\ContentController;
 use Newelement\Neutrino\Http\Controllers\BlocksController;
+use Newelement\LaravelCalendarEvent\Models\CalendarEvent;
 use TorMorten\Eventy\Facades\Events as Eventy;
 
 function states(){
@@ -634,6 +635,23 @@ function getEvent($id, $type, $fieldName){
 
 }
 
+function getUpcomingEvents($limit = 5){
+
+    $events = CalendarEvent::
+    join('template_calendar_events AS tc', 'tc.id' ,'=' ,'calendar_events.template_calendar_event_id')
+    ->join('event_slugs AS es', 'es.event_id', '=', 'tc.id')
+    ->orderBy('calendar_event.created_at', 'desc')
+    ->limit($limit)
+    ->get();
+
+    foreach( $events as $key => $event ){
+        $start = $event->start_datetime->timestamp;
+        $end = $event->end_datetime->timestamp;
+        $events[$key]->url = '/event/'.$event->slug.'/'.$start.'/'.$end;
+    }
+
+    return $events;
+}
 
 /*
 * IMAGES
