@@ -157,7 +157,8 @@ class MediaController extends Controller
 
                     foreach( $imageSizes as $key => $size ){
 
-                        $image->reset();
+                        //$image->backup();
+                        //$image->reset();
 
                         if( $key === 'thumb' && config('neutrino.media.thumb_crop') === 'square' ){
                             $thumbData = Image::make($file)->fit( $size );
@@ -438,7 +439,7 @@ class MediaController extends Controller
     {
         $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
         $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
-        $filename = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $filename ) );
+        $filename = preg_replace( '/[^a-z0-9.]+/', '-', strtolower( $filename ) );
         return $filename;
     }
 
