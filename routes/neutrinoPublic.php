@@ -15,10 +15,14 @@ Route::get('reset-password/{email}/{token}', $namespacePrefix.'NeutrinoAuthContr
 Route::post('reset-password', $namespacePrefix.'NeutrinoAuthController@resetPassword');
 
 Route::get('register', $namespacePrefix.'NeutrinoAuthController@getRegister')->name('register');
-Route::post('register', $namespacePrefix.'NeutrinoRegisterController@create')->name('register');
+Route::post('register', $namespacePrefix.'NeutrinoRegisterController@create');
 
-Route::get('sitemap', $namespacePrefix.'Admin\SitemapController@generate')->name('sitemap');
-Route::get('sitemap.xml', $namespacePrefix.'Admin\SitemapController@generate')->name('sitemap');
+Route::group([ 'as' => 'sitemap.'], function () use ( $namespacePrefix ) {
+
+    Route::get('sitemap', $namespacePrefix.'Admin\SitemapController@generate')->name('list');
+    Route::get('sitemap.xml', $namespacePrefix.'Admin\SitemapController@generate')->name('list-file');
+
+});
 
 Route::get('/{any}', $namespacePrefix.'ContentController@guessContent')->where('any', '.*'); // Yeah seriously
 

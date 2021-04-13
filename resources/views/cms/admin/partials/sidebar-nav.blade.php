@@ -48,7 +48,7 @@
             @endif
         </li>
         @endforeach
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.entry-types' || isRouteGroup('entries.') || isRouteGroup('comments.') ) active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('entries.')  ) active open @endif">
 			@php
 			$commentCount = _getCommentCount();
 			@endphp
@@ -60,7 +60,7 @@
 				echo '<span class="moderate-counter">'.$commentCount.'</span>';
 			}
 			@endphp
-			<ul @if( \Route::currentRouteName() === 'neutrino.entry-types' || isRouteGroup('entries.') || isRouteGroup('comments.') ) class="open" @endif>
+			<ul @if( isRouteGroup('entries.')) class="open" @endif>
 				<li>
 				    <a href="/admin/entries?entry_type=post">Post</a>
 				</li>
@@ -98,11 +98,11 @@
             @endif
         </li>
         @endforeach
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.taxonomies') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('taxonomies.') ) active open @endif">
 		    <a href="/admin/taxonomy-types">
     		    <i class="fal fa-folders fa-fw"></i> <span class="parent-nav-title">Taxonomies</span>
 		    </a>
-			<ul @if( \Route::currentRouteName() === 'neutrino.taxonomies') class="open" @endif>
+			<ul @if( isRouteGroup('taxonomies.')) class="open" @endif>
 				<li><a href="/admin/taxonomies/1">Categories</a></li>
 				@php $taxTypes = _getTaxonomyTypes(); @endphp
 				@foreach( $taxTypes as $taxType )
@@ -132,7 +132,7 @@
         @php
             $orderCount = getNewOrderCount();
         @endphp
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'shoppe.products') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('shoppe.') ) active open @endif">
 		    <a href="/admin/products">
     		    <i class="fal fa-shopping-cart fa-fw"></i> <span class="parent-nav-title">Products</span>
             </a>
@@ -142,7 +142,7 @@
                 <li><a href="/admin/product-attributes">Attributes</a></li>
 		    </ul>
 		</li>
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'shoppe.shoppe' || \Route::currentRouteName() === 'shoppe.orders') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('shoppe.orders') ) active open @endif">
 		    <a href="/admin/shoppe">
     		    <i class="fal fa-store fa-fw"></i> <span class="parent-nav-title">Shoppe</span>
                 @if( $orderCount > 0 )
@@ -182,11 +182,11 @@
             @endif
         </li>
         @endforeach
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.events') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('events.') ) active open @endif">
 		    <a href="/admin/events">
     		    <i class="fal fa-calendar-alt fa-fw"></i> <span class="parent-nav-title">Events</span>
             </a>
-			<ul @if( \Route::currentRouteName() === 'neutrino.events') class="open" @endif>
+			<ul @if( isRouteGroup('events.')) class="open" @endif>
 				<li><a href="/admin/events">All Events</a></li>
 				<li><a href="/admin/event">Create Event</a></li>
 				<li><a href="/admin/places">Places</a></li>
@@ -209,11 +209,11 @@
             @endif
         </li>
         @endforeach
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.forms') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('forms.') ) active open @endif">
 		    <a href="/admin/forms">
     		    <i class="fal fa-clipboard-list-check fa-fw"></i> <span class="parent-nav-title">Forms</span>
             </a>
-			<ul @if( \Route::currentRouteName() === 'neutrino.forms') class="open" @endif>
+			<ul @if( isRouteGroup('forms.') ) class="open" @endif>
 				<li><a href="/admin/forms">All Forms</a></li>
 				<li><a href="/admin/form">Create Form</a></li>
 			</ul>
@@ -257,7 +257,7 @@
             @endif
         </li>
         @endforeach
-		<li @if( \Route::currentRouteName() === 'neutrino.menus') class="active" @endif>
+		<li @if( isRouteGroup('menus.') ) class="active" @endif>
 		    <a href="/admin/menus">
     		    <i class="fal fa-stream fa-fw"></i> <span class="parent-nav-title">Menus</span>
 		    </a>
@@ -279,20 +279,20 @@
             @endif
         </li>
         @endforeach
-        <li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.galleries') active open @endif">
+        <li class="has-dropdown @if( isRouteGroup('galleries.')) active open @endif">
             <a href="/admin/galleries">
                 <i class="fal fa-images fa-fw"></i> <span class="parent-nav-title">Galleries</span>
             </a>
-            <ul @if( \Route::currentRouteName() === 'neutrino.galleries') class="open" @endif>
+            <ul @if( isRouteGroup('galleries.') ) class="open" @endif>
                 <li><a href="/admin/galleries">All Galleries</a></li>
                 <li><a href="/admin/gallery">Create Gallery</a></li>
             </ul>
         </li>
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.custom-fields') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('custom-fields.')) active open @endif">
 		    <a href="/admin/custom-fields">
     		    <i class="fal fa-ballot fa-fw"></i> <span class="parent-nav-title">Custom Fields</span>
             </a>
-            <ul @if( \Route::currentRouteName() === 'neutrino.custom-fields') class="open" @endif>
+            <ul @if( isRouteGroup('custom-fields.')) class="open" @endif>
             <li><a href="/admin/custom-fields">Custom Fields</a></li>
         </ul>
         </li>
@@ -315,20 +315,20 @@
         </li>
         @endforeach
 
-        <li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.shortcodes') active open @endif">
+        <li class="has-dropdown @if( isRouteGroup('shortcodes.') ) active open @endif">
             <a href="/admin/shortcodes">
                 <i class="fal fa-brackets fa-fw"></i> <span class="parent-nav-title">Shortcodes</span>
             </a>
-            <ul @if( \Route::currentRouteName() === 'neutrino.shortcodes') class="open" @endif>
+            <ul @if( isRouteGroup('shortcodes.')) class="open" @endif>
                 <li><a href="/admin/shortcodes">Shortcodes</a></li>
             </ul>
         </li>
 
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.users') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('users.') ) active open @endif">
 		    <a href="/admin/users">
     		    <i class="fal fa-users fa-fw"></i> <span class="parent-nav-title">Users</span>
             </a>
-			<ul @if( \Route::currentRouteName() === 'neutrino.users') class="open" @endif>
+			<ul @if( isRouteGroup('users.') ) class="open" @endif>
 				<li><a href="/admin/users">All Users</a></li>
 				<li><a href="/admin/user">Create User</a></li>
 				<li><a href="/admin/roles">Roles</a></li>
@@ -351,11 +351,11 @@
             @endif
         </li>
         @endforeach
-		<li class="has-dropdown @if( \Route::currentRouteName() === 'neutrino.settings') active open @endif">
+		<li class="has-dropdown @if( isRouteGroup('settings.') ) active open @endif">
 		    <a href="/admin/settings">
     		    <i class="fal fa-cog fa-fw"></i> <span class="parent-nav-title">Settings</span>
             </a>
-            <ul @if( \Route::currentRouteName() === 'neutrino.settings') class="open" @endif>
+            <ul @if( isRouteGroup('settings.')) class="open" @endif>
                 <li><a href="/admin/settings">Settings</a></li>
                 <li><a href="/admin/redirects">Redirects</a></li>
             </ul>
