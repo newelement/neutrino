@@ -1,5 +1,5 @@
 let $ = require('jquery');
-let Vue2 = require('vue');
+let Vue2 = require('vue').default;
 let slugger = require('slugger');
 import Sortable from 'sortablejs';
 import select2 from 'select2';
