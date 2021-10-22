@@ -29,7 +29,7 @@
     "sortablejs": "^1.13.0",
     "sweetalert2": "^10.14.0",
     "tabulator-tables": "^4.9.3",
-    "tinymce": "^5.6.2",
+    "tinymce": "^5.9.0",
     "v-runtime-template": "^1.10.0",
     "vue": "^2.6.12",
     "vue-clickaway": "^2.2.2",
